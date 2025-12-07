@@ -16,17 +16,17 @@
       rel="stylesheet"
     />
     <style>
-      /* --- 1. نظام الألوان الأساسي (الوضع الفاتح) --- */
+      /* --- 1. نظام الألوان الأساسي (الوضع الفاتح) - تصميم عصري للمؤسسات التعليمية --- */
       :root {
-        --primary-color: #007bff;
+        --primary-color: #0d6efd; /* أزرق مؤسسي حديث */
         --secondary-color: #1a73e8;
-        --bg-color: #f4f7f6;
+        --bg-color: #f8f9fa; /* خلفية ناعمة ونظيفة */
         --panel-bg: #ffffff;
-        --border-color: #e0e4e7;
-        --text-color: #333d47;
-        --light-text: #707b85;
-        --hover-bg: #f0f3f5;
-        --shadow-elevation: 0 4px 12px rgba(0, 0, 0, 0.05);
+        --border-color: #dee2e6; /* حدود ناعمة */
+        --text-color: #212529; /* لون نص غامق وواضح */
+        --light-text: #6c757d;
+        --hover-bg: #e9ecef; /* لون خفيف عند التمرير */
+        --shadow-elevation: 0 6px 15px rgba(0, 0, 0, 0.08); /* ظل أقوى لكن ناعم */
         --icon-color-pdf: #e63946;
         --icon-color-doc: #2196f3;
         --icon-color-xls: #4caf50;
@@ -38,26 +38,24 @@
 
       /* --- 2. نظام الألوان للوضع الداكن (Dark Mode) --- */
       body.dark-mode {
-        --bg-color: #121212;
-        --panel-bg: #1e1e1e;
-        --border-color: #333333;
-        --text-color: #e0e0e0;
-        --light-text: #b0b0b0;
-        --hover-bg: #2a2a2a;
-        --shadow-elevation: 0 4px 12px rgba(0, 0, 0, 0.4);
+        --bg-color: #18191a;
+        --panel-bg: #242526;
+        --border-color: #444648;
+        --text-color: #e4e6eb;
+        --light-text: #b0b3b8;
+        --hover-bg: #3a3b3c;
+        --shadow-elevation: 0 6px 15px rgba(0, 0, 0, 0.4);
       }
       /* تطبيق ألوان الوضع الداكن على عناصر الإدخال */
       body.dark-mode #file-filter,
       body.dark-mode #search-input {
-        background-color: #2a2a2a;
+        background-color: #3a3b3c; /* لون خلفية المدخلات أغمق */
         border-color: #444;
         color: var(--text-color);
-        /* تحديث لون السهم الداخلي للوضع الداكن */
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='%23b0b0b0' d='M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 286.327l154.745-154.745c9.357-9.357 24.522-9.375 33.901-.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.373-24.569 9.373-33.942 0z'/%3E%3C/svg%3E");
       }
       body.dark-mode #file-filter:focus,
       body.dark-mode #search-input:focus {
-        background-color: #1e1e1e;
+        background-color: #242526;
       }
       /* تحديث لون أيقونة الوضع الداكن ليتناسب مع الخلفية */
       body.dark-mode #dark-mode-toggle i {
@@ -72,7 +70,7 @@
         display: flex;
         height: 100vh;
         overflow: hidden;
-        transition: background-color 0.3s, color 0.3s; /* انتقال سلس بين الأوضاع */
+        transition: background-color 0.3s, color 0.3s;
       }
       .container {
         display: flex;
@@ -80,8 +78,8 @@
         height: 100%;
       }
       .sidebar {
-        width: 380px;
-        min-width: 320px;
+        width: 350px; /* **تعديل: تقليل العرض لتكبير المعاينة** */
+        min-width: 300px;
         background-color: var(--panel-bg);
         border-left: 1px solid var(--border-color);
         display: flex;
@@ -92,7 +90,7 @@
       .sidebar-header {
         padding: 20px 25px;
         border-bottom: 1px solid var(--border-color);
-        display: flex; /* لترتيب العنوان وزر الوضع الليلي */
+        display: flex;
         flex-direction: column;
       }
       /* --- 3. تنسيق عناصر الرأس (العنوان وزر الوضع الليلي) --- */
@@ -104,7 +102,7 @@
       }
       .sidebar-header h3 {
         margin: 0;
-        font-size: 1.6em;
+        font-size: 1.8em; /* تكبير العنوان قليلاً */
         font-weight: 700;
         color: var(--text-color);
       }
@@ -134,32 +132,25 @@
       #file-filter,
       #search-input {
         width: 100%;
-        /* **تعديل: إضافة مسافة لليسار لوضع المؤشر** */
-        padding: 12px 15px 12px 40px; 
-        border-radius: 8px;
+        padding: 12px 15px;
+        border-radius: 10px; /* **تعديل: زيادة تدوير الحواف** */
         border: 1px solid var(--border-color);
         font-family: "Cairo", sans-serif;
         font-size: 1em;
         box-sizing: border-box;
         transition: border-color 0.2s, box-shadow 0.2s, background-color 0.3s,
           color 0.3s;
-        background-color: var(--hover-bg);
+        background-color: var(--panel-bg); /* **تعديل: استخدام لون اللوحة لمظهر أنظف** */
         color: var(--text-color);
-        /* **إضافة المؤشر المخصص للسهم باستخدام SVG مشفَّر** */
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='%23707b85' d='M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 286.327l154.745-154.745c9.357-9.357 24.522-9.375 33.901-.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.373-24.569 9.373-33.942 0z'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: left 15px center;
-        background-size: 14px;
-        /* **إخفاء سهم المتصفح الافتراضي** */
+        /* *************** إزالة سهم القائمة المنسدلة الإضافي *************** */
+        background-image: none;
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
+        /* ***************************************************************** */
       }
       #search-input {
         margin-top: 10px;
-        /* **إلغاء خاصية المؤشر للسهم من عنصر البحث** */
-        background-image: none;
-        padding-left: 15px;
       }
       #file-filter:focus,
       #search-input:focus {
@@ -201,21 +192,21 @@
       #file-table tbody tr {
         cursor: pointer;
         background-color: var(--panel-bg);
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+        border-radius: 10px; /* **تعديل: تدوير حواف صفوف الجدول** */
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* **تعديل: ظل أنعم** */
         transition: background-color 0.2s ease, transform 0.2s ease,
           box-shadow 0.2s ease;
       }
       #file-table tbody tr:hover {
         background-color: var(--hover-bg);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        transform: translateY(-1px); /* **تعديل: رفع أقل عند التمرير** */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       }
       #file-table tbody tr.active {
         background-color: var(--primary-color);
         color: white;
         font-weight: 600;
-        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+        box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3); /* **تحديث لون الظل** */
       }
       #file-table tbody tr.active i {
         color: white !important;
@@ -224,7 +215,7 @@
         padding: 15px 12px;
         vertical-align: middle;
         font-size: 1em;
-        border-radius: 8px;
+        border-radius: 10px; /* **تعديل: تدوير حواف الخلايا** */
       }
       #file-table td.col-seq {
         width: 30px;
@@ -274,7 +265,7 @@
       }
       .viewer-controls h2 {
         margin: 0 10px 0 0;
-        font-size: 1.5em;
+        font-size: 1.6em; /* تكبير العنوان قليلاً */
         font-weight: 600;
         color: var(--text-color);
       }
@@ -289,16 +280,16 @@
         display: none;
         align-items: center;
         justify-content: center;
-        padding: 10px 20px;
+        padding: 10px 25px; /* زيادة التباعد الأفقي */
         background-color: var(--primary-color);
         color: white;
         text-decoration: none;
-        border-radius: 25px;
+        border-radius: 30px; /* تدوير أكبر للزر */
         font-size: 1em;
         font-weight: 600;
         transition: background-color 0.3s ease, transform 0.2s ease,
           box-shadow 0.3s ease;
-        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+        box-shadow: 0 4px 10px rgba(13, 110, 253, 0.2);
       }
       #download-btn i {
         margin-left: 10px;
@@ -306,7 +297,7 @@
       }
       #download-btn:hover {
         background-color: var(--secondary-color);
-        box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+        box-shadow: 0 6px 15px rgba(13, 110, 253, 0.3);
         transform: translateY(-1px);
       }
 
@@ -314,7 +305,7 @@
         flex-grow: 1;
         background: var(--panel-bg);
         border: 1px solid var(--border-color);
-        border-radius: 12px;
+        border-radius: 15px; /* **تعديل: تدوير كبير لجزء المعاينة** */
         box-shadow: var(--shadow-elevation);
         position: relative;
         display: flex;
@@ -471,8 +462,7 @@
         <div class="viewer-controls">
           <div class="header-info">
             <h2>مستعرض مستندات مدرسة تحفيظ القرآن الابتدائية بالبجادية</h2>
-            <span class="programmer-credit">برمجة : NMO</span>
-          </div>
+            <span class="programmer-credit">برمجة: NMO</span> </div>
           <a href="#" id="download-btn" download
             >تحميل الملف<i class="fa-solid fa-download"></i
           ></a>
