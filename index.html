@@ -52,6 +52,8 @@
         background-color: #2a2a2a;
         border-color: #444;
         color: var(--text-color);
+        /* تحديث لون السهم الداخلي للوضع الداكن */
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='%23b0b0b0' d='M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 286.327l154.745-154.745c9.357-9.357 24.522-9.375 33.901-.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.373-24.569 9.373-33.942 0z'/%3E%3C/svg%3E");
       }
       body.dark-mode #file-filter:focus,
       body.dark-mode #search-input:focus {
@@ -78,8 +80,8 @@
         height: 100%;
       }
       .sidebar {
-        width: 300px; /* **تم التعديل: تقليل عرض الشريط الجانبي لتكبير صفحة المعاينة** */
-        min-width: 280px; /* **تم التعديل: تقليل الحد الأدنى للعرض** */
+        width: 380px;
+        min-width: 320px;
         background-color: var(--panel-bg);
         border-left: 1px solid var(--border-color);
         display: flex;
@@ -132,7 +134,8 @@
       #file-filter,
       #search-input {
         width: 100%;
-        padding: 12px 15px;
+        /* **تعديل: إضافة مسافة لليسار لوضع المؤشر** */
+        padding: 12px 15px 12px 40px; 
         border-radius: 8px;
         border: 1px solid var(--border-color);
         font-family: "Cairo", sans-serif;
@@ -142,9 +145,21 @@
           color 0.3s;
         background-color: var(--hover-bg);
         color: var(--text-color);
+        /* **إضافة المؤشر المخصص للسهم باستخدام SVG مشفَّر** */
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='%23707b85' d='M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 286.327l154.745-154.745c9.357-9.357 24.522-9.375 33.901-.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.373-24.569 9.373-33.942 0z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: left 15px center;
+        background-size: 14px;
+        /* **إخفاء سهم المتصفح الافتراضي** */
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
       }
       #search-input {
         margin-top: 10px;
+        /* **إلغاء خاصية المؤشر للسهم من عنصر البحث** */
+        background-image: none;
+        padding-left: 15px;
       }
       #file-filter:focus,
       #search-input:focus {
@@ -456,7 +471,7 @@
         <div class="viewer-controls">
           <div class="header-info">
             <h2>مستعرض مستندات مدرسة تحفيظ القرآن الابتدائية بالبجادية</h2>
-            <span class="programmer-credit">برمجة : NMO </span>
+            <span class="programmer-credit">برمجة : NMO</span>
           </div>
           <a href="#" id="download-btn" download
             >تحميل الملف<i class="fa-solid fa-download"></i
