@@ -16,7 +16,7 @@
       rel="stylesheet"
     />
     <style>
-      /* --- نظام الألوان الأساسي (الوضع الفاتح) --- */
+      /* --- 1. نظام الألوان الأساسي (الوضع الفاتح) --- */
       :root {
         --primary-color: #007bff;
         --secondary-color: #1a73e8;
@@ -36,7 +36,7 @@
         --icon-color-html: #f36f21;
       }
 
-      /* --- نظام الألوان للوضع الداكن (Dark Mode) --- */
+      /* --- 2. نظام الألوان للوضع الداكن (Dark Mode) --- */
       body.dark-mode {
         --bg-color: #121212;
         --panel-bg: #1e1e1e;
@@ -46,10 +46,19 @@
         --hover-bg: #2a2a2a;
         --shadow-elevation: 0 4px 12px rgba(0, 0, 0, 0.4);
       }
+      /* تطبيق ألوان الوضع الداكن على عناصر الإدخال */
       body.dark-mode #file-filter,
       body.dark-mode #search-input {
-        background-color: var(--hover-bg);
+        background-color: #2a2a2a;
         border-color: #444;
+        color: var(--text-color);
+      }
+      body.dark-mode #file-filter:focus,
+      body.dark-mode #search-input:focus {
+        background-color: #1e1e1e;
+      }
+      /* تحديث لون أيقونة الوضع الداكن ليتناسب مع الخلفية */
+      body.dark-mode #dark-mode-toggle i {
         color: var(--text-color);
       }
 
@@ -61,7 +70,7 @@
         display: flex;
         height: 100vh;
         overflow: hidden;
-        transition: background-color 0.3s, color 0.3s;
+        transition: background-color 0.3s, color 0.3s; /* انتقال سلس بين الأوضاع */
       }
       .container {
         display: flex;
@@ -76,14 +85,15 @@
         display: flex;
         flex-direction: column;
         box-shadow: var(--shadow-elevation);
-        transition: width 0.3s ease, background-color 0.3s;
+        transition: width 0.3s ease, background-color 0.3s, border-color 0.3s;
       }
       .sidebar-header {
         padding: 20px 25px;
         border-bottom: 1px solid var(--border-color);
-        display: flex;
+        display: flex; /* لترتيب العنوان وزر الوضع الليلي */
         flex-direction: column;
       }
+      /* --- 3. تنسيق عناصر الرأس (العنوان وزر الوضع الليلي) --- */
       .sidebar-header .top-row {
         display: flex;
         justify-content: space-between;
@@ -96,6 +106,29 @@
         font-weight: 700;
         color: var(--text-color);
       }
+      /* زر الوضع الداكن */
+      #dark-mode-toggle {
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        background: none;
+        color: var(--text-color);
+        box-shadow: none;
+        border: 1px solid var(--border-color);
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.2s, color 0.2s;
+      }
+      #dark-mode-toggle i {
+        margin: 0;
+        font-size: 1.1em;
+        color: var(--text-color);
+      }
+      #dark-mode-toggle:hover {
+        background: var(--hover-bg);
+      }
+      /* ------------------------------------------------ */
+
       #file-filter,
       #search-input {
         width: 100%;
@@ -120,122 +153,88 @@
         box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
         background-color: var(--panel-bg);
       }
-
+      #search-input::placeholder {
+        color: var(--light-text);
+        font-weight: 300;
+      }
       .table-container {
         overflow-y: auto;
         flex-grow: 1;
         padding: 0 15px;
         position: relative;
-        /* للحصول على تأثير التلاشي في نهاية القائمة */
         mask-image: linear-gradient(
           to bottom,
-          black 95%,
+          black 90%,
           transparent 100%
         );
         -webkit-mask-image: linear-gradient(
           to bottom,
-          black 95%,
+          black 90%,
           transparent 100%
         );
       }
 
-      /* --- تنسيق القائمة الشجرية الجديدة (Tree View) --- */
-      #file-list {
-        list-style: none;
-        padding: 10px 0;
-        margin: 0;
+      #file-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 8px;
+        margin-top: 10px;
       }
-      #file-list .file-item,
-      #file-list .folder-item {
-        margin: 4px 0;
-        padding: 10px 15px;
+      #file-table thead th {
+        display: none;
+      }
+      #file-table tbody tr {
         cursor: pointer;
+        background-color: var(--panel-bg);
         border-radius: 8px;
-        transition: background-color 0.2s ease;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        color: var(--text-color);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+        transition: background-color 0.2s ease, transform 0.2s ease,
+          box-shadow 0.2s ease;
       }
-      #file-list .file-item:hover,
-      #file-list .folder-item:hover {
+      #file-table tbody tr:hover {
         background-color: var(--hover-bg);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
       }
-      #file-list .file-item.active {
+      #file-table tbody tr.active {
         background-color: var(--primary-color);
         color: white;
+        font-weight: 600;
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
       }
-      #file-list .file-item.active .icon-type {
+      #file-table tbody tr.active i {
         color: white !important;
       }
-      #file-list .file-item-content {
-        display: flex;
-        align-items: center;
-        flex-grow: 1;
-        min-width: 0;
-      }
-      #file-list .file-name {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+      #file-table td {
+        padding: 15px 12px;
+        vertical-align: middle;
         font-size: 1em;
+        border-radius: 8px;
+      }
+      #file-table td.col-seq {
+        width: 30px;
+        text-align: center;
+        color: var(--light-text);
+        font-weight: 600;
+      }
+      #file-table tbody tr.active td.col-seq {
+        color: rgba(255, 255, 255, 0.8) !important;
+      }
+
+      #file-table td.col-name {
+        white-space: normal;
+        word-wrap: break-word;
         font-weight: 400;
         flex-grow: 1;
       }
-      #file-list .icon-type {
-        font-size: 1.4em;
-        margin-left: 10px;
-        transition: color 0.2s;
-        width: 25px;
+      #file-table td.col-type {
+        width: 40px;
         text-align: center;
       }
-      /* تنسيقات المجلدات */
-      .folder-item {
-        font-weight: 600;
-        background-color: transparent !important;
-        padding-left: 0;
-        padding-right: 0;
-        margin-top: 8px;
-        margin-bottom: 8px;
+      #file-table td.col-type i {
+        font-size: 1.6em;
+        transition: color 0.2s;
       }
-      .folder-item-content {
-        display: flex;
-        align-items: center;
-        width: 100%;
-        padding: 10px 15px;
-        transition: background-color 0.2s ease;
-        border-radius: 8px;
-      }
-      .folder-item-content:hover {
-        background-color: var(--hover-bg);
-      }
-      .folder-toggle-icon {
-        margin-left: 10px;
-        transition: transform 0.3s;
-        font-size: 0.8em;
-      }
-      .folder-item.collapsed .folder-toggle-icon {
-        transform: rotate(-90deg);
-      }
-      .folder-content {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        padding-right: 20px; /* المسافة البادئة للمجلدات الفرعية */
-        overflow: hidden;
-        transition: max-height 0.3s ease-out;
-      }
-      .folder-item.collapsed + .folder-content {
-        max-height: 0 !important;
-      }
-      .folder-item-content .icon-type {
-        font-size: 1.2em;
-        color: #ffc107; /* أيقونة مجلد بلون مميز */
-      }
-      .folder-item-content .icon-type.empty {
-        color: var(--light-text); /* لون خفيف للمجلدات الفارغة */
-      }
-      /* ---------------------------------------------------- */
 
       .main-content {
         flex-grow: 1;
@@ -251,6 +250,7 @@
         align-items: center;
         flex-wrap: wrap;
       }
+
       .header-info {
         display: flex;
         align-items: baseline;
@@ -269,14 +269,9 @@
         color: var(--light-text);
         white-space: nowrap;
       }
-      .action-buttons {
-        display: flex;
-        gap: 10px;
-        margin-right: 15px; /* مسافة عن الحافة */
-      }
-      .action-buttons button,
+
       #download-btn {
-        display: none; /* يتم إظهاره عبر JS */
+        display: none;
         align-items: center;
         justify-content: center;
         padding: 10px 20px;
@@ -289,56 +284,15 @@
         transition: background-color 0.3s ease, transform 0.2s ease,
           box-shadow 0.3s ease;
         box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
-        border: none;
-        cursor: pointer;
       }
-      .action-buttons button:hover,
-      #download-btn:hover {
-        background-color: var(--secondary-color);
-        box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
-        transform: translateY(-1px);
-      }
-      .action-buttons i,
       #download-btn i {
         margin-left: 10px;
         font-size: 1.1em;
       }
-      #copy-link-btn {
-        width: 40px;
-        padding: 0;
-        background: none;
-        color: var(--primary-color);
-        box-shadow: none;
-      }
-      #copy-link-btn i {
-        margin: 0;
-        font-size: 1.3em;
-      }
-      #copy-link-btn:hover {
-        background: var(--hover-bg);
-        transform: none;
-        box-shadow: none;
-      }
-      /* زر الوضع الداكن */
-      #dark-mode-toggle {
-        width: 40px;
-        height: 40px;
-        padding: 0;
-        background: none;
-        color: var(--text-color);
-        box-shadow: none;
-        border: 1px solid var(--border-color);
-        border-radius: 50%;
-        margin-right: 10px;
-      }
-      #dark-mode-toggle i {
-        margin: 0;
-        color: var(--text-color);
-      }
-      #dark-mode-toggle:hover {
-        background: var(--hover-bg);
-        transform: none;
-        box-shadow: none;
+      #download-btn:hover {
+        background-color: var(--secondary-color);
+        box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+        transform: translateY(-1px);
       }
 
       #viewer {
@@ -373,8 +327,26 @@
         object-fit: contain;
         border-radius: 10px;
       }
+
       .footer {
-        display: none; /* تم إخفاء التذييل بالكامل بناءً على طلب المستخدم */
+        padding: 15px 0 0 0;
+        text-align: center;
+        font-size: 0.85em;
+        color: var(--light-text);
+        border-top: 1px solid var(--border-color);
+        margin-top: 20px;
+      }
+      .footer p {
+        margin: 4px 0;
+      }
+      .footer a {
+        color: var(--secondary-color);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.2s;
+      }
+      .footer a:hover {
+        color: var(--primary-color);
       }
 
       @media (max-width: 768px) {
@@ -392,6 +364,9 @@
           padding: 20px;
           flex-grow: 1;
         }
+        .table-container {
+          padding: 0 10px;
+        }
         .viewer-controls {
           flex-direction: column;
           align-items: flex-start;
@@ -408,17 +383,32 @@
         .programmer-credit {
           font-size: 0.9em;
         }
-        .action-buttons {
-          margin-top: 10px;
-          margin-right: 0;
-          width: 100%;
-          justify-content: flex-start;
+        .sidebar::after {
+          content: "\f078";
+          font-family: "Font Awesome 6 Free";
+          font-weight: 900;
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          color: var(--primary-color);
+          animation: bounce 2s infinite;
+          pointer-events: none;
         }
-        #download-btn {
-          flex-grow: 1;
+      }
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateX(-50%) translateY(0);
         }
-        #dark-mode-toggle {
-          margin-right: 0;
+        40% {
+          transform: translateX(-50%) translateY(5px);
+        }
+        60% {
+          transform: translateX(-50%) translateY(2px);
         }
       }
     </style>
@@ -442,7 +432,6 @@
             <option value="img">ملفات الصور</option>
             <option value="txt">ملفات نصية</option>
             <option value="html">ملفات HTML</option>
-            <option value="other">ملفات أخرى</option>
           </select>
           <input
             type="text"
@@ -451,7 +440,16 @@
           />
         </div>
         <div class="table-container">
-          <ul id="file-list"></ul>
+          <table id="file-table">
+            <thead>
+              <tr>
+                <th class="col-seq">#</th>
+                <th class="col-name">اسم الملف</th>
+                <th class="col-type">النوع</th>
+              </tr>
+            </thead>
+            <tbody id="file-list"></tbody>
+          </table>
         </div>
       </aside>
       <main class="main-content">
@@ -460,14 +458,9 @@
             <h2>مستعرض مستندات مدرسة تحفيظ القرآن الابتدائية بالبجادية</h2>
             <span class="programmer-credit">برمجة الأستاذ: نفال مرزوق</span>
           </div>
-          <div class="action-buttons">
-            <button id="copy-link-btn" title="نسخ رابط الملف">
-              <i class="fa-solid fa-link"></i>
-            </button>
-            <a href="#" id="download-btn" download
-              >تحميل الملف<i class="fa-solid fa-download"></i
-            ></a>
-          </div>
+          <a href="#" id="download-btn" download
+            >تحميل الملف<i class="fa-solid fa-download"></i
+          ></a>
         </div>
         <div id="viewer">
           <div class="loader-message">
@@ -476,8 +469,7 @@
             (يعمل على بيئة GitHub Pages فقط)
           </div>
         </div>
-        <footer class="footer">
-          </footer>
+        <footer class="footer"></footer>
       </main>
     </div>
 
@@ -486,36 +478,151 @@
         const fileListElement = document.getElementById("file-list");
         const viewerElement = document.getElementById("viewer");
         const downloadBtn = document.getElementById("download-btn");
-        const copyLinkBtn = document.getElementById("copy-link-btn");
         const filterElement = document.getElementById("file-filter");
         const searchElement = document.getElementById("search-input");
-        const darkModeToggle = document.getElementById("dark-mode-toggle");
+        const darkModeToggle = document.getElementById("dark-mode-toggle"); // جلب زر الوضع الليلي
         const defaultFile = "تعليمات.pdf";
+
         const pinnedFiles = [
           "تعليمات.pdf",
           // "ملف مهم آخر.docx"
         ];
 
-        let currentActiveFile = null;
-        let fileStructure = {}; // لحفظ بنية الملفات والمجلدات
+        // --- 1. وظيفة الوضع الليلي ---
+        function initDarkMode() {
+          // التحقق من الإعداد المحفوظ أو تفضيلات النظام
+          const isDark =
+            localStorage.getItem("dark-mode") === "true" ||
+            (window.matchMedia &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches &&
+              localStorage.getItem("dark-mode") !== "false");
 
-        // --- 1. وظائف مساعدة لتحديد نوع وأيقونة الملف ---
+          if (isDark) {
+            document.body.classList.add("dark-mode");
+            darkModeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+          } else {
+            document.body.classList.remove("dark-mode");
+            darkModeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
+          }
+        }
 
-        function getFileType(filename) {
-          const extension = filename.split(".").pop().toLowerCase();
-          if (extension === "pdf") return "pdf";
-          if (["doc", "docx"].includes(extension)) return "doc";
-          if (["xls", "xlsx"].includes(extension)) return "xls";
-          if (["ppt", "pptx"].includes(extension)) return "ppt";
-          if (
-            ["png", "jpg", "jpeg", "gif", "svg", "webp", "bmp"].includes(
-              extension
-            )
-          )
-            return "img";
-          if (extension === "txt") return "txt";
-          if (["html", "htm"].includes(extension)) return "html";
-          return "other";
+        darkModeToggle.addEventListener("click", () => {
+          document.body.classList.toggle("dark-mode");
+          const isDark = document.body.classList.contains("dark-mode");
+          localStorage.setItem("dark-mode", isDark); // حفظ التفضيل
+          darkModeToggle.innerHTML = isDark
+            ? '<i class="fa-solid fa-sun"></i>'
+            : '<i class="fa-solid fa-moon"></i>';
+        });
+
+        // -----------------------------
+
+        async function fetchAndDisplayFiles() {
+          const username = window.location.hostname.split(".")[0];
+          const repo = window.location.pathname.split("/")[1];
+
+          if (!window.location.hostname.includes("github.io")) {
+            viewerElement.innerHTML = `<div class="loader-message" style="color: #e74c3c;">هذا العارض مصمم للعمل على مواقع GitHub Pages فقط.</div>`;
+            return;
+          }
+
+          const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/documents`;
+
+          try {
+            const response = await fetch(apiUrl);
+            if (!response.ok)
+              throw new Error(
+                `فشل الاتصال بواجهة GitHub API. (HTTP ${response.status})`
+              );
+            const data = await response.json();
+
+            let allFiles = data
+              .filter(
+                (item) => item.type === "file" && !item.name.startsWith(".")
+              )
+              .map((item) => item.name);
+
+            const orderedPinned = pinnedFiles.filter((pinnedFile) =>
+              allFiles.includes(pinnedFile)
+            );
+            const unpinnedFiles = allFiles.filter(
+              (file) => !pinnedFiles.includes(file)
+            );
+
+            unpinnedFiles.sort((a, b) => a.localeCompare(b, "ar"));
+
+            const files = [...orderedPinned, ...unpinnedFiles];
+
+            if (files.length === 0) {
+              viewerElement.innerHTML = `<div class="loader-message">مجلد "documents" فارغ. الرجاء إضافة ملفات لعرضها.</div>`;
+              return;
+            }
+
+            fileListElement.innerHTML = "";
+            files.forEach((file, index) => {
+              const tr = document.createElement("tr");
+              const fileType = getFileType(file);
+              tr.dataset.filename = file;
+              tr.dataset.filetype = fileType;
+
+              const tdSeq = document.createElement("td");
+              tdSeq.className = "col-seq";
+              tdSeq.textContent = index + 1;
+
+              const tdName = document.createElement("td");
+              tdName.className = "col-name";
+              tdName.textContent =
+                file.substring(0, file.lastIndexOf(".")) || file;
+
+              const tdType = document.createElement("td");
+              tdType.className = "col-type";
+              const icon = document.createElement("i");
+              icon.className = getFileIconClass(file);
+              tdType.appendChild(icon);
+
+              tr.appendChild(tdSeq);
+              tr.appendChild(tdName);
+              tr.appendChild(tdType);
+
+              tr.addEventListener("click", () => displayFile(file, tr));
+              fileListElement.appendChild(tr);
+            });
+
+            const defaultFileElement = Array.from(
+              fileListElement.children
+            ).find((li) => li.dataset.filename === defaultFile);
+            if (defaultFileElement) {
+              defaultFileElement.click();
+            } else if (fileListElement.children.length > 0) {
+              fileListElement.children[0].click();
+            }
+
+            filterElement.addEventListener("change", searchAndFilterFiles);
+            searchElement.addEventListener("input", searchAndFilterFiles);
+          } catch (error) {
+            viewerElement.innerHTML = `<div class="loader-message" style="color: #e74c3c;">فشل تحميل قائمة الملفات:<br>${error.message}</div>`;
+          }
+        }
+
+        function searchAndFilterFiles() {
+          const selectedType = filterElement.value;
+          const searchTerm = searchElement.value.toLowerCase();
+          const rows = document.querySelectorAll("#file-list tr");
+
+          rows.forEach((row) => {
+            const fileName = row.dataset.filename.toLowerCase();
+            const fileType = row.dataset.filetype;
+
+            const typeMatch =
+              selectedType === "all" || fileType === selectedType;
+            const searchMatch = fileName.includes(searchTerm);
+
+            if (typeMatch && searchMatch) {
+              row.style.display = "";
+            } else {
+              row.style.display = "none";
+            }
+          });
         }
 
         function getFileIconClass(filename) {
@@ -537,285 +644,51 @@
           if (extension === "txt") return solid + "fa-file-lines";
           if (["html", "htm"].includes(extension))
             return solid + "fa-file-code";
-          return solid + "fa-file";
+          return solid + "fa-file-archive";
         }
 
-        // --- 2. دالة لجلب وعرض بنية المجلدات (Tree View) ---
-
-        async function fetchAndDisplayFiles() {
-          const [username, repo] = [
-            window.location.hostname.split(".")[0],
-            window.location.pathname.split("/")[1],
-          ];
-
-          if (!window.location.hostname.includes("github.io")) {
-            viewerElement.innerHTML = `<div class="loader-message" style="color: #e74c3c;">هذا العارض مصمم للعمل على مواقع GitHub Pages فقط.</div>`;
-            return;
-          }
-
-          // استخدام نقطة نهاية git/trees للحصول على بنية المجلدات كاملة
-          const apiUrl = `https://api.github.com/repos/${username}/${repo}/git/trees/main?recursive=1`;
-
-          try {
-            const response = await fetch(apiUrl);
-            if (!response.ok) {
-              const errorText = await response.text();
-              throw new Error(
-                `فشل الاتصال بواجهة GitHub API. (HTTP ${response.status} - ${errorText.substring(
-                  0,
-                  100
-                )}...)`
-              );
-            }
-            const data = await response.json();
-
-            // بناء بنية المجلدات من البيانات المسترجعة
-            fileStructure = buildTree(data.tree);
-
-            // عرض البنية في القائمة الجانبية
-            renderTree(fileStructure.documents || {}, fileListElement);
-
-            // تفعيل وظائف البحث والتصفية
-            filterElement.addEventListener("change", searchAndFilterFiles);
-            searchElement.addEventListener("input", searchAndFilterFiles);
-
-            // تحديد الملف الافتراضي للعرض
-            const defaultFileElement = document.querySelector(
-              `[data-path$="${defaultFile}"]`
-            );
-            if (defaultFileElement) {
-              defaultFileElement.click();
-              // التأكد من فتح المجلدات الأبوية
-              let parentFolder = defaultFileElement.closest(".folder-content");
-              while (parentFolder) {
-                const folderItem = parentFolder.previousElementSibling;
-                if (folderItem && folderItem.classList.contains("folder-item")) {
-                  folderItem.classList.remove("collapsed");
-                }
-                parentFolder = parentFolder.parentElement.closest(
-                  ".folder-content"
-                );
-              }
-            } else {
-              viewerElement.innerHTML = `<div class="loader-message">تم تحميل بنية الملفات. الرجاء اختيار ملف.</div>`;
-            }
-          } catch (error) {
-            viewerElement.innerHTML = `<div class="loader-message" style="color: #e74c3c;">فشل تحميل قائمة الملفات: <br>${error.message}</div>`;
-          }
+        function getFileType(filename) {
+          const extension = filename.split(".").pop().toLowerCase();
+          if (extension === "pdf") return "pdf";
+          if (["doc", "docx"].includes(extension)) return "doc";
+          if (["xls", "xlsx"].includes(extension)) return "xls";
+          if (["ppt", "pptx"].includes(extension)) return "ppt";
+          if (
+            ["png", "jpg", "jpeg", "gif", "svg", "webp", "bmp"].includes(
+              extension
+            )
+          )
+            return "img";
+          if (extension === "txt") return "txt";
+          if (["html", "htm"].includes(extension)) return "html";
+          return "other";
         }
 
-        /** تحويل قائمة الملفات المسطحة إلى بنية شجرية متداخلة */
-        function buildTree(tree) {
-          const root = {};
-          tree.forEach((item) => {
-            // نركز فقط على الملفات والمجلدات داخل مجلد "documents"
-            if (!item.path.startsWith("documents/") && item.path !== "documents")
-              return;
-
-            const parts = item.path.split("/");
-            let current = root;
-            for (let i = 0; i < parts.length; i++) {
-              const part = parts[i];
-              if (!current[part]) {
-                current[part] = {
-                  children: {},
-                  type: item.type === "tree" ? "folder" : "file",
-                  path: item.path,
-                };
-              }
-              current = current[part].children;
-            }
-            // في حالة الملفات، نقوم بحفظ البيانات النهائية في المجلد الأب
-            if (item.type === "blob") {
-                const parent = root[parts[0]].children; // assuming 'documents' is root
-                if (parts.length > 1) {
-                    let temp = root;
-                    for (let i = 0; i < parts.length - 1; i++) {
-                        temp = temp[parts[i]].children;
-                    }
-                    temp[parts[parts.length - 1]] = {
-                        type: 'file',
-                        path: item.path,
-                    };
-                }
-            }
-          });
-          return root;
-        }
-
-        /** عرض البنية الشجرية في الـ HTML */
-        function renderTree(node, parentElement) {
-            // فرز المجلدات قبل الملفات، ثم الفرز أبجديًا
-            const sortedKeys = Object.keys(node).sort((a, b) => {
-                const isAFolder = node[a].type === 'folder';
-                const isBFolder = node[b].type === 'folder';
-                if (isAFolder && !isBFolder) return -1;
-                if (!isAFolder && isBFolder) return 1;
-                return a.localeCompare(b, 'ar');
-            });
-
-            sortedKeys.forEach(key => {
-                const item = node[key];
-                const displayName = key.replace(/\.[^/.]+$/, ''); // إزالة الامتداد من اسم الملف
-
-                if (item.type === "folder") {
-                    const folderLi = document.createElement("li");
-                    folderLi.className = "folder-item collapsed";
-                    folderLi.dataset.path = item.path;
-                    
-                    const folderContentDiv = document.createElement("div");
-                    folderContentDiv.className = "folder-item-content";
-                    folderContentDiv.addEventListener("click", () => {
-                        folderLi.classList.toggle("collapsed");
-                        // ضبط الارتفاع لفتح المجلد بسلاسة
-                        const contentUl = folderLi.nextElementSibling;
-                        if (contentUl && contentUl.classList.contains("folder-content")) {
-                            contentUl.style.maxHeight = folderLi.classList.contains("collapsed") ? '0' : contentUl.scrollHeight + 'px';
-                        }
-                    });
-
-                    folderContentDiv.innerHTML = `
-                        <i class="fa-solid fa-caret-down folder-toggle-icon"></i>
-                        <i class="fa-solid fa-folder icon-type"></i>
-                        <span class="file-name">${displayName}</span>
-                    `;
-                    folderLi.appendChild(folderContentDiv);
-                    parentElement.appendChild(folderLi);
-
-                    const folderUl = document.createElement("ul");
-                    folderUl.className = "folder-content";
-                    parentElement.appendChild(folderUl);
-                    
-                    // استدعاء متكرر للمجلدات الفرعية
-                    renderTree(item.children, folderUl);
-                } else if (item.type === "file") {
-                    const fileLi = document.createElement("li");
-                    fileLi.className = "file-item";
-                    fileLi.dataset.path = item.path;
-                    fileLi.dataset.filetype = getFileType(item.path);
-                    
-                    const fileExtension = item.path.split('.').pop();
-                    
-                    fileLi.innerHTML = `
-                        <div class="file-item-content">
-                            <i class="${getFileIconClass(item.path)} icon-type" style="color: var(--icon-color-${getFileType(item.path)}); margin-right: 0;"></i>
-                            <span class="file-name">${displayName}</span>
-                        </div>
-                    `;
-
-                    fileLi.addEventListener("click", () => displayFile(item.path, fileLi));
-                    parentElement.appendChild(fileLi);
-                }
-            });
-            // إعادة ضبط maxHeight للمجلدات بعد إضافة محتواها (لفتحها بسلاسة في حال لم تكن مطوية)
-            if (parentElement.classList.contains('folder-content') && !parentElement.previousElementSibling.classList.contains('collapsed')) {
-                parentElement.style.maxHeight = parentElement.scrollHeight + 'px';
-            }
-        }
-
-        // --- 3. وظيفة البحث والتصفية ---
-
-        function searchAndFilterFiles() {
-            const selectedType = filterElement.value;
-            const searchTerm = searchElement.value.toLowerCase();
-            const allItems = document.querySelectorAll("#file-list .file-item, #file-list .folder-item");
-
-            // تخزين حالة المجلدات
-            const folderStates = {};
-            document.querySelectorAll(".folder-item").forEach(item => {
-                folderStates[item.dataset.path] = item.classList.contains('collapsed');
-            });
-            
-            // إعادة بناء القائمة بالكامل (مؤقتًا، يمكن تحسينها لاحقاً لإخفاء وإظهار أسرع)
-            fileListElement.innerHTML = '';
-            const filteredRoot = filterTree(fileStructure.documents || {}, selectedType, searchTerm, folderStates);
-            renderTree(filteredRoot, fileListElement);
-            
-            // إعادة تطبيق حالة المجلدات للمجلدات التي لم تتم تصفيتها
-            document.querySelectorAll(".folder-item").forEach(item => {
-                 if (folderStates[item.dataset.path] === false) {
-                     item.classList.remove('collapsed');
-                     const contentUl = item.nextElementSibling;
-                     if (contentUl) {
-                         contentUl.style.maxHeight = contentUl.scrollHeight + 'px';
-                     }
-                 }
-            });
-            
-            // إعادة تفعيل الملف النشط (إن وجد)
-            if (currentActiveFile) {
-                const activeEl = document.querySelector(`[data-path="${currentActiveFile}"]`);
-                if (activeEl) activeEl.classList.add('active');
-            }
-        }
-
-        /** دالة تصفية الشجرة */
-        function filterTree(node, selectedType, searchTerm, folderStates) {
-            const filteredNode = {};
-            for (const key in node) {
-                const item = node[key];
-                
-                if (item.type === 'folder') {
-                    const filteredChildren = filterTree(item.children, selectedType, searchTerm, folderStates);
-                    // إذا كان المجلد يحتوي على ملفات مطابقة أو اسمه يطابق البحث
-                    if (Object.keys(filteredChildren).length > 0 || key.toLowerCase().includes(searchTerm)) {
-                        filteredNode[key] = {
-                            ...item,
-                            children: filteredChildren,
-                            // المحافظة على حالة الطي أو الفتح
-                            // collapsed: folderStates[item.path] !== undefined ? folderStates[item.path] : true 
-                        };
-                    }
-                } else if (item.type === 'file') {
-                    const fileName = item.path.split('/').pop().toLowerCase();
-                    const fileType = getFileType(fileName);
-                    const typeMatch = selectedType === "all" || fileType === selectedType;
-                    const searchMatch = fileName.includes(searchTerm);
-                    
-                    if (typeMatch && searchMatch) {
-                        filteredNode[key] = item;
-                    }
-                }
-            }
-            return filteredNode;
-        }
-
-
-        // --- 4. وظيفة عرض الملف والتحميل ---
-
-        function displayFile(filePath, activeListItem) {
-          // إلغاء تفعيل النشط السابق
+        function displayFile(filename, activeListItem) {
           document
-            .querySelectorAll("#file-list .file-item")
+            .querySelectorAll("#file-list tr")
             .forEach((item) => item.classList.remove("active"));
-            
-          // تفعيل النشط الحالي
           activeListItem.classList.add("active");
-          currentActiveFile = filePath;
 
           viewerElement.innerHTML = `<div class="loader-message">جاري تحميل المعاينة...</div>`;
-          const fileExtension = filePath.split(".").pop().toLowerCase();
-          const fileUrlForDownload = `${window.location.protocol}//${window.location.host}${window.location.pathname.replace('index.html', '')}${filePath}`;
+          const fileExtension = filename.split(".").pop().toLowerCase();
+          const fileUrlForDownload = `documents/${filename}`;
           let viewerIframe;
-
-          // بناء رابط الملف الخام لخدمة عارض Office
-          const [username, repo] = [
-            window.location.hostname.split(".")[0],
-            window.location.pathname.split("/")[1],
-          ];
-          const rawFileUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/${filePath}`;
 
           if (
             fileExtension === "pdf" ||
-            ["html", "htm", "txt"].includes(fileExtension)
+            ["html", "htm"].includes(fileExtension)
           ) {
+            // ملاحظة: قد تحتاج ملفات TXT و HTML إلى تعديل ألوانها في الوضع الليلي داخل ملفاتها أو استخدام حل CSS إضافي.
             viewerIframe = `<iframe src="${fileUrlForDownload}"></iframe>`;
           } else if (
             ["png", "jpg", "jpeg", "gif", "svg", "webp", "bmp"].includes(
               fileExtension
             )
           ) {
-            viewerIframe = `<img src="${fileUrlForDownload}" alt="معاينة ${filePath}">`;
+            viewerIframe = `<img src="${fileUrlForDownload}" alt="معاينة ${filename}">`;
+          } else if (fileExtension === "txt") {
+            viewerIframe = `<iframe src="${fileUrlForDownload}"></iframe>`;
           } else if (
             [
               "docx",
@@ -832,63 +705,25 @@
               "xltm",
             ].includes(fileExtension)
           ) {
+            const username = window.location.hostname.split(".")[0];
+            const repo = window.location.pathname.split("/")[1];
+            const rawFileUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/documents/${encodeURIComponent(
+              filename
+            )}`;
             const viewerUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(
               rawFileUrl
             )}`;
             viewerIframe = `<iframe src="${viewerUrl}"></iframe>`;
           } else {
-            viewerIframe = `<div class="loader-message">نوع الملف هذا غير مدعوم للمعـاينة المباشرة.<br>الرجاء استخدام زر التحميل.</div>`;
+            viewerIframe = `<div class="loader-message">نوع الملف هذا غير مدعوم للعرض.</div>`;
           }
 
           viewerElement.innerHTML = viewerIframe;
-          
-          // تحديث زري التحميل ونسخ الرابط
           downloadBtn.href = fileUrlForDownload;
           downloadBtn.style.display = "inline-flex";
-          copyLinkBtn.style.display = "inline-flex";
         }
 
-        // --- 5. وظيفة نسخ الرابط ---
-
-        copyLinkBtn.addEventListener("click", () => {
-          if (currentActiveFile) {
-            const fileUrlForShare = `${window.location.protocol}//${window.location.host}${window.location.pathname}?file=${currentActiveFile}`;
-            navigator.clipboard.writeText(fileUrlForShare).then(() => {
-              const originalIcon = copyLinkBtn.innerHTML;
-              copyLinkBtn.innerHTML = '<i class="fa-solid fa-check"></i>';
-              setTimeout(() => {
-                copyLinkBtn.innerHTML = originalIcon;
-              }, 1500);
-            });
-          }
-        });
-
-        // --- 6. وظيفة الوضع الداكن ---
-
-        function initDarkMode() {
-          const isDark =
-            localStorage.getItem("dark-mode") === "true" ||
-            (window.matchMedia &&
-              window.matchMedia("(prefers-color-scheme: dark)").matches);
-          if (isDark) {
-            document.body.classList.add("dark-mode");
-            darkModeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
-          } else {
-            document.body.classList.remove("dark-mode");
-            darkModeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
-          }
-        }
-
-        darkModeToggle.addEventListener("click", () => {
-          document.body.classList.toggle("dark-mode");
-          const isDark = document.body.classList.contains("dark-mode");
-          localStorage.setItem("dark-mode", isDark);
-          darkModeToggle.innerHTML = isDark
-            ? '<i class="fa-solid fa-sun"></i>'
-            : '<i class="fa-solid fa-moon"></i>';
-        });
-
-        // --- 7. تهيئة التطبيق ---
+        // --- 2. تنفيذ الوضع الليلي والتحميل ---
         initDarkMode();
         fetchAndDisplayFiles();
       });
