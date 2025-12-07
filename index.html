@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>مستعرض مستندات مدرسة تحفيظ القرآن الابتدائية بالبجادية </title>
+    <title>مستعرض مستندات مدرسة تحفيظ القرآن الابتدائية بالبجادية</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,17 +16,17 @@
       rel="stylesheet"
     />
     <style>
-      /* --- التعديل العصري: نظام ألوان ناعم (Soft Modern Palette) --- */
+      /* --- الكود المحدث: نظام الألوان والتنسيقات الأساسية كما هو --- */
       :root {
-        --primary-color: #007bff; /* أزرق حيوي */
-        --secondary-color: #1a73e8; /* أزرق عميق للتفاعل */
-        --bg-color: #f4f7f6; /* خلفية فاتحة ناعمة */
-        --panel-bg: #ffffff; /* أبيض نقي للوحات */
-        --border-color: #e0e4e7; /* لون حدود ناعم جداً */
-        --text-color: #333d47; /* لون نص داكن عصري */
-        --light-text: #707b85; /* لون نص ثانوي */
-        --hover-bg: #f0f3f5; /* لون خفيف عند التأشير */
-        --shadow-elevation: 0 4px 12px rgba(0, 0, 0, 0.05); /* ظل ناعم */
+        --primary-color: #007bff;
+        --secondary-color: #1a73e8;
+        --bg-color: #f4f7f6;
+        --panel-bg: #ffffff;
+        --border-color: #e0e4e7;
+        --text-color: #333d47;
+        --light-text: #707b85;
+        --hover-bg: #f0f3f5;
+        --shadow-elevation: 0 4px 12px rgba(0, 0, 0, 0.05);
         --icon-color-pdf: #e63946;
         --icon-color-doc: #2196f3;
         --icon-color-xls: #4caf50;
@@ -49,9 +49,8 @@
         width: 100%;
         height: 100%;
       }
-      /* --- تحديث الشريط الجانبي (Sidebar) --- */
       .sidebar {
-        width: 380px; /* زيادة العرض قليلاً */
+        width: 380px;
         min-width: 320px;
         background-color: var(--panel-bg);
         border-left: 1px solid var(--border-color);
@@ -61,28 +60,27 @@
         transition: width 0.3s ease;
       }
       .sidebar-header {
-        padding: 20px 25px; /* زيادة المسافات */
+        padding: 20px 25px;
         border-bottom: 1px solid var(--border-color);
       }
       .sidebar-header h3 {
-        text-align: right; /* محاذاة لليمين */
+        text-align: right;
         margin: 0 0 15px 0;
         font-size: 1.6em;
         font-weight: 700;
         color: var(--text-color);
       }
-      /* --- تصميم عصري لحقلي الفلتر والبحث (Inputs/Select) --- */
       #file-filter,
       #search-input {
         width: 100%;
         padding: 12px 15px;
-        border-radius: 8px; /* حواف أكثر استدارة */
+        border-radius: 8px;
         border: 1px solid var(--border-color);
         font-family: "Cairo", sans-serif;
         font-size: 1em;
         box-sizing: border-box;
         transition: border-color 0.2s, box-shadow 0.2s;
-        background-color: var(--hover-bg); /* خلفية خفيفة */
+        background-color: var(--hover-bg);
       }
       #search-input {
         margin-top: 10px;
@@ -92,41 +90,40 @@
         outline: none;
         border-color: var(--primary-color);
         box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
-        background-color: var(--panel-bg); /* خلفية بيضاء عند التركيز */
+        background-color: var(--panel-bg);
       }
       #search-input::placeholder {
         color: var(--light-text);
         font-weight: 300;
       }
-
-      /* --- تحديث مظهر الجدول ليصبح شبيهاً بالبطاقات (Card-like Table) --- */
       .table-container {
         overflow-y: auto;
         flex-grow: 1;
-        padding: 0 15px; /* مسافة على الجانبين */
+        padding: 0 15px;
+        position: relative;
+        mask-image: linear-gradient(
+          to bottom,
+          black 90%,
+          transparent 100%
+        );
+        -webkit-mask-image: linear-gradient(
+          to bottom,
+          black 90%,
+          transparent 100%
+        );
       }
+
       #file-table {
         width: 100%;
-        border-collapse: separate; /* مهم لتبدو البطاقات منفصلة */
-        border-spacing: 0 8px; /* مسافة بين الصفوف */
+        border-collapse: separate;
+        border-spacing: 0 8px;
         margin-top: 10px;
       }
       #file-table thead th {
-        background-color: transparent;
-        padding: 12px 10px;
-        text-align: right;
-        font-size: 0.9em;
-        font-weight: 400;
-        color: var(--light-text);
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        /* يجب إخفاء الرأس في هذا التصميم أو تبسيطه */
         display: none;
       }
       #file-table tbody tr {
         cursor: pointer;
-        border-bottom: none;
         background-color: var(--panel-bg);
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -151,7 +148,7 @@
         padding: 15px 12px;
         vertical-align: middle;
         font-size: 1em;
-        border-radius: 8px; /* تطبيق الحواف المستديرة على الخلايا */
+        border-radius: 8px;
       }
       #file-table td.col-seq {
         width: 30px;
@@ -178,10 +175,9 @@
         transition: color 0.2s;
       }
 
-      /* --- تحديث المحتوى الرئيسي (Main Content) --- */
       .main-content {
         flex-grow: 1;
-        padding: 30px; /* زيادة المسافة */
+        padding: 30px;
         display: flex;
         flex-direction: column;
         overflow: hidden;
@@ -193,13 +189,28 @@
         align-items: center;
         flex-wrap: wrap;
       }
+
+      /* --- تنسيق التجميع الجديد للعنوان والمبرمج --- */
+      .header-info {
+        display: flex; /* وضع H2 و Span جنبًا إلى جنب */
+        align-items: baseline; /* محاذاة على نفس الخط */
+        flex-wrap: wrap;
+        flex-grow: 1; /* للسماح لها بأخذ المساحة اللازمة */
+      }
       .viewer-controls h2 {
-        margin: 0;
+        margin: 0 10px 0 0; /* مسافة بسيطة على اليسار للابتعاد عن اسم المبرمج */
         font-size: 1.5em;
         font-weight: 600;
         color: var(--text-color);
       }
-      /* --- تصميم زر التحميل العصري (Download Button) --- */
+      .programmer-credit {
+        font-size: 1em; /* خط واضح */
+        font-weight: 400;
+        color: var(--light-text); /* لون خفيف ومميز */
+        white-space: nowrap; /* منع انقسام النص */
+      }
+      /* ------------------------------------------- */
+
       #download-btn {
         display: none;
         align-items: center;
@@ -208,7 +219,7 @@
         background-color: var(--primary-color);
         color: white;
         text-decoration: none;
-        border-radius: 25px; /* شكل "حبّة دواء" */
+        border-radius: 25px;
         font-size: 1em;
         font-weight: 600;
         transition: background-color 0.3s ease, transform 0.2s ease,
@@ -225,12 +236,11 @@
         transform: translateY(-1px);
       }
 
-      /* --- تصميم العارض (Viewer) --- */
       #viewer {
         flex-grow: 1;
         background: var(--panel-bg);
         border: 1px solid var(--border-color);
-        border-radius: 12px; /* حواف أكثر استدارة */
+        border-radius: 12px;
         box-shadow: var(--shadow-elevation);
         position: relative;
         display: flex;
@@ -257,7 +267,6 @@
         border-radius: 10px;
       }
 
-      /* --- تنسيق التذييل (Footer) العصري --- */
       .footer {
         padding: 15px 0 0 0;
         text-align: center;
@@ -279,19 +288,14 @@
         color: var(--primary-color);
       }
 
-      @media (max-width: 992px) {
-        .sidebar {
-          width: 320px;
-        }
-      }
       @media (max-width: 768px) {
         .container {
           flex-direction: column;
         }
         .sidebar {
           width: 100%;
-          height: 40%;
-          min-height: 300px;
+          height: 50%;
+          min-height: 250px;
           border-left: none;
           border-bottom: 1px solid var(--border-color);
         }
@@ -306,9 +310,46 @@
           flex-direction: column;
           align-items: flex-start;
         }
+        /* --- تنسيق الجوال للعنوان واسم المبرمج (وضعهم فوق بعض) --- */
+        .header-info {
+            flex-direction: column; 
+            align-items: flex-start;
+            margin-bottom: 10px; 
+        }
         .viewer-controls h2 {
-          margin-bottom: 10px;
-          font-size: 1.3em;
+            font-size: 1.3em;
+            margin: 0 0 5px 0;
+        }
+        .programmer-credit {
+            font-size: 0.9em;
+        }
+        /* -------------------------------------------------------- */
+        .sidebar::after {
+          content: "\f078";
+          font-family: "Font Awesome 6 Free";
+          font-weight: 900;
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          color: var(--primary-color);
+          animation: bounce 2s infinite;
+          pointer-events: none;
+        }
+      }
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateX(-50%) translateY(0);
+        }
+        40% {
+          transform: translateX(-50%) translateY(5px);
+        }
+        60% {
+          transform: translateX(-50%) translateY(2px);
         }
       }
     </style>
@@ -349,7 +390,10 @@
       </aside>
       <main class="main-content">
         <div class="viewer-controls">
-          <h2>مستعرض مستندات مدرسة تحفيظ القرآن الابتدائية بالبجادية </h2>
+          <div class="header-info">
+            <h2>مستعرض مستندات مدرسة تحفيظ القرآن الابتدائية بالبجادية</h2>
+            <span class="programmer-credit">برمجة الأستاذ: نفال مرزوق</span>
+          </div>
           <a href="#" id="download-btn" download
             >تحميل الملف<i class="fa-solid fa-download"></i
           ></a>
@@ -362,15 +406,18 @@
           </div>
         </div>
         <footer class="footer">
-          <p>برمجة الأستاذ نفال النفيعي
+          <p>
+            برمجة الأستاذ:
+            <a href="https://t.me/ITG_KSA" target="_blank"
+              >نفال مرزوق</a
+            >
           </p>
         </footer>
       </main>
     </div>
 
     <script>
-      // لا توجد تغييرات وظيفية في كود JavaScript، تم نقله كما هو
-      // باستثناء تحديث بسيط لرسالة البداية و Placeholder
+      // لا توجد تغييرات وظيفية في كود JavaScript.
       document.addEventListener("DOMContentLoaded", () => {
         const fileListElement = document.getElementById("file-list");
         const viewerElement = document.getElementById("viewer");
@@ -379,9 +426,8 @@
         const searchElement = document.getElementById("search-input");
         const defaultFile = "تعليمات.pdf";
 
-        // --- التعديل هنا: قائمة الملفات التي تريد تثبيتها في الأعلى ---
         const pinnedFiles = [
-          "1.png",
+          "تعليمات.pdf",
           // "ملف مهم آخر.docx"
         ];
 
