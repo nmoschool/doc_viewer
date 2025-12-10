@@ -162,6 +162,7 @@
         flex-grow: 1;
         padding: 0 15px;
         position: relative;
+        /* لجعل التمرير يبدو أكثر أناقة */
         mask-image: linear-gradient(
           to bottom,
           black 90%,
@@ -191,6 +192,7 @@
         transition: background-color 0.2s ease, transform 0.2s ease,
           box-shadow 0.2s ease;
       }
+      /* تعطيل تأثير الهوفر على عناوين المجلدات */
       #file-table tbody tr:hover:not(.folder-header) {
         background-color: var(--hover-bg);
         transform: translateY(-2px);
@@ -398,20 +400,22 @@
         color: var(--primary-color);
       }
 
+      /* --- تنسيق الاستجابة التلقائية (Responsive Design) --- */
+      /* يتم تفعيل هذا الجزء على الأجهزة ذات العرض 768 بكسل أو أقل (الهواتف والأجهزة اللوحية العمودية) */
       @media (max-width: 768px) {
         .container {
-          flex-direction: column;
+          flex-direction: column; /* ترتيب العناصر بشكل عمودي (القائمة في الأعلى، العارض في الأسفل) */
         }
         .sidebar {
           width: 100%;
-          height: 50%;
+          height: 50%; /* القائمة تأخذ 50% من الارتفاع */
           min-height: 250px;
           border-left: none;
           border-bottom: 1px solid var(--border-color);
         }
         .main-content {
           padding: 20px;
-          flex-grow: 1;
+          flex-grow: 1; /* العارض يأخذ المساحة المتبقية تلقائيًا */
         }
         .table-container {
           padding: 0 10px;
@@ -432,6 +436,7 @@
         .programmer-credit {
           font-size: 0.9em;
         }
+        /* أيقونة للإشارة إلى إمكانية السحب (اختياري) */
         .sidebar::after {
           content: "\f078";
           font-family: "Font Awesome 6 Free";
@@ -505,7 +510,7 @@
         <div class="viewer-controls">
           <div class="header-info">
             <h2>مستعرض مستندات مدرسة تحفيظ القرآن الابتدائية بالبجادية</h2>
-            <span class="programmer-credit">برمجة :NMO </span>
+            <span class="programmer-credit">برمجة : NMO </span>
           </div>
           <a href="#" id="download-btn" download
             >تحميل الملف<i class="fa-solid fa-download"></i
@@ -615,8 +620,6 @@
             }
         }
         
-        // -----------------------------
-        
         // وظيفة جلب الملفات من مجلد محدد
         async function fetchClassFiles(folderPath) {
             const username = window.location.hostname.split(".")[0];
@@ -703,7 +706,7 @@
 
             fileListElement.innerHTML = "";
             let seq = 1; 
-            let isFirstFolder = true;
+            let isFirstFolder = true; // لفتح أول مجلد تلقائيًا عند التحميل
 
             for (const folderName in filesByFolder) {
                 const folderFiles = filesByFolder[folderName];
@@ -712,7 +715,7 @@
                 const folderHeaderTr = document.createElement("tr");
                 folderHeaderTr.className = "folder-header";
                 folderHeaderTr.dataset.folderName = folderName;
-                folderHeaderTr.dataset.isExpanded = isFirstFolder ? "true" : "false"; // افتح الأول
+                folderHeaderTr.dataset.isExpanded = isFirstFolder ? "true" : "false"; 
 
                 folderHeaderTr.innerHTML = `
                     <td colspan="3" class="folder-header-content">
