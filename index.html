@@ -16,16 +16,18 @@
       rel="stylesheet"
     />
     <style>
-      /* --- 1. نظام الألوان الأساسي (الوضع الفاتح) --- */
+      /* --- 1. نظام الألوان الأساسي (وزارة التعليم) --- */
       :root {
-        --primary-color: #007bff;
-        --secondary-color: #1a73e8;
-        --bg-color: #f4f7f6;
+        --moe-green: #00a65a; /* الأخضر السعودي الرسمي */
+        --moe-dark-blue: #005d76; /* أزرق داكن للمنظمات الرسمية */
+        --primary-color: var(--moe-green);
+        --secondary-color: var(--moe-dark-blue);
+        --bg-color: #f8f8f8; /* خلفية فاتحة جداً */
         --panel-bg: #ffffff;
         --border-color: #e0e4e7;
         --text-color: #333d47;
         --light-text: #707b85;
-        --hover-bg: #f0f3f5;
+        --hover-bg: #e6f6ef; /* تظليل خفيف بالأخضر */
         --shadow-elevation: 0 4px 12px rgba(0, 0, 0, 0.05);
         --icon-color-pdf: #e63946;
         --icon-color-doc: #2196f3;
@@ -43,7 +45,7 @@
         --border-color: #333333;
         --text-color: #e0e0e0;
         --light-text: #b0b0b0;
-        --hover-bg: #2a2a2a;
+        --hover-bg: #2a3a3a; /* تظليل داكن يتناسب مع الأخضر */
         --shadow-elevation: 0 4px 12px rgba(0, 0, 0, 0.4);
       }
       /* تطبيق ألوان الوضع الداكن على عناصر الإدخال */
@@ -68,7 +70,6 @@
         background-color: var(--bg-color);
         color: var(--text-color);
         display: flex;
-        /* **تعديل: إزالة ارتفاع الشاشة الثابت ووضع حد أدنى للسماح بالتمرير الكلي** */
         min-height: 100vh;
         overflow-x: hidden;
         transition: background-color 0.3s, color 0.3s;
@@ -76,7 +77,6 @@
       .container {
         display: flex;
         width: 100%;
-        /* **تعديل: السماح بالتمدد** */
         flex-grow: 1;
       }
       .sidebar {
@@ -88,7 +88,6 @@
         flex-direction: column;
         box-shadow: var(--shadow-elevation);
         transition: width 0.3s ease, background-color 0.3s, border-color 0.3s;
-        /* **تعديل: تثبيت الشريط الجانبي على الكمبيوتر** */
         position: sticky;
         top: 0;
         height: 100vh;
@@ -99,7 +98,6 @@
         display: flex;
         flex-direction: column;
       }
-      /* --- 3. تنسيق عناصر الرأس (العنوان وزر الوضع الليلي) --- */
       .sidebar-header .top-row {
         display: flex;
         justify-content: space-between;
@@ -133,7 +131,6 @@
       #dark-mode-toggle:hover {
         background: var(--hover-bg);
       }
-      /* ------------------------------------------------ */
 
       #file-filter,
       #search-input {
@@ -156,7 +153,7 @@
       #search-input:focus {
         outline: none;
         border-color: var(--primary-color);
-        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        box-shadow: 0 0 0 3px rgba(0, 166, 90, 0.1); /* ظل أخضر */
         background-color: var(--panel-bg);
       }
       #search-input::placeholder {
@@ -203,10 +200,10 @@
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
       }
       #file-table tbody tr.active {
-        background-color: var(--primary-color);
+        background-color: var(--primary-color); /* اللون الأخضر الأساسي */
         color: white;
         font-weight: 600;
-        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+        box-shadow: 0 4px 10px rgba(0, 166, 90, 0.3);
       }
       #file-table tbody tr.active i {
         color: white !important;
@@ -247,7 +244,7 @@
         background-color: var(--panel-bg);
         box-shadow: none;
         cursor: pointer;
-        margin-top: 15px; /* مسافة أكبر بين المجلدات */
+        margin-top: 15px;
       }
       #file-table tbody tr.folder-header:hover {
         background-color: var(--hover-bg);
@@ -272,7 +269,7 @@
       }
       .folder-title .folder-icon {
         margin-left: 10px;
-        color: #f7a01a; /* لون أيقونة المجلد */
+        color: #f7a01a;
         font-size: 1.2em;
       }
       .folder-title .file-count {
@@ -281,11 +278,9 @@
         color: var(--light-text);
         margin-right: 10px;
       }
-      /* حالة المجلد المفتوح (الافتراضي: الأول يكون مفتوحاً) */
       #file-table tr.folder-header[data-is-expanded="true"] .arrow-icon {
         transform: rotate(-90deg);
       }
-      /* إزالة الهامش العلوي لأول مجلد في القائمة */
       #file-list tr:first-child.folder-header {
         margin-top: 0;
       }
@@ -296,37 +291,74 @@
         padding: 30px;
         display: flex;
         flex-direction: column;
-        /* **تعديل: إزالة overflow: hidden; للسماح بالتمرير الكلي** */
         overflow: visible;
-        /* **تعديل: تأكيد شغل ارتفاع الشاشة** */
         min-height: 100vh;
       }
-      .viewer-controls {
-        margin-bottom: 20px;
+      /* تنسيق الهيدر الجديد (عمودي الآن) */
+      .app-header {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid var(--primary-color); /* شريط أخضر رسمي */
+        display: flex;
+        flex-direction: column;
+      }
+      /* صف العناوين وزر التحميل */
+      .top-row-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        flex-wrap: wrap;
+        width: 100%;
+        margin-bottom: 10px; /* مسافة بين الصف العلوي ونص المبرمج */
       }
-
-      .header-info {
+      .header-logo-container {
         display: flex;
-        align-items: baseline;
-        flex-wrap: wrap;
+        align-items: center;
         flex-grow: 1;
       }
-      .viewer-controls h2 {
-        margin: 0 10px 0 0;
-        font-size: 1.5em;
+      /* حاوية الشعار (لتضع صورتك فيها) */
+      .logo-placeholder {
+        width: 60px;
+        height: 60px;
+        background-color: #f0f0f0; 
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        margin-left: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7em;
+        color: var(--light-text);
         font-weight: 600;
-        color: var(--text-color);
       }
-      /* **تعديل: تنسيق نص المبرمج باللون الأزرق والخط الواضح** */
+      .header-titles {
+        line-height: 1.3;
+        flex-grow: 1;
+      }
+      /* تغيير لون العنوان الرئيسي إلى الأخضر الرسمي */
+      .main-title {
+        margin: 0;
+        font-size: 1.8em;
+        font-weight: 700;
+        color: var(--primary-color); /* الأخضر الرسمي */
+      }
+      /* تغيير لون العنوان الفرعي إلى الأخضر الرسمي */
+      .sub-title {
+        margin: 0;
+        font-size: 1.2em;
+        font-weight: 500;
+        color: var(--primary-color); /* الأخضر الرسمي */
+      }
+      
+      /* توسيط نص المبرمج */
+      .programmer-credit-container {
+        width: 100%;
+        text-align: center;
+      }
       .programmer-credit {
         font-size: 1em;
-        font-weight: 700; /* جعل الخط أوضح وأكثر جرأة */
-        color: var(--primary-color); /* اللون الأزرق الأساسي */
-        white-space: nowrap;
+        font-weight: 700;
+        color: var(--moe-dark-blue); 
+        border-bottom: 1px solid var(--moe-dark-blue);
       }
       /* ---------------------------------------------------- */
 
@@ -343,7 +375,8 @@
         font-weight: 600;
         transition: background-color 0.3s ease, transform 0.2s ease,
           box-shadow 0.3s ease;
-        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+        box-shadow: 0 4px 10px rgba(0, 166, 90, 0.2);
+        white-space: nowrap; /* لمنع الكسر في الجوال */
       }
       #download-btn i {
         margin-left: 10px;
@@ -351,7 +384,7 @@
       }
       #download-btn:hover {
         background-color: var(--secondary-color);
-        box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+        box-shadow: 0 6px 15px rgba(0, 166, 90, 0.3);
         transform: translateY(-1px);
       }
 
@@ -365,10 +398,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        /* **تعديل: السماح بعرض المحتوى كاملاً داخل العارض** */
         overflow: auto;
         transition: background-color 0.3s, border-color 0.3s;
-        /* **تعديل: وضع حد أدنى للارتفاع لملء المساحة المتاحة** */
         min-height: 500px;
       }
       #viewer iframe {
@@ -423,11 +454,9 @@
         }
         .sidebar {
           width: 100%;
-          /* **تعديل: جعل الارتفاع تلقائي ووضع حد أقصى للتحكم** */
           height: auto;
           max-height: 50vh;
           min-height: 250px;
-          /* **تعديل: إزالة التثبيت** */
           position: static;
           border-left: none;
           border-bottom: 1px solid var(--border-color);
@@ -435,42 +464,27 @@
         .main-content {
           padding: 20px;
           flex-grow: 1;
-          /* **تعديل: إزالة الارتفاع الثابت للجوال** */
           min-height: auto;
         }
         .table-container {
           padding: 0 10px;
         }
-        .viewer-controls {
-          flex-direction: column;
-          align-items: flex-start;
+        .top-row-header {
+            flex-direction: column;
+            align-items: flex-start;
         }
-        .header-info {
-          flex-direction: column;
-          align-items: flex-start;
-          margin-bottom: 10px;
+        .header-logo-container {
+            margin-bottom: 10px;
         }
-        .viewer-controls h2 {
-          font-size: 1.3em;
-          margin: 0 0 5px 0;
+        .main-title {
+          font-size: 1.5em;
         }
-        .programmer-credit {
-          font-size: 0.9em;
+        .sub-title {
+          font-size: 1em;
         }
-      }
-      @keyframes bounce {
-        0%,
-        20%,
-        50%,
-        80%,
-        100% {
-          transform: translateX(-50%) translateY(0);
-        }
-        40% {
-          transform: translateX(-50%) translateY(5px);
-        }
-        60% {
-          transform: translateX(-50%) translateY(2px);
+        #download-btn {
+            width: 100%;
+            margin-top: 10px;
         }
       }
     </style>
@@ -517,15 +531,24 @@
         </div>
       </aside>
       <main class="main-content">
-        <div class="viewer-controls">
-          <div class="header-info">
-            <h2>مستعرض مستندات مدرسة تحفيظ القرآن الابتدائية بالبجادية</h2>
+        <header class="app-header">
+          <div class="top-row-header">
+            <div class="header-logo-container">
+              <div class="logo-placeholder">moe_logo.png</div>
+              <div class="header-titles">
+                  <h1 class="main-title">مستعرض مستندات</h1>
+                  <h2 class="sub-title">مدرسة تحفيظ القرآن الابتدائية بالبجادية</h2>
+              </div>
+            </div>
+            <a href="#" id="download-btn" download
+                >تحميل الملف<i class="fa-solid fa-download"></i
+              ></a>
+          </div>
+          
+          <div class="programmer-credit-container">
             <span class="programmer-credit">برمجة :NMO </span>
           </div>
-          <a href="#" id="download-btn" download
-            >تحميل الملف<i class="fa-solid fa-download"></i
-          ></a>
-        </div>
+        </header>
         <div id="viewer">
           <div class="loader-message">
             الرجاء اختيار ملف من الفهرس لعرضه
@@ -549,7 +572,7 @@
 
         // الملفات التي يجب تثبيتها في أعلى القائمة (تظهر أولاً)
         const pinnedFiles = [
-          "22.png",
+          "تعليمات.pdf",
           // "ملف مهم آخر.docx"
         ];
 
