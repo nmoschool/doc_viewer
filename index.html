@@ -390,7 +390,7 @@
       #viewer video {
         width: 100%; /* تأكيد ملء العرض */
         height: 100%; /* تأكيد ملء الارتفاع */
-        object-fit: contain; 
+        object-fit: contain; /* أبقها على contain للحفاظ على نسبة العرض الأصلية وتفادي الإقتصاص */
         border-radius: 10px;
       }
       /* ----------------------------------------------------------- */
@@ -599,7 +599,18 @@
             const folderName = headerRow.dataset.folderName;
             const isExpanded = headerRow.dataset.isExpanded === "true";
 
-            // **تم حذف منطق الأكورديون للسماح بفتح مجلدات متعددة**
+            // إغلاق جميع المجلدات أولاً (سلوك الأكورديون)
+            document.querySelectorAll("#file-list .folder-header").forEach(otherHeader => {
+                if (otherHeader !== headerRow) {
+                    otherHeader.dataset.isExpanded = "false";
+                    otherHeader.querySelector('.arrow-icon').style.transform = 'rotate(0deg)';
+
+                    const otherFolderName = otherHeader.dataset.folderName;
+                    document.querySelectorAll(`#file-list tr[data-folder="${otherFolderName}"]`).forEach(fileRow => {
+                        fileRow.style.display = 'none';
+                    });
+                }
+            });
 
             if (isExpanded) {
                 // إذا كان مفتوحاً، أغلقه
@@ -642,7 +653,7 @@
                     .filter((item) => item.type === "file" && !item.name.startsWith("."))
                     .map((item) => ({
                         name: item.name,
-                        path: folderPath ? `${folderPath}/${item.name}` : file.name, // المسار الكامل للملف
+                        path: folderPath ? `${folderPath}/${item.name}` : item.name, // المسار الكامل للملف
                         folder: folderPath || 'ملفات عامة',
                     }));
             } catch (error) {
@@ -711,8 +722,7 @@
 
             fileListElement.innerHTML = "";
             let seq = 1;
-            // **التعديل: لا نحتاج إلى isFirstFolder بما أننا نريد فتح الجميع**
-            // let isFirstFolder = true; 
+            let isFirstFolder = true;
 
             for (const folderName in filesByFolder) {
                 const folderFiles = filesByFolder[folderName];
@@ -721,13 +731,12 @@
                 const folderHeaderTr = document.createElement("tr");
                 folderHeaderTr.className = "folder-header";
                 folderHeaderTr.dataset.folderName = folderName;
-                // **التعديل: فتح جميع المجلدات بشكل افتراضي**
-                folderHeaderTr.dataset.isExpanded = "true"; 
+                folderHeaderTr.dataset.isExpanded = isFirstFolder ? "true" : "false"; // افتح الأول
 
                 folderHeaderTr.innerHTML = `
                     <td colspan="3" class="folder-header-content">
                         <div class="folder-title">
-                            <i class="fa-solid fa-chevron-left arrow-icon" style="transform: rotate(-90deg);"></i>
+                            <i class="fa-solid fa-chevron-left arrow-icon"></i>
                             <i class="fa-solid fa-folder-open folder-icon"></i>
                             <span>${folderName}</span>
                             <span class="file-count">(${folderFiles.length})</span>
@@ -750,12 +759,10 @@
                     tr.dataset.folder = folderName;
                     tr.dataset.isHiddenBySearch = "false";
 
-                    // **تم حذف: إخفاء الملفات إذا لم يكن المجلد مفتوحاً (لأن الكل مفتوح)**
-                    /*
+                    // إخفاء الملفات إذا لم يكن المجلد مفتوحاً
                     if (!isFirstFolder) {
                         tr.style.display = 'none';
                     }
-                    */
 
                     const tdSeq = document.createElement("td");
                     tdSeq.className = "col-seq";
@@ -781,7 +788,7 @@
                     fileListElement.appendChild(tr);
                 });
 
-                // **تم حذف: isFirstFolder = false;**
+                isFirstFolder = false;
             }
 
             // الضغط على الملف الافتراضي
@@ -1008,3 +1015,5 @@
     </script>
   </body>
 </html>
+
+
