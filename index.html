@@ -273,7 +273,7 @@
       .folder-title .folder-icon {
         margin-left: 10px;
         /* **تحديث لون أيقونة المجلد** */
-        color: #ffc107; /* اللون الأصفر الأصلي للمجلدات */
+        color: #607d8b; /* Blue-Grey for elegance */
         font-size: 1.2em;
       }
       .folder-title .file-count {
@@ -310,39 +310,23 @@
 
       .header-info {
         display: flex;
-        /* **تعديل: ترتيب العناصر عمودياً** */
-        flex-direction: column;
-        align-items: flex-start;
+        align-items: baseline;
+        flex-wrap: wrap;
         flex-grow: 1;
       }
-
-      /* **تنسيق العنوان الأصلي** */
       .viewer-controls h2 {
-        margin: 0 0 5px 0; /* تم تعديل الهامش لترك مسافة تحت العنوان */
-        font-size: 1.8em; /* تكبير الخط ليكون العنوان الرئيسي */
-        font-weight: 700;
+        margin: 0 10px 0 0;
+        font-size: 1.5em;
+        font-weight: 600;
         color: var(--text-color);
       }
-
-      /* **تنسيق اسم المدرسة (العنوان الفرعي الجديد)** */
-      .school-name {
-        display: block; /* لضمان ظهوره في سطر جديد تحت h2 */
-        font-size: 1.3em; /* حجم مناسب كعنوان فرعي */
-        font-weight: 600;
-        color: var(--primary-color); /* لون أخضر (Teal) واضح */
-        margin: 0 0 10px 0;
-      }
-
-      /* **تنسيق نص المبرمج ليكون أسفل الكل** */
+      /* **تنسيق نص المبرمج باللون الأزرق الجديد والخط الواضح** */
       .programmer-credit {
-        display: block; /* لضمان ظهوره في سطر جديد */
-        font-size: 0.9em;
-        font-weight: 500;
-        color: var(--light-text); /* لون رمادي فاتح ليكون في الخلفية */
-        margin: 0;
+        font-size: 1em;
+        font-weight: 700;
+        color: var(--primary-color);
         white-space: nowrap;
       }
-
       /* ---------------------------------------------------- */
 
       #download-btn {
@@ -463,11 +447,8 @@
           margin-bottom: 10px;
         }
         .viewer-controls h2 {
-          font-size: 1.6em; /* تعديل حجم الخط في الجوال */
+          font-size: 1.3em;
           margin: 0 0 5px 0;
-        }
-        .school-name {
-          font-size: 1.1em; /* تعديل حجم الخط الفرعي في الجوال */
         }
         .programmer-credit {
           font-size: 0.9em;
@@ -534,8 +515,7 @@
       <main class="main-content">
         <div class="viewer-controls">
           <div class="header-info">
-            <h2>مستعرض مستندات مدرسة</h2>
-            <span class="school-name">تحفيظ القرآن الابتدائية بالبجادية</span>
+            <h2>مستعرض مستندات مدرسة تحفيظ القرآن الابتدائية بالبجادية</h2>
             <span class="programmer-credit">برمجة :NMO </span>
           </div>
           <a href="#" id="download-btn" download
@@ -555,6 +535,9 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
+        // ** التعديل النهائي: تحديد اسم المستودع يدوياً بناءً على "doc_viewer" **
+        const MANUAL_REPO_NAME = "doc_viewer"; 
+
         const fileListElement = document.getElementById("file-list");
         const viewerElement = document.getElementById("viewer");
         const downloadBtn = document.getElementById("download-btn");
@@ -651,25 +634,24 @@
         // وظيفة جلب الملفات من مجلد محدد
         async function fetchClassFiles(folderPath) {
             const username = window.location.hostname.split(".")[0];
-            let repo = window.location.pathname.split("/")[1];
+            // ** تم التعديل هنا **
+            const repo = MANUAL_REPO_NAME;
             
-            // **الإضافة: معالجة حالة User/Organization Pages**
-            if (repo === "" && window.location.hostname.endsWith(".github.io")) {
-                 // إذا كانت repo فارغة، نستخدم اسم النطاق بالكامل كاسم للمستودع (مثل nmo.github.io)
-                 repo = window.location.hostname;
-            } else if (repo === "") {
-                // إذا لم نتمكن من تحديد اسم المستودع، نعود بـ []
-                return [];
+            // إضافة تحقق بسيط في حال لم يتم تحديد اسم المستودع
+            if (!repo) {
+                 console.error("MANUAL_REPO_NAME is not set, file fetching failed.");
+                 return [];
             }
-            // -----------------------------------------------------------------
-
+            
             const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/documents/${encodeURIComponent(folderPath)}`;
 
             try {
                 const response = await fetch(apiUrl);
                 if (!response.ok) {
                     if (response.status === 404) return [];
-                    throw new Error(`فشل الاتصال بواجهة GitHub API لمسار ${folderPath}. (HTTP ${response.status})`);
+                    // استخدام رسالة خطأ أوضح
+                    console.error(`GitHub API Error for ${apiUrl}: Status ${response.status}`);
+                    return [];
                 }
                 const data = await response.json();
                 return data
@@ -1011,7 +993,8 @@
             ].includes(fileExtension)
           ) {
             const username = window.location.hostname.split(".")[0];
-            const repo = window.location.pathname.split("/")[1];
+            // ** تم التعديل هنا **
+            const repo = MANUAL_REPO_NAME; 
 
             // **استخدام المسار الكامل في رابط RAW لخدمة Office Online Viewer**
             const rawFileUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/documents/${encodeURIComponent(
