@@ -273,7 +273,7 @@
       .folder-title .folder-icon {
         margin-left: 10px;
         /* **تحديث لون أيقونة المجلد** */
-        color: #FFC107; /* اللون الأصفر الأصلي للمجلدات */
+        color: #ffc107; /* اللون الأصفر الأصلي للمجلدات */
         font-size: 1.2em;
       }
       .folder-title .file-count {
@@ -310,23 +310,39 @@
 
       .header-info {
         display: flex;
-        align-items: baseline;
-        flex-wrap: wrap;
+        /* **تعديل: ترتيب العناصر عمودياً** */
+        flex-direction: column;
+        align-items: flex-start;
         flex-grow: 1;
       }
+
+      /* **تنسيق العنوان الأصلي** */
       .viewer-controls h2 {
-        margin: 0 10px 0 0;
-        font-size: 1.5em;
-        font-weight: 600;
+        margin: 0 0 5px 0; /* تم تعديل الهامش لترك مسافة تحت العنوان */
+        font-size: 1.8em; /* تكبير الخط ليكون العنوان الرئيسي */
+        font-weight: 700;
         color: var(--text-color);
       }
-      /* **تنسيق نص المبرمج باللون الأزرق الجديد والخط الواضح** */
+
+      /* **تنسيق اسم المدرسة (العنوان الفرعي الجديد)** */
+      .school-name {
+        display: block; /* لضمان ظهوره في سطر جديد تحت h2 */
+        font-size: 1.3em; /* حجم مناسب كعنوان فرعي */
+        font-weight: 600;
+        color: var(--primary-color); /* لون أخضر (Teal) واضح */
+        margin: 0 0 10px 0;
+      }
+
+      /* **تنسيق نص المبرمج ليكون أسفل الكل** */
       .programmer-credit {
-        font-size: 1em;
-        font-weight: 700;
-        color: var(--primary-color);
+        display: block; /* لضمان ظهوره في سطر جديد */
+        font-size: 0.9em;
+        font-weight: 500;
+        color: var(--light-text); /* لون رمادي فاتح ليكون في الخلفية */
+        margin: 0;
         white-space: nowrap;
       }
+
       /* ---------------------------------------------------- */
 
       #download-btn {
@@ -447,8 +463,11 @@
           margin-bottom: 10px;
         }
         .viewer-controls h2 {
-          font-size: 1.3em;
+          font-size: 1.6em; /* تعديل حجم الخط في الجوال */
           margin: 0 0 5px 0;
+        }
+        .school-name {
+          font-size: 1.1em; /* تعديل حجم الخط الفرعي في الجوال */
         }
         .programmer-credit {
           font-size: 0.9em;
@@ -515,7 +534,8 @@
       <main class="main-content">
         <div class="viewer-controls">
           <div class="header-info">
-            <h2>مستعرض مستندات مدرسة تحفيظ القرآن الابتدائية بالبجادية</h2>
+            <h2>مستعرض مستندات مدرسة</h2>
+            <span class="school-name">تحفيظ القرآن الابتدائية بالبجادية</span>
             <span class="programmer-credit">برمجة :NMO </span>
           </div>
           <a href="#" id="download-btn" download
@@ -1007,3 +1027,4 @@
     </script>
   </body>
 </html>
+
