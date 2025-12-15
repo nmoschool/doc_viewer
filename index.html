@@ -12,50 +12,50 @@
     />
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Tajawal:wght@300;400;700&display=swap"
       rel="stylesheet"
     />
     <style>
-      /* --- 1. نظام الألوان الأساسي (الوضع الفاتح) --- */
+      /* --- 1. نظام الألوان الأساسي (الوضع الفاتح) - Modern & Elegant --- */
       :root {
-        --primary-color: #007bff;
-        --secondary-color: #1a73e8;
-        --bg-color: #f4f7f6;
+        --primary-color: #00796b; /* Teal/Deep Green */
+        --secondary-color: #004d40;
+        --bg-color: #f0f4f8; /* Very Light Blue-Grey */
         --panel-bg: #ffffff;
-        --border-color: #e0e4e7;
-        --text-color: #333d47;
-        --light-text: #707b85;
-        --hover-bg: #f0f3f5;
+        --border-color: #cfd8dc; /* Light, calm grey */
+        --text-color: #263238; /* Dark Charcoal Blue */
+        --light-text: #78909c;
+        --hover-bg: #e8f0f5; /* Light Blue/Grey */
         --shadow-elevation: 0 4px 12px rgba(0, 0, 0, 0.05);
-        --icon-color-pdf: #e63946;
-        --icon-color-doc: #2196f3;
-        --icon-color-xls: #4caf50;
-        --icon-color-ppt: #ff9800;
-        --icon-color-img: #9c27b0;
-        --icon-color-txt: #607d8b;
-        --icon-color-html: #f36f21;
+        --icon-color-pdf: #c62828;
+        --icon-color-doc: #1976d2;
+        --icon-color-xls: #388e3c;
+        --icon-color-ppt: #e65100;
+        --icon-color-img: #4527a0;
+        --icon-color-txt: #546e7a;
+        --icon-color-html: #d84315;
       }
 
-      /* --- 2. نظام الألوان للوضع الداكن (Dark Mode) --- */
+      /* --- 2. نظام الألوان للوضع الداكن (Dark Mode) - Modern & Elegant --- */
       body.dark-mode {
-        --bg-color: #121212;
-        --panel-bg: #1e1e1e;
-        --border-color: #333333;
+        --bg-color: #1a1a1a;
+        --panel-bg: #262626;
+        --border-color: #424242;
         --text-color: #e0e0e0;
-        --light-text: #b0b0b0;
-        --hover-bg: #2a2a2a;
-        --shadow-elevation: 0 4px 12px rgba(0, 0, 0, 0.4);
+        --light-text: #bdbdbd;
+        --hover-bg: #333333;
+        --shadow-elevation: 0 4px 12px rgba(0, 0, 0, 0.6);
       }
       /* تطبيق ألوان الوضع الداكن على عناصر الإدخال */
       body.dark-mode #file-filter,
       body.dark-mode #search-input {
-        background-color: #2a2a2a;
-        border-color: #444;
+        background-color: #333333;
+        border-color: #555;
         color: var(--text-color);
       }
       body.dark-mode #file-filter:focus,
       body.dark-mode #search-input:focus {
-        background-color: #1e1e1e;
+        background-color: #262626;
       }
       /* تحديث لون أيقونة الوضع الداكن ليتناسب مع الخلفية */
       body.dark-mode #dark-mode-toggle i {
@@ -63,12 +63,12 @@
       }
 
       body {
-        font-family: "Cairo", sans-serif;
+        /* **تحديث الخط** */
+        font-family: "Almarai", "Tajawal", sans-serif;
         margin: 0;
         background-color: var(--bg-color);
         color: var(--text-color);
         display: flex;
-        /* **تعديل: إزالة ارتفاع الشاشة الثابت ووضع حد أدنى للسماح بالتمرير الكلي** */
         min-height: 100vh;
         overflow-x: hidden;
         transition: background-color 0.3s, color 0.3s;
@@ -76,7 +76,6 @@
       .container {
         display: flex;
         width: 100%;
-        /* **تعديل: السماح بالتمدد** */
         flex-grow: 1;
       }
       .sidebar {
@@ -88,7 +87,6 @@
         flex-direction: column;
         box-shadow: var(--shadow-elevation);
         transition: width 0.3s ease, background-color 0.3s, border-color 0.3s;
-        /* **تعديل: تثبيت الشريط الجانبي على الكمبيوتر** */
         position: sticky;
         top: 0;
         height: 100vh;
@@ -141,7 +139,7 @@
         padding: 12px 15px;
         border-radius: 8px;
         border: 1px solid var(--border-color);
-        font-family: "Cairo", sans-serif;
+        font-family: "Almarai", "Tajawal", sans-serif;
         font-size: 1em;
         box-sizing: border-box;
         transition: border-color 0.2s, box-shadow 0.2s, background-color 0.3s,
@@ -156,7 +154,8 @@
       #search-input:focus {
         outline: none;
         border-color: var(--primary-color);
-        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        /* **تحديث لون الظل** */
+        box-shadow: 0 0 0 3px rgba(0, 121, 107, 0.15);
         background-color: var(--panel-bg);
       }
       #search-input::placeholder {
@@ -206,7 +205,8 @@
         background-color: var(--primary-color);
         color: white;
         font-weight: 600;
-        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+        /* **تحديث لون الظل** */
+        box-shadow: 0 4px 10px rgba(0, 121, 107, 0.4);
       }
       #file-table tbody tr.active i {
         color: white !important;
@@ -272,7 +272,8 @@
       }
       .folder-title .folder-icon {
         margin-left: 10px;
-        color: #f7a01a; /* لون أيقونة المجلد */
+        /* **تحديث لون أيقونة المجلد** */
+        color: #607d8b; /* Blue-Grey for elegance */
         font-size: 1.2em;
       }
       .folder-title .file-count {
@@ -296,9 +297,7 @@
         padding: 30px;
         display: flex;
         flex-direction: column;
-        /* **تعديل: إزالة overflow: hidden; للسماح بالتمرير الكلي** */
         overflow: visible;
-        /* **تعديل: تأكيد شغل ارتفاع الشاشة** */
         min-height: 100vh;
       }
       .viewer-controls {
@@ -321,11 +320,11 @@
         font-weight: 600;
         color: var(--text-color);
       }
-      /* **تعديل: تنسيق نص المبرمج باللون الأزرق والخط الواضح** */
+      /* **تنسيق نص المبرمج باللون الأزرق الجديد والخط الواضح** */
       .programmer-credit {
         font-size: 1em;
-        font-weight: 700; /* جعل الخط أوضح وأكثر جرأة */
-        color: var(--primary-color); /* اللون الأزرق الأساسي */
+        font-weight: 700;
+        color: var(--primary-color);
         white-space: nowrap;
       }
       /* ---------------------------------------------------- */
@@ -343,7 +342,8 @@
         font-weight: 600;
         transition: background-color 0.3s ease, transform 0.2s ease,
           box-shadow 0.3s ease;
-        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+        /* **تحديث لون الظل** */
+        box-shadow: 0 4px 10px rgba(0, 121, 107, 0.2);
       }
       #download-btn i {
         margin-left: 10px;
@@ -351,7 +351,8 @@
       }
       #download-btn:hover {
         background-color: var(--secondary-color);
-        box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+        /* **تحديث لون الظل** */
+        box-shadow: 0 6px 15px rgba(0, 121, 107, 0.3);
         transform: translateY(-1px);
       }
 
@@ -365,10 +366,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        /* **تعديل: السماح بعرض المحتوى كاملاً داخل العارض** */
         overflow: auto;
         transition: background-color 0.3s, border-color 0.3s;
-        /* **تعديل: وضع حد أدنى للارتفاع لملء المساحة المتاحة** */
         min-height: 500px;
       }
       #viewer iframe {
@@ -384,17 +383,13 @@
         text-align: center;
         padding: 20px;
       }
-      
-      /* --- التعديل هنا لتكبير معاينة الصور والفيديو لملء المساحة --- */
       #viewer img,
       #viewer video {
-        width: 100%; /* تأكيد ملء العرض */
-        height: 100%; /* تأكيد ملء الارتفاع */
-        object-fit: contain; /* أبقها على contain للحفاظ على نسبة العرض الأصلية وتفادي الإقتصاص */
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
         border-radius: 10px;
       }
-      /* ----------------------------------------------------------- */
-
       #viewer audio {
         width: 80%;
         margin: 20px;
@@ -427,11 +422,9 @@
         }
         .sidebar {
           width: 100%;
-          /* **تعديل: جعل الارتفاع تلقائي ووضع حد أقصى للتحكم** */
           height: auto;
           max-height: 50vh;
           min-height: 250px;
-          /* **تعديل: إزالة التثبيت** */
           position: static;
           border-left: none;
           border-bottom: 1px solid var(--border-color);
@@ -439,7 +432,6 @@
         .main-content {
           padding: 20px;
           flex-grow: 1;
-          /* **تعديل: إزالة الارتفاع الثابت للجوال** */
           min-height: auto;
         }
         .table-container {
@@ -958,7 +950,7 @@
             viewerContent = `<img src="${fileUrlForDownload}" alt="معاينة ${filename}">`;
           // **إضافة دعم الفيديو**
           } else if (["mp4", "mov", "webm", "avi", "mkv"].includes(fileExtension)) {
-            viewerContent = `<video controls autoplay style="width: 100%; height: 100%; border-radius: 10px;">
+            viewerContent = `<video controls autoplay style="max-width: 100%; max-height: 100%; border-radius: 10px;">
                 <source src="${fileUrlForDownload}" type="video/${fileExtension}">
                 <div class="loader-message">متصفحك لا يدعم عرض الفيديو.</div>
             </video>`;
@@ -1015,5 +1007,3 @@
     </script>
   </body>
 </html>
-
-
