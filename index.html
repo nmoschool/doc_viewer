@@ -4,8 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>مستعرض مستندات مدرسة تحفيظ القرآن الابتدائية بالبجادية</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://view.officeapps.live.com" />
+    <link rel="preconnect" href="https://docs.google.com" />
+    <link rel="preconnect" href="https://raw.githubusercontent.com" />
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -535,9 +540,6 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        // ** التعديل النهائي: تحديد اسم المستودع يدوياً بناءً على "doc_viewer" **
-        const MANUAL_REPO_NAME = "doc_viewer"; 
-
         const fileListElement = document.getElementById("file-list");
         const viewerElement = document.getElementById("viewer");
         const downloadBtn = document.getElementById("download-btn");
@@ -634,24 +636,14 @@
         // وظيفة جلب الملفات من مجلد محدد
         async function fetchClassFiles(folderPath) {
             const username = window.location.hostname.split(".")[0];
-            // ** تم التعديل هنا **
-            const repo = MANUAL_REPO_NAME;
-            
-            // إضافة تحقق بسيط في حال لم يتم تحديد اسم المستودع
-            if (!repo) {
-                 console.error("MANUAL_REPO_NAME is not set, file fetching failed.");
-                 return [];
-            }
-            
+            const repo = window.location.pathname.split("/")[1];
             const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/documents/${encodeURIComponent(folderPath)}`;
 
             try {
                 const response = await fetch(apiUrl);
                 if (!response.ok) {
                     if (response.status === 404) return [];
-                    // استخدام رسالة خطأ أوضح
-                    console.error(`GitHub API Error for ${apiUrl}: Status ${response.status}`);
-                    return [];
+                    throw new Error(`فشل الاتصال بواجهة GitHub API لمسار ${folderPath}. (HTTP ${response.status})`);
                 }
                 const data = await response.json();
                 return data
@@ -677,11 +669,10 @@
           try {
             let allFilesData = [];
 
-            // جلب ملفات كل فصل دراسي
-            for (const folder of classFolders) {
-                const filesInFolder = await fetchClassFiles(folder);
-                allFilesData.push(...filesInFolder);
-            }
+            // **التعديل رقم 1: جلب ملفات كل فصل دراسي بشكل متوازٍ باستخدام Promise.all لتسريع التحميل**
+            const folderPromises = classFolders.map(folder => fetchClassFiles(folder));
+            const foldersData = await Promise.all(folderPromises); // جلب جميع المجلدات في نفس اللحظة
+            foldersData.forEach(files => allFilesData.push(...files));
 
             // جلب الملفات العامة الموجودة مباشرة في مجلد 'documents'
             const generalFiles = await fetchClassFiles("");
@@ -931,7 +922,7 @@
           return "other";
         }
 
-        // تم تحديث الدالة لتقبل المسار الكامل (filepath)
+        // **التعديل رقم 2: تحديث دالة العرض لدعم عارض جوجل للهواتف المحمولة لملفات PDF**
         function displayFile(filename, filepath, activeListItem) {
           // إزالة التحديد السابق وتحديد الملف النشط
           document
@@ -939,43 +930,63 @@
             .forEach((item) => item.classList.remove("active"));
           activeListItem.classList.add("active");
 
-          // **تسريع العرض: عرض رسالة التحميل فوراً**
-          viewerElement.innerHTML = `<div class="loader-message">جاري تحميل المعاينة...</div>`;
+          // عرض رسالة التحميل فوراً
+          viewerElement.innerHTML = `<div class="loader-message"><i class="fa-solid fa-spinner fa-spin"></i> جاري تحميل المعاينة...</div>`;
           downloadBtn.style.display = "none"; // إخفاء زر التحميل مؤقتاً
 
           const fileExtension = filename.split(".").pop().toLowerCase();
+          
+          // إعداد الروابط
+          const username = window.location.hostname.split(".")[0];
+          const repo = window.location.pathname.split("/")[1];
+          
+          // الرابط النسبي (يعمل داخل الموقع للتحميل والعرض المباشر)
+          const relativeUrl = `documents/${filepath}`;
+          
+          // الرابط الكامل (مطلوب للعارضات الخارجية مثل جوجل ومايكروسوفت)
+          const absoluteUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/documents/${encodeURIComponent(filepath)}`;
+          
+          // التحقق هل الجهاز موبايل؟ (لإصلاح مشكلة PDF)
+          const isMobile = /iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-          // **استخدام المسار الكامل لإنشاء رابط التحميل**
-          const fileUrlForDownload = `documents/${filepath}`;
 
           let viewerContent;
 
-          if (
-            fileExtension === "pdf" ||
-            ["html", "htm"].includes(fileExtension)
-          ) {
-            viewerContent = `<iframe src="${fileUrlForDownload}"></iframe>`;
-          } else if (
+          // 1. معالجة ملفات PDF
+          if (fileExtension === "pdf") {
+              if (isMobile) {
+                  // حل الموبايل: استخدام عارض جوجل لضمان العرض
+                  const googleViewerUrl = `https://docs.google.com/gview?url=${encodeURIComponent(absoluteUrl)}&embedded=true`;
+                  viewerContent = `<iframe src="${googleViewerUrl}" frameborder="0"></iframe>`;
+              } else {
+                  // حل الكمبيوتر: العرض المباشر
+                  viewerContent = `<iframe src="${relativeUrl}" frameborder="0"></iframe>`;
+              }
+          } 
+          // 2. ملفات HTML والنص
+          else if (["html", "htm", "txt"].includes(fileExtension)) {
+             viewerContent = `<iframe src="${relativeUrl}" frameborder="0"></iframe>`;
+          }
+          // 3. الصور
+          else if (
             ["png", "jpg", "jpeg", "gif", "svg", "webp", "bmp"].includes(
               fileExtension
             )
           ) {
-            viewerContent = `<img src="${fileUrlForDownload}" alt="معاينة ${filename}">`;
-          // **إضافة دعم الفيديو**
+            viewerContent = `<img src="${relativeUrl}" alt="معاينة ${filename}">`;
+          // 4. الفيديو
           } else if (["mp4", "mov", "webm", "avi", "mkv"].includes(fileExtension)) {
             viewerContent = `<video controls autoplay style="max-width: 100%; max-height: 100%; border-radius: 10px;">
-                <source src="${fileUrlForDownload}" type="video/${fileExtension}">
+                <source src="${relativeUrl}" type="video/${fileExtension}">
                 <div class="loader-message">متصفحك لا يدعم عرض الفيديو.</div>
             </video>`;
-          // **إضافة دعم الصوت**
+          // 5. الصوت
           } else if (["mp3", "wav", "ogg", "aac", "flac"].includes(fileExtension)) {
             viewerContent = `<audio controls autoplay style="width: 80%; margin: 20px;">
-                <source src="${fileUrlForDownload}" type="audio/${fileExtension}">
+                <source src="${relativeUrl}" type="audio/${fileExtension}">
                 <div class="loader-message">متصفحك لا يدعم تشغيل الصوت.</div>
             </audio>`;
-          // ----------------------------
-          } else if (fileExtension === "txt") {
-            viewerContent = `<iframe src="${fileUrlForDownload}"></iframe>`;
+          // 6. ملفات الأوفيس
           } else if (
             [
               "docx",
@@ -992,25 +1003,17 @@
               "xltm",
             ].includes(fileExtension)
           ) {
-            const username = window.location.hostname.split(".")[0];
-            // ** تم التعديل هنا **
-            const repo = MANUAL_REPO_NAME; 
-
-            // **استخدام المسار الكامل في رابط RAW لخدمة Office Online Viewer**
-            const rawFileUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/documents/${encodeURIComponent(
-                filepath
-            )}`;
-
+            // استخدام عارض Office Online Viewer
             const viewerUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(
-              rawFileUrl
+              absoluteUrl
             )}`;
-            viewerContent = `<iframe src="${viewerUrl}"></iframe>`;
+            viewerContent = `<iframe src="${viewerUrl}" frameborder="0"></iframe>`;
           } else {
             viewerContent = `<div class="loader-message">نوع الملف هذا غير مدعوم للعرض.</div>`;
           }
 
           viewerElement.innerHTML = viewerContent;
-          downloadBtn.href = fileUrlForDownload;
+          downloadBtn.href = relativeUrl; // رابط التحميل يبقى هو الرابط النسبي
           downloadBtn.style.display = "inline-flex";
         }
 
@@ -1021,4 +1024,3 @@
     </script>
   </body>
 </html>
-
