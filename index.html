@@ -1,91 +1,63 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
   <head>
-    <!-- ===================================================================
-         إعدادات أساسية للصفحة (Meta Tags)
-         =================================================================== -->
-    <meta charset="UTF-8" /> <!-- ترميز النصوص UTF-8 لدعم العربية بشكل كامل -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- جعل الموقع متجاوبًا مع جميع الأجهزة -->
-    <title>مستعرض مستندات مدرسة تحفيظ القرآن الابتدائية بالبجادية</title> <!-- عنوان الصفحة في المتصفح -->
-
-    <!-- ===================================================================
-         تحميل الموارد الخارجية مسبقًا لتسريع تحميل الصفحة (Preconnect)
-         =================================================================== -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>مستعرض مستندات مدرسة تحفيظ القرآن الابتدائية بالبجادية</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://view.officeapps.live.com" /> <!-- عارض مايكروسوفت أوفيس -->
-    <link rel="preconnect" href="https://docs.google.com" /> <!-- عارض جوجل لملفات PDF على الموبايل -->
-    <link rel="preconnect" href="https://raw.githubusercontent.com" /> <!-- روابط الملفات من GitHub -->
+    <link rel="preconnect" href="https://view.officeapps.live.com" />
+    <link rel="preconnect" href="https://docs.google.com" />
+    <link rel="preconnect" href="https://raw.githubusercontent.com" />
 
-    <!-- ===================================================================
-         مكتبات وموارد خارجية
-         =================================================================== -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    /> <!-- مكتبة Font Awesome للأيقونات -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon" /> <!-- أيقونة الموقع في تبويب المتصفح -->
-    
-    <!-- خطوط جوجل مناسبة للغة العربية -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Tajawal:wght@300;400;700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Tajawal:wght@300;400;700&display=swap" rel="stylesheet" />
 
     <style>
-      /* ===================================================================
-         1. نظام الألوان الأساسي (الوضع الفاتح)
-         =================================================================== */
       :root {
-        --primary-color: #1976d2;          /* اللون الأساسي: أزرق ملكي للأزرار والعناوين */
-        --secondary-color: #0d47a1;        /* اللون الثانوي: أزرق داكن للتأثيرات عند التحويم */
-        --bg-color: #f0f4f8;               /* خلفية الصفحة الرئيسية (رمادي فاتح) */
-        --panel-bg: #ffffff;               /* خلفية اللوحات والقوائم (أبيض) */
-        --border-color: #cfd8dc;           /* لون الحدود بين العناصر */
-        --text-color: #263238;             /* لون النصوص الرئيسية */
-        --light-text: #78909c;             /* لون النصوص الثانوية (مثل الأرقام والتلميحات) */
-        --hover-bg: #e3f2fd;               /* خلفية عند تمرير الماوس */
-        --shadow-elevation: 0 8px 20px rgba(128, 128, 128, 0.12); /* ظل ناعم للعناصر المرتفعة */
-        --radius: 12px;                    /* انحناء الزوايا للتصميم الحديث */
-        --folder-icon-color: #fac75b;      /* لون أيقونة المجلد في الوضع الفاتح */
-        --announcement-bg: #ff9800;        /* لون خلفية شريط الإعلانات العلوي */
+        --primary-color: #1976d2;
+        --secondary-color: #0d47a1;
+        --bg-color: #f0f4f8;
+        --panel-bg: #ffffff;
+        --border-color: #cfd8dc;
+        --text-color: #263238;
+        --light-text: #78909c;
+        --hover-bg: #e3f2fd;
+        --shadow-elevation: 0 8px 20px rgba(128, 128, 128, 0.12);
+        --radius: 12px;
+        --folder-icon-color: #fac75b;
+        --announcement-bg: #ff9800; /* لون شريط الإعلان */
       }
 
-      /* ===================================================================
-         2. نظام الألوان للوضع الداكن (Dark Mode) - محسن للراحة البصرية
-         =================================================================== */
       body.dark-mode {
-        --primary-color: #64b5f6;          /* أزرق فاتح ليبرز جيدًا على الخلفية الداكنة */
+        --primary-color: #64b5f6;
         --secondary-color: #42a5f5;
-        --bg-color: #121212;               /* خلفية داكنة جدًا */
-        --panel-bg: #1e1e1e;               /* خلفية اللوحات داكنة */
-        --border-color: #333333;           /* حدود رمادية داكنة */
-        --text-color: #f5f5f5;             /* نصوص بيضاء ناعمة لقراءة مريحة */
-        --light-text: #b0bec5;             /* نصوص ثانوية أوضح */
-        --hover-bg: #2c3e50;               /* خلفية التحويم */
-        --shadow-elevation: 0 8px 25px rgba(0, 0, 0, 0.6); /* ظل أقوى في الوضع الداكن */
-        --folder-icon-color: #ffd54f;      /* أصفر أكثر سطوعًا لأيقونات المجلدات */
-        --announcement-bg: #f57c00;        /* لون إعلانات أغمق قليلاً */
+        --bg-color: #121212;
+        --panel-bg: #1e1e1e;
+        --border-color: #333333;
+        --text-color: #f5f5f5;
+        --light-text: #b0bec5;
+        --hover-bg: #2c3e50;
+        --shadow-elevation: 0 8px 25px rgba(0, 0, 0, 0.6);
+        --folder-icon-color: #ffd54f;
+        --announcement-bg: #f57c00;
       }
 
-      /* ===================================================================
-         إعدادات عامة للجسم (Body) والتخطيط الأساسي
-         =================================================================== */
       body {
-        font-family: "Almarai", "Tajawal", sans-serif; /* خطوط عربية أنيقة وواضحة */
+        font-family: "Almarai", "Tajawal", sans-serif;
         margin: 0;
         background-color: var(--bg-color);
         color: var(--text-color);
         display: flex;
-        flex-direction: column;           /* ترتيب عمودي ليشمل شريط الإعلانات */
+        flex-direction: column;
         min-height: 100vh;
         overflow-x: hidden;
-        transition: background-color 0.3s, color 0.3s; /* انتقال سلس عند تبديل الوضع الداكن */
+        transition: all 0.3s;
       }
 
-      /* ===================================================================
-         شريط الإعلانات العلوي (Announcement Bar)
-         =================================================================== */
+      /* شريط الإعلانات العلوي */
       #announcement-bar {
         background: var(--announcement-bg);
         color: white;
@@ -110,18 +82,12 @@
         cursor: pointer;
       }
 
-      /* ===================================================================
-         الحاوية الرئيسية للصفحة (Sidebar + Main Content)
-         =================================================================== */
       .container {
         display: flex;
         width: 100%;
-        flex-grow: 1; /* يأخذ كل المساحة المتبقية بعد شريط الإعلانات */
+        flex-grow: 1;
       }
 
-      /* ===================================================================
-         الشريط الجانبي (Sidebar) - يحتوي على فهرس الملفات وأدوات البحث
-         =================================================================== */
       .sidebar {
         width: 380px;
         min-width: 320px;
@@ -157,9 +123,7 @@
         color: var(--text-color);
       }
 
-      /* ===================================================================
-         أزرار تبديل طريقة العرض (قائمة / شبكة)
-         =================================================================== */
+      /* أزرار تبديل العرض */
       .view-toggle {
         display: flex;
         gap: 10px;
@@ -181,9 +145,6 @@
         border-color: var(--primary-color);
       }
 
-      /* ===================================================================
-         حقول البحث والفلتر
-         =================================================================== */
       #file-filter, #search-input {
         width: 100%;
         padding: 12px 15px;
@@ -205,7 +166,7 @@
         box-shadow: 0 0 0 3px rgba(100, 181, 246, 0.3);
       }
 
-      /* عرض عدد نتائج البحث */
+      /* نتائج البحث */
       #search-results-count {
         margin-top: 8px;
         font-size: 0.9em;
@@ -213,23 +174,19 @@
         text-align: center;
       }
 
-      /* ===================================================================
-         حاوية جدول الملفات مع إمكانية التمرير
-         =================================================================== */
       .table-container {
         overflow-y: auto;
         flex-grow: 1;
         padding: 15px;
       }
 
-      /* ===================================================================
-         وضع القائمة (List View) - الوضع الافتراضي
-         =================================================================== */
-      #file-list.list-view { display: block; }
+      /* وضع القائمة (List View) */
+      #file-list.list-view {
+        display: block;
+      }
 
       #file-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; margin-top: 10px; }
-      #file-table thead th { display: none; } /* إخفاء رؤوس الجدول لتصميم بطاقات */
-      
+      #file-table thead th { display: none; }
       #file-table tbody tr {
         cursor: pointer;
         background-color: var(--panel-bg);
@@ -237,28 +194,23 @@
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
         transition: all 0.2s ease;
       }
-
       #file-table tbody tr:hover:not(.folder-header) {
         background-color: var(--hover-bg);
         transform: translateY(-2px);
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
       }
-
       #file-table tbody tr.active {
         background-color: var(--primary-color);
         color: white;
         font-weight: 600;
       }
-
       #file-table td { padding: 15px 12px; vertical-align: middle; font-size: 1em; }
       #file-table td.col-seq { width: 30px; text-align: center; color: var(--light-text); font-weight: 600; }
       #file-table td.col-name { white-space: normal; word-wrap: break-word; }
       #file-table td.col-type { width: 40px; text-align: center; }
       #file-table td.col-type i { font-size: 1.6em; }
 
-      /* ===================================================================
-         وضع الشبكة (Grid View) - عرض البطاقات
-         =================================================================== */
+      /* وضع الشبكة (Grid View) */
       #file-list.grid-view {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -300,7 +252,6 @@
         word-break: break-word;
       }
 
-      /* عنوان المجلد في وضع الشبكة */
       .folder-header.grid-folder {
         grid-column: 1 / -1;
         background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
@@ -312,61 +263,23 @@
         font-weight: 700;
       }
 
-      /* ===================================================================
-         المحتوى الرئيسي (Main Content) - عارض الملفات
-         =================================================================== */
-      .main-content {
-        flex-grow: 1;
-        padding: 30px;
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-      }
+      /* باقي التنسيقات كما هي... */
+      .main-content { flex-grow: 1; padding: 30px; display: flex; flex-direction: column; min-height: 100vh; }
+      .viewer-controls { margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+      .header-info { display: flex; align-items: baseline; flex-wrap: wrap; flex-grow: 1; }
+      .viewer-controls h2 { margin: 0 10px 0 0; font-size: 1.5em; font-weight: 600; color: var(--text-color); }
+      .programmer-credit { font-size: 1em; font-weight: 700; color: var(--primary-color); white-space: nowrap; }
 
-      .viewer-controls {
-        margin-bottom: 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 15px;
-      }
-
-      .header-info {
-        display: flex;
-        align-items: baseline;
-        flex-wrap: wrap;
-        flex-grow: 1;
-      }
-
-      .viewer-controls h2 {
-        margin: 0 10px 0 0;
-        font-size: 1.5em;
-        font-weight: 600;
-        color: var(--text-color);
-      }
-
-      .programmer-credit {
-        font-size: 1em;
-        font-weight: 700;
-        color: var(--primary-color);
-        white-space: nowrap;
-      }
-
-      /* ===================================================================
-         أزرار الإجراءات (تحميل وطباعة) - تنسيق موحد وأنيق
-         =================================================================== */
       .action-buttons {
         display: flex;
-        gap: 15px;
+        gap: 10px;
         flex-wrap: wrap;
       }
 
       .action-btn {
         display: inline-flex;
         align-items: center;
-        justify-content: center;
-        padding: 10px 20px;
+        padding: 10px 18px;
         background-color: var(--primary-color);
         color: white;
         text-decoration: none;
@@ -375,23 +288,15 @@
         font-weight: 600;
         transition: all 0.3s ease;
         box-shadow: 0 4px 10px rgba(25, 118, 210, 0.2);
-        min-width: 140px;
       }
 
       .action-btn:hover {
         background-color: var(--secondary-color);
-        box-shadow: 0 6px 15px rgba(25, 118, 210, 0.3);
         transform: translateY(-2px);
       }
 
-      .action-btn i {
-        margin-left: 10px;
-        font-size: 1.1em;
-      }
+      .action-btn i { margin-left: 8px; font-size: 1.1em; }
 
-      /* ===================================================================
-         عارض الملفات الرئيسي
-         =================================================================== */
       #viewer {
         flex-grow: 1;
         background: var(--panel-bg);
@@ -402,72 +307,38 @@
         min-height: 500px;
       }
 
-      #viewer iframe, #viewer img, #viewer video {
-        width: 100%;
-        height: 100%;
-        border: none;
-        object-fit: contain;
-      }
+      #viewer iframe, #viewer img, #viewer video { width: 100%; height: 100%; border: none; object-fit: contain; }
 
-      .loader-message {
-        font-size: 1.3em;
-        color: var(--light-text);
-        text-align: center;
-        padding: 40px;
-      }
+      .loader-message { font-size: 1.3em; color: var(--light-text); text-align: center; padding: 40px; }
 
-      /* ===================================================================
-         التذييل (Footer)
-         =================================================================== */
-      .footer {
-        padding: 20px;
-        text-align: center;
-        color: var(--light-text);
-        font-size: 0.9em;
-        border-top: 1px solid var(--border-color);
-        margin-top: auto;
-      }
+      .footer { padding: 20px; text-align: center; color: var(--light-text); font-size: 0.9em; border-top: 1px solid var(--border-color); margin-top: auto; }
 
-      /* ===================================================================
-         التصميم المتجاوب (Responsive) للشاشات الصغيرة
-         =================================================================== */
       @media (max-width: 768px) {
         .container { flex-direction: column; }
         .sidebar { width: 100%; height: auto; max-height: 60vh; position: static; border-left: none; border-bottom: 1px solid var(--border-color); }
         #file-list.grid-view { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
-        .action-buttons { justify-content: center; width: 100%; gap: 10px; }
-        .action-btn { min-width: 120px; font-size: 0.95em; }
+        .action-buttons { justify-content: center; width: 100%; }
       }
     </style>
   </head>
-
   <body>
-    <!-- ===================================================================
-         شريط الإعلانات العلوي - يمكن تغيير النص بسهولة من هنا
-         =================================================================== -->
+
+    <!-- شريط الإعلانات العلوي - غيّر النص هنا بسهولة -->
     <div id="announcement-bar">
-      <button class="close-btn" onclick="this.parentElement.style.display='none'">×</button>
+      <button class="close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
       📢 بدء الاختبارات النهائية يوم الأحد 5 يناير 2026 - تابعوا الجداول في القسم المخصص
     </div>
 
-    <!-- ===================================================================
-         الحاوية الرئيسية للشريط الجانبي والمحتوى
-         =================================================================== -->
     <div class="container">
-      <!-- ===================================================================
-           الشريط الجانبي (فهرس الملفات)
-           =================================================================== -->
       <aside class="sidebar">
         <div class="sidebar-header">
           <div class="top-row">
             <h3>📂 فهرس الملفات</h3>
-            <!-- زر تبديل الوضع الداكن/الفاتح -->
             <button id="dark-mode-toggle" title="الوضع الداكن / الوضع الفاتح">
               <i class="fa-solid fa-moon"></i>
             </button>
           </div>
 
-          <!-- فلتر حسب نوع الملف -->
           <select id="file-filter">
             <option value="all">عرض الكل</option>
             <option value="pdf">ملفات PDF</option>
@@ -481,30 +352,24 @@
             <option value="html">ملفات HTML</option>
           </select>
 
-          <!-- حقل البحث المتقدم -->
           <input type="text" id="search-input" placeholder="🔍 ابحث في الملفات والمجلدات..." />
 
-          <!-- عرض عدد نتائج البحث -->
           <div id="search-results-count"></div>
 
-          <!-- أزرار تبديل طريقة العرض -->
+          <!-- أزرار تبديل العرض -->
           <div class="view-toggle">
             <button class="view-btn active" data-view="list"><i class="fa-solid fa-list"></i> قائمة</button>
             <button class="view-btn" data-view="grid"><i class="fa-solid fa-grid"></i> شبكة</button>
           </div>
         </div>
 
-        <!-- قائمة الملفات (سيتم ملؤها ديناميكيًا عبر JavaScript) -->
         <div class="table-container">
           <div id="file-list" class="list-view">
-            <!-- الملفات والمجلدات تُضاف هنا تلقائيًا -->
+            <!-- سيتم ملؤه ديناميكيًا -->
           </div>
         </div>
       </aside>
 
-      <!-- ===================================================================
-           المحتوى الرئيسي (عارض الملفات)
-           =================================================================== -->
       <main class="main-content">
         <div class="viewer-controls">
           <div class="header-info">
@@ -512,76 +377,49 @@
             <span class="programmer-credit">برمجة :NMO</span>
           </div>
 
-          <!-- أزرار التحميل والطباعة -->
           <div class="action-buttons">
-            <a href="#" id="download-btn" class="action-btn" download>
-              تحميل الملف<i class="fa-solid fa-download"></i>
-            </a>
-            <button id="print-btn" class="action-btn">
-              طباعة الملف<i class="fa-solid fa-print"></i>
-            </button>
+            <a href="#" id="download-btn" class="action-btn" download>تحميل الملف<i class="fa-solid fa-download"></i></a>
+            <button id="print-btn" class="action-btn">طباعة<i class="fa-solid fa-print"></i></button>
+            <button id="save-pdf-btn" class="action-btn">حفظ كـ PDF<i class="fa-solid fa-file-pdf"></i></button>
           </div>
         </div>
 
-        <!-- منطقة عرض الملف المختار -->
         <div id="viewer">
           <div class="loader-message">
             الرجاء اختيار ملف من الفهرس لعرضه<br>(يعمل على GitHub Pages فقط)
           </div>
         </div>
 
-        <!-- التذييل -->
         <footer class="footer">
           <p>جميع الحقوق محفوظة © 2025 - مدرسة تحفيظ القرآن الابتدائية بالبجادية</p>
         </footer>
       </main>
     </div>
 
-    <!-- ===================================================================
-         JavaScript: المنطق الديناميكي للمستعرض
-         =================================================================== -->
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        // =================================================================
-        // تعريف العناصر الرئيسية في الصفحة (DOM Elements)
-        // =================================================================
         const fileListElement = document.getElementById("file-list");
         const viewerElement = document.getElementById("viewer");
         const downloadBtn = document.getElementById("download-btn");
         const printBtn = document.getElementById("print-btn");
+        const savePdfBtn = document.getElementById("save-pdf-btn");
         const filterElement = document.getElementById("file-filter");
         const searchElement = document.getElementById("search-input");
         const searchCountElement = document.getElementById("search-results-count");
         const darkModeToggle = document.getElementById("dark-mode-toggle");
         const viewButtons = document.querySelectorAll(".view-btn");
 
-        // =================================================================
-        // الإعدادات الأساسية
-        // =================================================================
-        const defaultFile = "تعليمات.pdf"; // الملف الذي يُعرض افتراضيًا عند التحميل
-        const pinnedFiles = ["2.webp"]; // الملفات المثبتة في أعلى القائمة
-        const classFolders = [
-          "جداول الاختبارات",
-          "أول ابتدائي",
-          "ثاني ابتدائي",
-          "ثالث ابتدائي",
-          "رابع ابتدائي",
-          "خامس ابتدائي",
-          "سادس ابتدائي",
-        ]; // ترتيب المجلدات المطلوب
+        const defaultFile = "تعليمات.pdf";
+        const pinnedFiles = ["2.webp"];
+        const classFolders = ["جداول الاختبارات","أول ابتدائي","ثاني ابتدائي","ثالث ابتدائي","رابع ابتدائي","خامس ابتدائي","سادس ابتدائي"];
 
-        let currentView = "list"; // الوضع الحالي: list أو grid
-        let allFilesData = []; // تخزين جميع بيانات الملفات بعد جلبها
+        let currentView = "list"; // list أو grid
+        let allFilesData = [];
 
-        // =================================================================
-        // 1. إدارة الوضع الداكن مع الحفظ في localStorage
-        // =================================================================
+        // الوضع الداكن
         function initDarkMode() {
-          const isDark =
-            localStorage.getItem("dark-mode") === "true" ||
-            (window.matchMedia("(prefers-color-scheme: dark)").matches &&
-              localStorage.getItem("dark-mode") !== "false");
-
+          const isDark = localStorage.getItem("dark-mode") === "true" || 
+            (window.matchMedia("(prefers-color-scheme: dark)").matches && localStorage.getItem("dark-mode") !== "false");
           if (isDark) {
             document.body.classList.add("dark-mode");
             darkModeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
@@ -595,51 +433,38 @@
           document.body.classList.toggle("dark-mode");
           const isDark = document.body.classList.contains("dark-mode");
           localStorage.setItem("dark-mode", isDark);
-          darkModeToggle.innerHTML = isDark
-            ? '<i class="fa-solid fa-sun"></i>'
-            : '<i class="fa-solid fa-moon"></i>';
+          darkModeToggle.innerHTML = isDark ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
         });
 
-        // =================================================================
-        // 2. تبديل طريقة العرض (قائمة / شبكة)
-        // =================================================================
+        // تبديل العرض
         viewButtons.forEach(btn => {
           btn.addEventListener("click", () => {
             viewButtons.forEach(b => b.classList.remove("active"));
             btn.classList.add("active");
             currentView = btn.dataset.view;
             fileListElement.className = currentView + "-view";
-            renderFiles(allFilesData); // إعادة رسم الملفات بالوضع الجديد
+            renderFiles(allFilesData);
           });
         });
 
-        // =================================================================
-        // 3. جلب قائمة الملفات من GitHub باستخدام API
-        // =================================================================
+        // جلب الملفات
         async function fetchClassFiles(folderPath) {
           const username = window.location.hostname.split(".")[0];
           const repo = window.location.pathname.split("/")[1];
           const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/documents/${encodeURIComponent(folderPath)}`;
-
           try {
             const response = await fetch(apiUrl);
             if (!response.ok) return response.status === 404 ? [] : [];
             const data = await response.json();
-            return data
-              .filter(item => item.type === "file" && !item.name.startsWith("."))
+            return data.filter(item => item.type === "file" && !item.name.startsWith("."))
               .map(item => ({
                 name: item.name,
                 path: folderPath ? `${folderPath}/${item.name}` : item.name,
                 folder: folderPath || 'ملفات عامة',
               }));
-          } catch {
-            return [];
-          }
+          } catch { return []; }
         }
 
-        // =================================================================
-        // 4. تحميل وعرض جميع الملفات ديناميكيًا
-        // =================================================================
         async function fetchAndDisplayFiles() {
           if (!window.location.hostname.includes("github.io")) {
             viewerElement.innerHTML = `<div class="loader-message" style="color:#e74c3c;">يعمل فقط على GitHub Pages</div>`;
@@ -655,14 +480,10 @@
             const general = await fetchClassFiles("");
             files.push(...general.filter(f => !classFolders.includes(f.name)));
 
-            // تثبيت الملفات المحددة في الأعلى
-            const pinned = pinnedFiles
-              .filter(p => files.some(f => f.name === p))
-              .map(p => files.find(f => f.name === p));
+            const pinned = pinnedFiles.filter(p => files.some(f => f.name === p)).map(p => files.find(f => f.name === p));
             const unpinned = files.filter(f => !pinnedFiles.includes(f.name));
 
-            // ترتيب الملفات حسب المجلد ثم الاسم
-            unpinned.sort((a, b) => {
+            unpinned.sort((a,b) => {
               if (a.folder !== b.folder) return classFolders.indexOf(a.folder) - classFolders.indexOf(b.folder);
               return a.name.localeCompare(b.name, "ar");
             });
@@ -670,12 +491,10 @@
             allFilesData = [...pinned, ...unpinned];
             renderFiles(allFilesData);
 
-            // عرض الملف الافتراضي أو الأول
             const defaultEl = [...fileListElement.children].find(el => el.dataset?.filename === defaultFile);
             if (defaultEl) defaultEl.click();
             else if (fileListElement.querySelector("[data-filename]")) fileListElement.querySelector("[data-filename]").click();
 
-            // تفعيل البحث والفلتر
             filterElement.addEventListener("change", filterAndSearch);
             searchElement.addEventListener("input", filterAndSearch);
           } catch (err) {
@@ -683,9 +502,6 @@
           }
         }
 
-        // =================================================================
-        // 5. رسم الملفات حسب الوضع الحالي (قائمة أو شبكة)
-        // =================================================================
         function renderFiles(filesToShow) {
           fileListElement.innerHTML = "";
           const filesByFolder = {};
@@ -694,7 +510,7 @@
             filesByFolder[f.folder].push(f);
           });
 
-          const sortedFolders = Object.keys(filesByFolder).sort((a, b) => {
+          const sortedFolders = Object.keys(filesByFolder).sort((a,b) => {
             const ia = classFolders.indexOf(a); const ib = classFolders.indexOf(b);
             return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
           });
@@ -704,7 +520,6 @@
             const folderFiles = filesByFolder[folderName];
 
             if (currentView === "list") {
-              // إنشاء رأس المجلد
               const header = document.createElement("tr");
               header.className = "folder-header";
               header.innerHTML = `<td colspan="3"><div class="folder-title"><i class="fa-solid fa-chevron-left arrow-icon"></i><i class="fa-solid fa-folder-open folder-icon"></i><span>${folderName}</span><span class="file-count">(${folderFiles.length})</span></div></td>`;
@@ -712,14 +527,12 @@
               header.dataset.expanded = isFirst ? "true" : "false";
               fileListElement.appendChild(header);
 
-              // إضافة ملفات المجلد
               folderFiles.forEach((file, i) => {
                 const row = createListRow(file, i + 1);
                 if (!isFirst) row.style.display = "none";
                 fileListElement.appendChild(row);
               });
             } else {
-              // وضع الشبكة: عنوان المجلد + بطاقات الملفات
               const gridHeader = document.createElement("div");
               gridHeader.className = "folder-header grid-folder";
               gridHeader.textContent = `${folderName} (${folderFiles.length})`;
@@ -734,9 +547,6 @@
           });
         }
 
-        // =================================================================
-        // 6. إنشاء صف في وضع القائمة
-        // =================================================================
         function createListRow(file, seq) {
           const tr = document.createElement("tr");
           tr.dataset.filename = file.name;
@@ -754,9 +564,6 @@
           return tr;
         }
 
-        // =================================================================
-        // 7. إنشاء بطاقة في وضع الشبكة
-        // =================================================================
         function createGridItem(file) {
           const div = document.createElement("div");
           div.className = "grid-item";
@@ -773,28 +580,22 @@
           return div;
         }
 
-        // =================================================================
-        // 8. فتح وإغلاق المجلدات في وضع القائمة
-        // =================================================================
         function toggleFolder(e) {
           const header = e.currentTarget;
           const expanded = header.dataset.expanded === "true";
           header.dataset.expanded = !expanded;
 
-          const folderName = header.querySelector("span").textContent.split(" (")[0];
-          const rows = fileListElement.querySelectorAll(`tr[data-folder="${folderName}"]`);
+          const rows = fileListElement.querySelectorAll(`tr[data-folder="${header.querySelector("span").textContent.split(" (")[0]}"]`);
           rows.forEach(row => row.style.display = expanded ? "none" : "");
         }
 
-        // =================================================================
-        // 9. البحث المتقدم والفلترة
-        // =================================================================
         function filterAndSearch() {
           const term = searchElement.value.toLowerCase();
           const type = filterElement.value;
           let visibleCount = 0;
 
           const items = fileListElement.querySelectorAll(currentView === "list" ? "tr:not(.folder-header)" : ".grid-item");
+          const folders = currentView === "list" ? fileListElement.querySelectorAll(".folder-header") : fileListElement.querySelectorAll(".grid-folder");
 
           items.forEach(item => {
             const name = item.dataset.filename.toLowerCase();
@@ -812,11 +613,17 @@
           });
 
           searchCountElement.textContent = visibleCount > 0 ? `تم العثور على ${visibleCount} نتيجة` : "لا توجد نتائج";
+
+          // إخفاء رؤوس المجلدات الفارغة في وضع القائمة
+          if (currentView === "list") {
+            folders.forEach(header => {
+              const folderName = header.querySelector("span").textContent.split(" (")[0];
+              const hasVisible = [...items].some(i => i.dataset.folder === folderName && i.style.display !== "none");
+              header.style.display = hasVisible || term === "" ? "" : "none";
+            });
+          }
         }
 
-        // =================================================================
-        // 10. دوال مساعدة: أيقونات وأنواع الملفات
-        // =================================================================
         function getFileIconClass(name) {
           const ext = name.split(".").pop().toLowerCase();
           const s = "fa-solid ";
@@ -846,17 +653,12 @@
           return "other";
         }
 
-        // =================================================================
-        // 11. عرض الملف المختار في العارض الرئيسي
-        // =================================================================
         function displayFile(filename, filepath, activeItem) {
-          // تحديد العنصر النشط بصريًا
           document.querySelectorAll("#file-list > *").forEach(el => el.classList.remove("active"));
           activeItem.classList.add("active");
 
-          // رسالة تحميل مؤقتة
           viewerElement.innerHTML = `<div class="loader-message"><i class="fa-solid fa-spinner fa-spin"></i> جاري التحميل...</div>`;
-          downloadBtn.style.display = printBtn.style.display = "none";
+          downloadBtn.style.display = printBtn.style.display = savePdfBtn.style.display = "none";
 
           const ext = filename.split(".").pop().toLowerCase();
           const username = window.location.hostname.split(".")[0];
@@ -867,11 +669,10 @@
 
           let content = "";
 
-          // دعم أنواع الملفات المختلفة
           if (ext === "pdf") {
-            content = mobile
-              ? `<iframe src="https://docs.google.com/gview?url=${encodeURIComponent(abs)}&embedded=true"></iframe>`
-              : `<iframe src="${rel}"></iframe>`;
+            content = mobile ?
+              `<iframe src="https://docs.google.com/gview?url=${encodeURIComponent(abs)}&embedded=true"></iframe>` :
+              `<iframe src="${rel}"></iframe>`;
           } else if (["html","htm","txt"].includes(ext)) {
             content = `<iframe src="${rel}"></iframe>`;
           } else if (["png","jpg","jpeg","gif","webp","bmp"].includes(ext)) {
@@ -889,23 +690,22 @@
           viewerElement.innerHTML = content;
           downloadBtn.href = rel;
           downloadBtn.style.display = "inline-flex";
-          printBtn.style.display = "inline-flex";
+          printBtn.style.display = savePdfBtn.style.display = "inline-flex";
 
-          // وظيفة الطباعة: تعمل مع iframe أو الصفحة مباشرة
-          printBtn.onclick = () => {
-            const iframe = viewerElement.querySelector("iframe");
-            if (iframe) {
-              iframe.contentWindow.focus();
-              iframe.contentWindow.print();
+          // أوامر الطباعة وحفظ PDF
+          printBtn.onclick = () => viewerElement.querySelector("iframe")?.contentWindow?.print() || window.print();
+          savePdfBtn.onclick = () => {
+            if (ext === "pdf") {
+              const a = document.createElement("a");
+              a.href = rel;
+              a.download = filename;
+              a.click();
             } else {
-              window.print();
+              printBtn.click(); // في معظم المتصفحات يظهر خيار "حفظ كـ PDF"
             }
           };
         }
 
-        // =================================================================
-        // تشغيل الوظائف عند تحميل الصفحة
-        // =================================================================
         initDarkMode();
         fetchAndDisplayFiles();
       });
