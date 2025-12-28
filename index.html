@@ -21,10 +21,10 @@
       rel="stylesheet"
     />
     <style>
-      /* --- 1. نظام الألوان الأساسي (الوضع الفاتح) --- */
+      /* --- 1. نظام الألوان الأساسي --- */
       :root {
-        --primary-color: #1976d2;          /* Royal Blue */
-        --secondary-color: #0d47a1;        /* Deep Navy Blue */
+        --primary-color: #1976d2;
+        --secondary-color: #0d47a1;
         --bg-color: #f0f4f8;
         --panel-bg: #ffffff;
         --border-color: #cfd8dc;
@@ -33,9 +33,9 @@
         --hover-bg: #e3f2fd;
         --shadow-elevation: 0 8px 20px rgba(128, 128, 128, 0.12);
         --radius: 12px;
-        --folder-icon-color: #fac75b;      /* أصفر ذهبي للمجلدات */
+        --folder-icon-color: #fac75b;
+        --announcement-bg: #d32f2f; /* لون أحمر غامق للإعلان */
 
-        /* ألوان الأيقونات حسب النوع */
         --icon-color-pdf: #c62828;
         --icon-color-doc: #1976d2;
         --icon-color-xls: #388e3c;
@@ -45,18 +45,17 @@
         --icon-color-html: #d84315;
       }
 
-      /* --- 2. نظام الألوان للوضع الداكن (Dark Mode) - محسن --- */
       body.dark-mode {
         --primary-color: #64b5f6;
         --secondary-color: #42a5f5;
         --bg-color: #121212;
         --panel-bg: #1e1e1e;
         --border-color: #333333;
-        --text-color: #f5f5f5;             /* نص أساسي أكثر وضوحًا */
-        --light-text: #b0bec5;             /* نصوص ثانوية أوضح */
+        --text-color: #f5f5f5;
+        --light-text: #b0bec5;
         --hover-bg: #2c3e50;
         --shadow-elevation: 0 8px 25px rgba(0, 0, 0, 0.6);
-        --folder-icon-color: #ffd54f;      /* أصفر أكثر حيوية في الداكن */
+        --folder-icon-color: #ffd54f;
       }
 
       body {
@@ -65,10 +64,35 @@
         background-color: var(--bg-color);
         color: var(--text-color);
         display: flex;
+        flex-direction: column; /* تعديل ليكون الإعلان في الأعلى */
         min-height: 100vh;
         overflow-x: hidden;
         transition: background-color 0.3s, color 0.3s;
       }
+
+      /* --- شريط الإعلان الأحمر --- */
+      .announcement-bar {
+  background-color: var(--announcement-bg);
+  color: white;
+  padding: 12px 0; /* زيادة الحشو قليلاً لمظهر أفضل */
+  font-weight: 700;
+  font-size: 1.1em;
+  position: sticky;
+  top: 0;
+  z-index: 2000;
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  display: flex;
+  justify-content: center; /* توسيط النص أفقياً */
+  align-items: center;     /* توسيط النص عمودياً */
+  text-align: center;
+}
+
+.announcement-content {
+  width: 100%;
+  padding: 0 20px;
+}
+
 
       .container {
         display: flex;
@@ -86,8 +110,8 @@
         box-shadow: var(--shadow-elevation);
         transition: width 0.3s ease, background-color 0.3s, border-color 0.3s;
         position: sticky;
-        top: 0;
-        height: 100vh;
+        top: 44px; /* لتبدأ تحت شريط الإعلان */
+        height: calc(100vh - 44px);
       }
 
       .sidebar-header {
@@ -236,7 +260,6 @@
         font-size: 1.6em;
       }
 
-      /* تنسيقات الأكورديون */
       #file-table tbody tr.folder-header {
         background-color: var(--panel-bg);
         box-shadow: none;
@@ -399,28 +422,26 @@
         margin-top: 20px;
       }
 
-      .footer a {
-        color: var(--secondary-color);
-        text-decoration: none;
-        font-weight: 600;
-      }
-
-      .footer a:hover {
-        color: var(--primary-color);
-      }
-
       @media (max-width: 768px) {
         .container { flex-direction: column; }
-        .sidebar { width: 100%; height: auto; max-height: 50vh; position: static; border-left: none; border-bottom: 1px solid var(--border-color); }
+        .sidebar { 
+          width: 100%; height: auto; max-height: 50vh; 
+          position: static; border-left: none; 
+          border-bottom: 1px solid var(--border-color); 
+        }
         .main-content { padding: 20px; }
         .viewer-controls { flex-direction: column; align-items: flex-start; }
         .header-info { flex-direction: column; align-items: flex-start; margin-bottom: 10px; }
-        .viewer-controls h2 { font-size: 1.3em; margin: 0 0 5px 0; }
-        .programmer-credit { font-size: 0.9em; }
       }
     </style>
   </head>
   <body>
+   <div class="announcement-bar">
+  <div class="announcement-content">
+    ⚠️ بدء الاختبارات النهائية يوم الأحد 15-7 - تابعوا الجداول في القسم المخصص ⚠️
+  </div>
+</div>
+
     <div class="container">
       <aside class="sidebar">
         <div class="sidebar-header">
@@ -476,6 +497,7 @@
     </div>
 
     <script>
+      // ... (نفس كود الجافا سكريبت الأصلي دون تغيير)
       document.addEventListener("DOMContentLoaded", () => {
         const fileListElement = document.getElementById("file-list");
         const viewerElement = document.getElementById("viewer");
