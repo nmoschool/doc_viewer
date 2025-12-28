@@ -472,6 +472,44 @@
           font-size: 0.9em;
         }
       }
+      @media (max-width: 768px) {
+        .container {
+          flex-direction: column;
+        }
+        .sidebar {
+          width: 100%;
+          height: auto;
+          max-height: 50vh;
+          min-height: 250px;
+          position: static;
+          border-left: none;
+          border-bottom: 1px solid var(--border-color);
+        }
+        .main-content {
+          padding: 20px;
+          flex-grow: 1;
+          min-height: auto;
+        }
+        .table-container {
+          padding: 0 10px;
+        }
+        .viewer-controls {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .header-info {
+          flex-direction: column;
+          align-items: flex-start;
+          margin-bottom: 10px;
+        }
+        .viewer-controls h2 {
+          font-size: 1.3em;
+          margin: 0 0 5px 0;
+        }
+        .programmer-credit {
+          font-size: 0.9em;
+        }
+      }
       @keyframes bounce {
         0%,
         20%,
@@ -567,7 +605,7 @@
           // "ملف مهم آخر.docx"
         ];
 
-        // قائمة مجلدات الفصول الدراسية الجديدة
+        // قائمة مجلدات الفصول الدراسية الجديدة - تم إضافة جداول الاختبارات في المقدمة
         const classFolders = [
             "جداول الاختبارات",
             "أول ابتدائي",
@@ -708,7 +746,8 @@
             unpinnedFilesData.sort((a, b) => {
                 // ترتيب حسب المجلد (الصف)، ثم حسب الاسم
                 if (a.folder !== b.folder) {
-                    return a.folder.localeCompare(b.folder, "ar");
+                    // الحفاظ على ترتيب المجلدات كما هو محدد في مصفوفة classFolders
+                    return classFolders.indexOf(a.folder) - classFolders.indexOf(b.folder);
                 }
                 return a.name.localeCompare(b.name, "ar");
             });
@@ -720,21 +759,30 @@
               return;
             }
 
-            // تجميع الملفات حسب المجلد
-            const filesByFolder = filesData.reduce((acc, fileData) => {
+            // تجميع الملفات حسب المجلد مع مراعاة الترتيب
+            const filesByFolder = {};
+            filesData.forEach(fileData => {
                 const folder = fileData.folder;
-                if (!acc[folder]) {
-                    acc[folder] = [];
+                if (!filesByFolder[folder]) {
+                    filesByFolder[folder] = [];
                 }
-                acc[folder].push(fileData);
-                return acc;
-            }, {});
+                filesByFolder[folder].push(fileData);
+            });
 
             fileListElement.innerHTML = "";
             let seq = 1;
             let isFirstFolder = true;
 
-            for (const folderName in filesByFolder) {
+            // عرض المجلدات حسب ترتيبها في المصفوفة
+            const sortedFolderKeys = Object.keys(filesByFolder).sort((a, b) => {
+                let idxA = classFolders.indexOf(a);
+                let idxB = classFolders.indexOf(b);
+                if(idxA === -1) idxA = 999;
+                if(idxB === -1) idxB = 999;
+                return idxA - idxB;
+            });
+
+            for (const folderName of sortedFolderKeys) {
                 const folderFiles = filesByFolder[folderName];
 
                 // 1. إنشاء زر المجلد (Folder Header/Accordion Button)
