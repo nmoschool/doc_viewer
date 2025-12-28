@@ -1,3 +1,4 @@
+كود المدرسة باللون الأزرق 
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
   <head>
@@ -706,18 +707,19 @@
             );
 
             unpinnedFilesData.sort((a, b) => {
-            unpinnedFilesData.sort((a, b) => {
-    // إذا كان أحد الملفين ينتمي لمجلد جداول الاختبارات، يوضع في البداية
-    if (a.folder === "جداول الاختبارات" && b.folder !== "جداول الاختبارات") return -1;
-    if (a.folder !== "جداول الاختبارات" && b.folder === "جداول الاختبارات") return 1;
+                // ترتيب حسب المجلد (الصف)، ثم حسب الاسم
+                if (a.folder !== b.folder) {
+                    return a.folder.localeCompare(b.folder, "ar");
+                }
+                return a.name.localeCompare(b.name, "ar");
+            });
 
-    // الترتيب العادي لبقية المجلدات حسب الاسم
-    if (a.folder !== b.folder) {
-        return a.folder.localeCompare(b.folder, "ar");
-    }
-    return a.name.localeCompare(b.name, "ar");
-});
+            const filesData = [...orderedPinned, ...unpinnedFilesData];
 
+            if (filesData.length === 0) {
+              viewerElement.innerHTML = `<div class="loader-message">مجلدات المستندات فارغة. الرجاء إضافة ملفات لعرضها.</div>`;
+              return;
+            }
 
             // تجميع الملفات حسب المجلد
             const filesByFolder = filesData.reduce((acc, fileData) => {
