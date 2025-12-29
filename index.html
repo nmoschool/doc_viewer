@@ -41,6 +41,7 @@
         --icon-color-img: #4527a0;
         --icon-color-txt: #546e7a;
         --icon-color-html: #d84315;
+        --announcement-bg: #d32f2f; /* لون الشريط الأحمر */
       }
 
       /* --- 2. نظام الألوان للوضع الداكن (Dark Mode) --- */
@@ -53,6 +54,21 @@
         --light-text: #90a4ae;
         --hover-bg: #2c3e50;
         --shadow-elevation: 0 8px 25px rgba(0, 0, 0, 0.4); 
+      }
+
+      /* --- تنسيق شريط الإعلانات --- */
+      .announcement-bar {
+        background-color: var(--announcement-bg);
+        color: #ffffff;
+        text-align: center;
+        padding: 10px;
+        font-weight: 700;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        font-size: 1.1em;
       }
       
       /* تطبيق التعديلات على العناصر */
@@ -84,6 +100,7 @@
         /* **تحديث الخط** */
         font-family: "Almarai", "Tajawal", sans-serif;
         margin: 0;
+        padding-top: 45px; /* مسافة لتعويض ارتفاع الشريط الثابت */
         background-color: var(--bg-color);
         color: var(--text-color);
         display: flex;
@@ -106,8 +123,8 @@
         box-shadow: var(--shadow-elevation);
         transition: width 0.3s ease, background-color 0.3s, border-color 0.3s;
         position: sticky;
-        top: 0;
-        height: 100vh;
+        top: 45px; /* يبدأ من تحت الشريط */
+        height: calc(100vh - 45px);
       }
       .sidebar-header {
         padding: 20px 25px;
@@ -435,44 +452,8 @@
       }
 
       @media (max-width: 768px) {
-        .container {
-          flex-direction: column;
-        }
-        .sidebar {
-          width: 100%;
-          height: auto;
-          max-height: 50vh;
-          min-height: 250px;
-          position: static;
-          border-left: none;
-          border-bottom: 1px solid var(--border-color);
-        }
-        .main-content {
-          padding: 20px;
-          flex-grow: 1;
-          min-height: auto;
-        }
-        .table-container {
-          padding: 0 10px;
-        }
-        .viewer-controls {
-          flex-direction: column;
-          align-items: flex-start;
-        }
-        .header-info {
-          flex-direction: column;
-          align-items: flex-start;
-          margin-bottom: 10px;
-        }
-        .viewer-controls h2 {
-          font-size: 1.3em;
-          margin: 0 0 5px 0;
-        }
-        .programmer-credit {
-          font-size: 0.9em;
-        }
-      }
-      @media (max-width: 768px) {
+        body { padding-top: 55px; }
+        .announcement-bar { font-size: 0.9em; padding: 8px 5px; top: 0; }
         .container {
           flex-direction: column;
         }
@@ -528,6 +509,10 @@
     </style>
   </head>
   <body>
+    <div class="announcement-bar">
+      📢 بدء الاختبارات النهائية يوم الأحد 15-7 - تابعوا الجداول في القسم المخصص
+    </div>
+
     <div class="container">
       <aside class="sidebar">
         <div class="sidebar-header">
