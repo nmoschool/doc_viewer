@@ -38,7 +38,7 @@
         display: flex;
         flex-direction: column;
         height: 100vh;
-        overflow: hidden; /* لمنع التمرير في الصفحة الرئيسية */
+        overflow: hidden;
       }
 
       header {
@@ -55,6 +55,7 @@
         position: absolute; left: 20px; top: 50%; transform: translateY(-50%);
         background: rgba(212, 168, 83, 0.2); border: 1px solid var(--gold);
         color: var(--gold); padding: 8px; border-radius: 50%; cursor: pointer;
+        z-index: 100;
       }
 
       .main-wrapper {
@@ -72,6 +73,7 @@
       .sidebar-header {
         background: var(--navy); color: var(--gold); padding: 15px;
         border-radius: 12px 12px 0 0; font-weight: bold;
+        display: flex; align-items: center; gap: 10px;
       }
 
       .fav-section { border-bottom: 3px solid var(--gold); background: rgba(212, 168, 83, 0.05); max-height: 40%; overflow-y: auto; }
@@ -87,10 +89,10 @@
       .folder-item {
         background: var(--border-color); margin-bottom: 5px; cursor: pointer;
         padding: 12px; border-radius: 8px; font-weight: bold;
-        display: flex; justify-content: space-between;
+        display: flex; justify-content: space-between; align-items: center;
       }
 
-      .folder-content { display: none; padding-right: 5px; }
+      .folder-content { display: none; padding-right: 5px; margin-bottom: 10px; }
 
       .file-item {
         padding: 10px; cursor: pointer; border-bottom: 1px solid var(--border-color);
@@ -114,10 +116,14 @@
         background: var(--navy-light); color: white; flex-shrink: 0;
       }
 
+      .toolbar-actions { display: flex; gap: 8px; }
+
       .btn-action {
-        background: var(--gold); color: var(--navy); padding: 6px 10px;
+        background: var(--gold); color: var(--navy); padding: 8px 12px;
         text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 0.8rem; border: none; cursor: pointer;
+        display: flex; align-items: center; gap: 6px;
       }
+      .btn-action:hover { background: #eec16a; }
 
       #display-container {
         flex: 1; display: flex; flex-direction: column; background: #525659;
@@ -128,13 +134,14 @@
 
       @media (max-width: 992px) {
         body { overflow: auto; }
-        .main-wrapper { flex-direction: column; height: auto; overflow: visible; }
-        .sidebar { width: 100%; max-height: 500px; }
-        .viewer-area { height: 600px; }
+        .main-wrapper { flex-direction: column; height: auto; overflow: visible; padding: 10px; }
+        .sidebar { width: 100%; max-height: 400px; }
+        .viewer-area { height: 75vh; min-height: 500px; }
+        .btn-action span { display: none; } /* إخفاء النص في الجوال لإبقاء الأيقونة فقط */
       }
     </style>
-  </head>
-  <body>
+</head>
+<body>
 
     <header>
       <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
@@ -162,16 +169,22 @@
 
       <main class="viewer-area">
         <div class="viewer-toolbar">
-          <div id="file-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 50%;">اختر ملفاً</div>
-          <div style="display: flex; gap: 8px;">
-            <button class="btn-action" onclick="goFullScreen()" title="ملء الشاشة"><i class="fas fa-expand"></i></button>
-            <button id="share-btn" class="btn-action" style="display:none;" onclick="shareLink()"><i class="fas fa-link"></i></button>
-            <a href="#" id="download-link" class="btn-action" style="display:none;" target="_blank"><i class="fas fa-download"></i> تحميل</a>
+          <div id="file-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 45%;">اختر ملفاً</div>
+          <div class="toolbar-actions">
+            <button class="btn-action" onclick="goFullScreen()" title="ملء الشاشة">
+                <i class="fas fa-expand"></i>
+            </button>
+            <button id="share-btn" class="btn-action" style="display:none;" onclick="shareLink()" title="مشاركة الرابط">
+                <i class="fas fa-link"></i> <span>مشاركة</span>
+            </button>
+            <a href="#" id="download-link" class="btn-action" style="display:none;" target="_blank" title="تحميل الملف">
+                <i class="fas fa-download"></i> <span>تحميل</span>
+            </a>
           </div>
         </div>
         <div id="display-container">
           <div id="placeholder" style="color: white; text-align: center; margin: auto; padding: 20px;">
-            <i class="fas fa-book-open" style="font-size: 3rem; color: var(--gold); margin-bottom: 10px; display: block;"></i>
+            <i class="fas fa-book-open" style="font-size: 3.5rem; color: var(--gold); margin-bottom: 15px; display: block;"></i>
             الرجاء اختيار مستند من القائمة للبدء
           </div>
         </div>
@@ -193,13 +206,18 @@
         
         let data = JSON.parse(sessionStorage.getItem('nmo_cache'));
         if (!data) {
-          const promises = classFolders.map(f => 
-            fetch(`https://api.github.com/repos/${username}/${repo}/contents/${folderPath}/${encodeURIComponent(f)}`)
-            .then(r => r.json()).then(files => ({folder: f, files: Array.isArray(files) ? files : []}))
-            .catch(() => ({folder: f, files: []}))
-          );
-          data = await Promise.all(promises);
-          sessionStorage.setItem('nmo_cache', JSON.stringify(data));
+          try {
+            const promises = classFolders.map(f => 
+              fetch(`https://api.github.com/repos/${username}/${repo}/contents/${folderPath}/${encodeURIComponent(f)}`)
+              .then(r => r.json()).then(files => ({folder: f, files: Array.isArray(files) ? files : []}))
+              .catch(() => ({folder: f, files: []}))
+            );
+            data = await Promise.all(promises);
+            sessionStorage.setItem('nmo_cache', JSON.stringify(data));
+          } catch(e) {
+            listDiv.innerHTML = '<p style="text-align:center; padding:20px;">فشل الاتصال بالخادم</p>';
+            return;
+          }
         }
 
         let html = '';
@@ -226,6 +244,7 @@
         const e = n.split('.').pop().toLowerCase();
         if(e==='pdf') return 'fas fa-file-pdf text-danger';
         if(['doc','docx'].includes(e)) return 'fas fa-file-word text-primary';
+        if(['xls','xlsx'].includes(e)) return 'fas fa-file-excel text-success';
         return 'fas fa-file-alt';
       }
 
@@ -241,27 +260,38 @@
         if(el) el.classList.add('active');
         
         document.getElementById('file-title').innerText = name;
-        currentURL = `https://${username}.github.io/${repo}/${folderPath}/${encodeURIComponent(path)}`;
         
+        // الرابط المطلق للملف على GitHub Pages
+        const absoluteURL = `https://${username}.github.io/${repo}/${folderPath}/${encodeURIComponent(path)}`;
+        currentURL = absoluteURL;
+
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
         const ext = name.split('.').pop().toLowerCase();
         const container = document.getElementById('display-container');
         
-        document.getElementById('download-link').style.display = 'block';
-        document.getElementById('download-link').href = currentURL;
-        document.getElementById('share-btn').style.display = 'block';
+        // تفعيل أزرار التحميل والمشاركة
+        const dl = document.getElementById('download-link');
+        const sh = document.getElementById('share-btn');
+        dl.style.display = 'flex';
+        dl.href = absoluteURL;
+        sh.style.display = 'flex';
 
         if (ext === 'pdf') {
-          const googleViewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(currentURL)}&embedded=true&rm=minimal`;
           if (isMobile) {
-            container.innerHTML = `<iframe id="viewer-frame" src="${googleViewerUrl}"></iframe>`;
+            // استخدام عارض جوجل للموبايل لضمان عدم التحميل التلقائي
+            const gViewer = `https://docs.google.com/viewer?url=${encodeURIComponent(absoluteURL)}&embedded=true`;
+            container.innerHTML = `<iframe id="viewer-frame" src="${gViewer}" style="background:white;"></iframe>`;
           } else {
-            container.innerHTML = `<embed src="${currentURL}" type="application/pdf" id="viewer-frame">`;
+            // استخدام العارض المدمج للكمبيوتر
+            container.innerHTML = `<embed src="${absoluteURL}" type="application/pdf" id="viewer-frame">`;
           }
-        } else if (['doc','docx','xls','xlsx'].includes(ext)) {
-          container.innerHTML = `<iframe id="viewer-frame" src="https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(currentURL)}"></iframe>`;
+        } else if (['doc','docx','xls','xlsx','ppt','pptx'].includes(ext)) {
+          // عارض أوفيس أونلاين
+          container.innerHTML = `<iframe id="viewer-frame" src="https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(absoluteURL)}"></iframe>`;
+        } else if (['jpg','jpeg','png','gif','webp'].includes(ext)) {
+          container.innerHTML = `<div style="height:100%; display:flex; align-items:center; justify-content:center; background:#333;"><img src="${absoluteURL}" style="max-width:95%; max-height:95%; object-fit:contain;"></div>`;
         } else {
-          container.innerHTML = `<div style="height:100%; display:flex; align-items:center; justify-content:center;"><img src="${currentURL}" style="max-width:95%; max-height:95%; object-fit:contain;"></div>`;
+          container.innerHTML = `<div style="color:white; text-align:center; margin:auto;"><i class="fas fa-file-alt" style="font-size:3rem;"></i><p>المعاينة غير متاحة لهذا الملف.</p></div>`;
         }
       }
 
@@ -307,8 +337,10 @@
       }
 
       function shareLink() {
-        navigator.clipboard.writeText(currentURL);
-        alert("تم نسخ الرابط المباشر للملف!");
+        if(!currentURL) return;
+        navigator.clipboard.writeText(currentURL).then(() => {
+            alert("✅ تم نسخ رابط الملف المباشر!");
+        });
       }
 
       function toggleTheme(initOnly = false) {
@@ -321,5 +353,5 @@
 
       init();
     </script>
-  </body>
+</body>
 </html>
