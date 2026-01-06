@@ -1,0 +1,29 @@
+name: Update File List JSON
+
+on:
+  push:
+    paths:
+      - 'documents/**' # يشتغل فقط لما تضيف أو تعدل ملفات داخل مجلد documents
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Generate JSON List
+        run: node generate-list.js # هنا ينفذ السكربت حقك
+
+      - name: Commit and Push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add filelist.json
+          git commit -m "تحديث تلقائي لقائمة الملفات [skip ci]" || exit 0
+          git push
