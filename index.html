@@ -27,8 +27,7 @@
         color: var(--text-color);
         display: flex;
         flex-direction: column;
-        height: 100vh; /* تحديد الطول بكامل الشاشة */
-        overflow: hidden; /* منع التمرير في الجسم الرئيسي */
+        min-height: 100vh;
       }
 
       .announcement-bar {
@@ -44,33 +43,33 @@
       header {
         background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
         color: var(--gold);
-        padding: 15px;
+        padding: 20px;
         text-align: center;
         border-bottom: 4px solid var(--gold);
-        flex-shrink: 0;
       }
 
-      header h1 { font-size: 1.2rem; margin-bottom: 2px; }
+      header h1 { font-size: 1.4rem; margin-bottom: 5px; }
 
       .main-wrapper {
         display: flex;
         flex: 1;
-        gap: 15px;
-        padding: 15px;
-        max-width: 1600px;
+        gap: 20px;
+        padding: 20px;
+        max-width: 1400px;
         margin: 0 auto;
         width: 100%;
-        overflow: hidden; /* لمنع التمرير الخارجي */
       }
 
       .sidebar {
-        width: 320px;
+        width: 350px;
         background: var(--panel-bg);
         border-radius: var(--border-radius);
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         display: flex;
         flex-direction: column;
-        height: 100%;
+        max-height: calc(100vh - 150px);
+        position: sticky;
+        top: 20px;
       }
 
       .sidebar-header {
@@ -78,28 +77,24 @@
         color: var(--gold);
         padding: 15px;
         border-radius: var(--border-radius) var(--border-radius) 0 0;
-        font-weight: bold;
       }
 
-      .search-box { padding: 10px; background: #f8f9fa; border-bottom: 1px solid #eee; }
+      .search-box { padding: 10px; background: #eee; }
       #search-input {
         width: 100%;
         padding: 10px;
-        border: 2px solid #eee;
+        border: 1px solid #ddd;
         border-radius: 8px;
         outline: none;
-        transition: 0.3s;
       }
-      #search-input:focus { border-color: var(--gold); }
 
       .file-list-container {
         overflow-y: auto;
         padding: 10px;
-        flex: 1;
       }
 
       .folder-item {
-        background: #fdfdfd;
+        background: #f9f9f9;
         margin-bottom: 5px;
         cursor: pointer;
         padding: 12px;
@@ -107,25 +102,23 @@
         font-weight: bold;
         display: flex;
         justify-content: space-between;
-        align-items: center;
         border: 1px solid #eee;
         transition: 0.3s;
       }
-      .folder-item:hover { background: #f1f1f1; }
+
+      .folder-item:hover { background: #f0f0f0; }
 
       .file-item {
-        padding: 10px 20px;
+        padding: 10px 25px;
         cursor: pointer;
-        border-bottom: 1px solid #f9f9f9;
+        border-bottom: 1px solid #f0f0f0;
         display: none; 
         transition: 0.2s;
-        font-size: 0.85rem;
-        color: #444;
+        font-size: 0.9rem;
       }
       .file-item:hover { background: #fff9eb; color: var(--gold); }
-      .file-item.active { background: var(--gold); color: var(--navy); font-weight: bold; border-radius: 5px; }
+      .file-item.active { background: var(--gold); color: var(--navy); font-weight: bold; }
 
-      /* منطقة العرض - تحسين الجوال */
       .viewer-area {
         flex: 1;
         background: var(--panel-bg);
@@ -134,31 +127,23 @@
         display: flex;
         flex-direction: column;
         overflow: hidden;
+        min-height: 600px;
       }
 
       .viewer-toolbar {
-        padding: 12px 15px;
+        padding: 15px;
         border-bottom: 2px solid var(--gold);
         display: flex;
         justify-content: space-between;
         align-items: center;
         background: #fafafa;
-        flex-shrink: 0;
-      }
-
-      #display-container {
-        flex: 1;
-        width: 100%;
-        height: 100%;
-        position: relative;
-        background: #525659; /* لون خلفية القارئ الافتراضي */
       }
 
       #viewer-frame {
+        flex: 1;
         width: 100%;
         height: 100%;
         border: none;
-        display: block;
       }
 
       .btn-download {
@@ -169,17 +154,12 @@
         border-radius: 6px;
         font-weight: bold;
         font-size: 0.8rem;
-        display: flex;
-        align-items: center;
-        gap: 5px;
       }
 
-      /* تنسيقات الجوال */
       @media (max-width: 992px) {
-        body { overflow: auto; height: auto; }
-        .main-wrapper { flex-direction: column; height: auto; overflow: visible; }
-        .sidebar { width: 100%; height: 400px; }
-        .viewer-area { height: 80vh; min-height: 500px; margin-bottom: 20px; }
+        .main-wrapper { flex-direction: column; padding: 10px; }
+        .sidebar { width: 100%; position: relative; top: 0; max-height: 400px; }
+        .viewer-area { min-height: 500px; }
         header h1 { font-size: 1.1rem; }
       }
     </style>
@@ -192,13 +172,13 @@
 
     <header>
       <h1>مدرسة تحفيظ القرآن بالبجادية</h1>
-      <p style="font-size: 0.8rem; opacity: 0.8;">بوابة عرض المستندات التعليمية</p>
+      <p style="font-size: 0.9rem; opacity: 0.8;">برمجة : NMO</p>
     </header>
 
     <div class="main-wrapper">
       <aside class="sidebar">
         <div class="sidebar-header">
-          <i class="fas fa-folder-open"></i> قائمة الفصول
+          <i class="fas fa-list-ul"></i> الفصول الدراسية
         </div>
         <div class="search-box">
           <input type="text" id="search-input" placeholder="بحث عن ملف..." onkeyup="filterFiles()">
@@ -209,16 +189,13 @@
 
       <main class="viewer-area">
         <div class="viewer-toolbar">
-          <div id="file-title" style="font-weight: bold; color: var(--navy); font-size: 0.9rem;">اختر ملفاً للعرض</div>
+          <div id="file-title" style="font-weight: bold; color: var(--navy);">اختر ملفاً للعرض</div>
           <a href="#" id="download-link" class="btn-download" style="display: none;" target="_blank">
             <i class="fas fa-download"></i> تحميل
           </a>
         </div>
-        <div id="display-container">
-            <div id="placeholder" style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; color:#aaa; background:#fff;">
-                <i class="fas fa-file-pdf" style="font-size: 4rem; margin-bottom:15px; opacity:0.2;"></i>
-                <p>الرجاء اختيار ملف من القائمة اليمنى</p>
-            </div>
+        <div id="display-container" style="flex:1; display: flex; justify-content: center; align-items: center; background: #fff;">
+          <p id="placeholder-text">الرجاء اختيار ملف من القائمة</p>
         </div>
       </main>
     </div>
@@ -231,7 +208,7 @@
 
       async function init() {
         const listDiv = document.getElementById('file-list');
-        listDiv.innerHTML = '<p style="padding:20px; text-align:center;">جاري جلب الملفات...</p>';
+        listDiv.innerHTML = '<p style="padding:20px; text-align:center;">جاري تحميل الملفات...</p>';
 
         let html = '';
         for (const folder of classFolders) {
@@ -260,8 +237,9 @@
 
       function getIcon(name) {
         const ext = name.split('.').pop().toLowerCase();
-        if (ext === 'pdf') return 'fas fa-file-pdf' style='color:#e74c3c';
-        if (['doc', 'docx'].includes(ext)) return 'fas fa-file-word' style='color:#2b579a';
+        if (ext === 'pdf') return 'fas fa-file-pdf text-danger';
+        if (['doc', 'docx'].includes(ext)) return 'fas fa-file-word text-primary';
+        if (['xls', 'xlsx'].includes(ext)) return 'fas fa-file-excel text-success';
         return 'fas fa-file-alt';
       }
 
@@ -271,7 +249,7 @@
         const isOpen = content.style.display === 'block';
         
         content.style.display = isOpen ? 'none' : 'block';
-        el.style.color = isOpen ? 'var(--navy)' : 'var(--gold)';
+        el.style.color = isOpen ? 'black' : '#d4a853';
         if(icon) icon.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
 
         const files = content.querySelectorAll('.file-item');
@@ -286,32 +264,35 @@
         const container = document.getElementById('display-container');
         const downloadLink = document.getElementById('download-link');
         
+        // الروابط
         const fullPath = `https://nmoschool.github.io/doc_viewer/documents/${encodeURIComponent(path)}`;
         const ext = name.split('.').pop().toLowerCase();
 
+        // إعداد زر التحميل
         downloadLink.href = fullPath;
-        downloadLink.style.display = 'flex';
+        downloadLink.style.display = 'block';
 
+        // التحقق من نوع الجهاز (موبايل أم لا)
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
         if (ext === 'pdf') {
-          // استخدام Google Viewer للجوال والـ iframe المباشر للكمبيوتر مع ضمان ملء الشاشة
-          const viewerUrl = isMobile 
-            ? `https://docs.google.com/viewer?url=${encodeURIComponent(fullPath)}&embedded=true` 
-            : fullPath;
-          
-          container.innerHTML = `<iframe id="viewer-frame" src="${viewerUrl}"></iframe>`;
+          if (isMobile) {
+            // حل الموبايل: عارض جوجل
+            container.innerHTML = `<iframe id="viewer-frame" src="https://docs.google.com/viewer?url=${encodeURIComponent(fullPath)}&embedded=true"></iframe>`;
+          } else {
+            // حل الكمبيوتر: العرض المباشر
+            container.innerHTML = `<iframe id="viewer-frame" src="${fullPath}"></iframe>`;
+          }
         } 
-        else if (['doc', 'docx', 'xls', 'xlsx'].includes(ext)) {
+        else if (['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'].includes(ext)) {
+          // عارض أوفيس أونلاين
           container.innerHTML = `<iframe id="viewer-frame" src="https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(fullPath)}"></iframe>`;
         } 
-        else if (['jpg', 'png', 'jpeg'].includes(ext)) {
-          container.innerHTML = `<div style="display:flex; align-items:center; justify-content:center; height:100%; background:#fff; overflow:auto;"><img src="${fullPath}" style="max-width:100%; height:auto;"></div>`;
-        }
-        
-        // تمرير تلقائي لمنطقة العرض في الجوال
-        if (window.innerWidth <= 992) {
-            document.querySelector('.viewer-area').scrollIntoView({ behavior: 'smooth' });
+        else if (['jpg', 'png', 'jpeg', 'webp'].includes(ext)) {
+          container.innerHTML = `<img src="${fullPath}" style="max-width:100%; max-height:100%; object-fit:contain; border-radius:8px;">`;
+        } 
+        else {
+          container.innerHTML = `<div style="text-align:center; padding:20px;"><i class="fas fa-file-download" style="font-size:3rem; color:var(--gold);"></i><p>المعاينة غير متاحة، يرجى تحميل الملف.</p></div>`;
         }
       }
 
@@ -320,13 +301,9 @@
         const files = document.querySelectorAll('.file-item');
         files.forEach(f => {
           const name = f.getAttribute('data-name').toLowerCase();
-          const folderContent = f.parentElement;
-          const folderHeader = folderContent.previousElementSibling;
-
           if(name.includes(term)) {
             f.style.display = 'block';
-            folderContent.style.display = 'block';
-            folderHeader.style.display = 'flex';
+            f.parentElement.style.display = 'block'; 
           } else {
             f.style.display = 'none';
           }
