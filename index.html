@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مدرسة تحفيظ القرآن بالبجادية</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Amiri:ital,wght@0,700;1,700&family=Marcellus&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
             --primary: #064e3b;
@@ -60,7 +62,51 @@
             font-weight: 700;
         }
 
-        .container { max-width: 900px; margin: -60px auto 60px; padding: 0 20px; position: relative; z-index: 5; }
+        /* --- شريط الوقت والتاريخ المدمج --- */
+        .live-date-bar {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            margin: -30px auto 30px;
+            width: 95%;
+            max-width: 700px;
+        }
+        
+        .date-container {
+            background: var(--card-bg);
+            padding: 12px 20px;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            border: 1px solid #eef2f6;
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .date-container i {
+            color: var(--secondary);
+            font-size: 1rem;
+            animation: gold-pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes gold-pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.6; }
+        }
+
+        .date-container span.sep {
+            color: var(--secondary);
+            opacity: 0.3;
+            font-weight: 300;
+        }
+
+        /* --- بقية التنسيقات الأصلية --- */
+        .container { max-width: 900px; margin: 0 auto 60px; padding: 0 20px; position: relative; z-index: 5; }
 
         .quote-card {
             background: var(--card-bg); padding: 35px; border-radius: 24px;
@@ -135,6 +181,7 @@
             header h1 { font-size: 1.7rem; } 
             .compact-card { width: 45%; } 
             .links-title-wrapper h2 { font-size: 1.1rem; }
+            .date-container { font-size: 0.75rem; padding: 10px; gap: 8px; }
         }
     </style>
 </head>
@@ -146,6 +193,18 @@
             <div class="portal-badge">بوابة الطالب الذكية</div>
         </div>
     </header>
+
+    <div class="live-date-bar">
+        <div class="date-container" dir="rtl">
+            <i class="fas fa-calendar-alt"></i>
+            <span id="hijri-clock"></span>
+            <span class="sep">|</span>
+            <span id="gregorian-clock"></span>
+            <span class="sep">|</span>
+            <i class="fas fa-clock"></i>
+            <span id="live-time-clock"></span>
+        </div>
+    </div>
 
     <div class="container">
         <div class="quote-card">
@@ -235,6 +294,66 @@
             <span style="font-size:0.7rem; letter-spacing:2px; opacity:0.7;">DESIGNED BY</span>
         </div>
     </footer>
+
+    <script>
+     
+  function updateSchoolClock() {
+    // 1. الحصول على الوقت الحالي
+    const now = new Date();
+    
+    // --- دالة إضافة الأيام لتعديل التاريخ (+1 أو -1) ---
+    const dayOffset = -1; // غير الرقم هنا إلى +1 للإضافة أو -1 للطرح
+    const adjustedDate = new Date(now);
+    adjustedDate.setDate(now.getDate() + dayOffset);
+    // -----------------------------------------------
+
+    // 2. التاريخ الهجري (باستخدام التاريخ المعدل)
+    const hijriOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+    let hijriDate = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', hijriOptions).format(adjustedDate);
+    
+    // التأكد من عدم تكرار رمز "هـ"
+    if (!hijriDate.includes("هـ")) {
+        hijriDate += " هـ";
+    }
+    
+    // 3. التاريخ الميلادي (يمكنك استخدام adjustedDate إذا أردت تعديله أيضاً أو now للتاريخ الفعلي)
+    const gregOptions = { day: 'numeric', month: 'numeric', year: 'numeric' };
+    let gregDate = new Intl.DateTimeFormat('ar-EG', gregOptions).format(now);
+    gregDate += " م"; 
+    
+    // 4. الوقت المباشر مع اختصار ص/م
+    const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+    let timeString = now.toLocaleTimeString('ar-EG', timeOptions);
+    timeString = timeString.replace("صباحاً", "ص").replace("مساءً", "م");
+
+    // تحديث العناصر في الصفحة
+    const hEl = document.getElementById('hijri-clock');
+    const gEl = document.getElementById('gregorian-clock');
+    const tEl = document.getElementById('live-time-clock');
+
+    if(hEl) hEl.textContent = hijriDate;
+    if(gEl) gEl.textContent = gregDate;
+    if(tEl) tEl.textContent = timeString;
+}
+
+// البدء بالتحديث
+setInterval(updateSchoolClock, 1000);
+updateSchoolClock();
+
+  
+        window.addEventListener('scroll', function() {
+            sessionStorage.setItem('scrollPosition', window.scrollY);
+        });
+
+        window.addEventListener('load', function() {
+            if (sessionStorage.getItem('scrollPosition') !== null) {
+                window.scrollTo({
+                    top: parseInt(sessionStorage.getItem('scrollPosition')),
+                    behavior: 'smooth'
+                });
+            }
+        });
+    </script>
 
 </body>
 </html>
