@@ -62,14 +62,14 @@
             font-weight: 700;
         }
 
-        /* --- شريط الوقت والتاريخ المدمج --- */
+        /* --- شريط الوقت والتاريخ الموحد في سطر واحد --- */
         .live-date-bar {
             position: relative;
             z-index: 10;
             text-align: center;
             margin: -30px auto 30px;
-            width: 95%;
-            max-width: 700px;
+            width: 98%;
+            max-width: 800px;
         }
         
         .date-container {
@@ -78,7 +78,6 @@
             border-radius: 50px;
             display: inline-flex;
             align-items: center;
-            flex-wrap: wrap;
             justify-content: center;
             gap: 10px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.08);
@@ -86,12 +85,16 @@
             color: var(--text-main);
             font-weight: 700;
             font-size: 0.9rem;
+            white-space: nowrap; /* يمنع نزول النص لسطر جديد */
+            flex-wrap: nowrap;   /* يمنع العناصر من الالتفاف */
+            overflow: hidden;
         }
 
         .date-container i {
             color: var(--secondary);
             font-size: 1rem;
             animation: gold-pulse 2s infinite ease-in-out;
+            flex-shrink: 0;
         }
 
         @keyframes gold-pulse {
@@ -103,7 +106,52 @@
             color: var(--secondary);
             opacity: 0.3;
             font-weight: 300;
+            flex-shrink: 0;
         }
+
+        .date-text-item {
+            flex-shrink: 0;
+        }
+
+        /* --- لوحة التحكم المخفية --- */
+        #admin-panel {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 9999;
+        }
+
+        #panel-toggle {
+            width: 40px; height: 40px;
+            background: var(--card-bg);
+            border: 1px solid #e2e8f0;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0.3; transition: 0.3s;
+        }
+
+        #panel-toggle:hover { opacity: 1; background: var(--secondary); color: white; }
+
+        .panel-content {
+            display: none;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+            border: 1px solid var(--secondary);
+            text-align: center;
+            width: 200px;
+        }
+
+        .panel-content h4 { margin: 0 0 10px; font-size: 0.9rem; color: var(--primary); }
+        .panel-content button {
+            background: #f1f5f9; border: 1px solid #e2e8f0;
+            padding: 5px 15px; border-radius: 5px; cursor: pointer;
+            font-family: 'Cairo'; font-weight: 700; margin: 2px;
+        }
+        .panel-content button:hover { background: var(--secondary); color: white; }
 
         /* --- بقية التنسيقات الأصلية --- */
         .container { max-width: 900px; margin: 0 auto 60px; padding: 0 20px; position: relative; z-index: 5; }
@@ -181,7 +229,8 @@
             header h1 { font-size: 1.7rem; } 
             .compact-card { width: 45%; } 
             .links-title-wrapper h2 { font-size: 1.1rem; }
-            .date-container { font-size: 0.75rem; padding: 10px; gap: 8px; }
+            .date-container { font-size: 0.7rem; padding: 10px 12px; gap: 6px; letter-spacing: -0.5px; }
+            .date-container i { font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -197,12 +246,25 @@
     <div class="live-date-bar">
         <div class="date-container" dir="rtl">
             <i class="fas fa-calendar-alt"></i>
-            <span id="hijri-clock"></span>
+            <span id="hijri-clock" class="date-text-item"></span>
             <span class="sep">|</span>
-            <span id="gregorian-clock"></span>
+            <span id="gregorian-clock" class="date-text-item"></span>
             <span class="sep">|</span>
             <i class="fas fa-clock"></i>
-            <span id="live-time-clock"></span>
+            <span id="live-time-clock" class="date-text-item"></span>
+        </div>
+    </div>
+
+    <div id="admin-panel">
+        <div class="panel-content" id="panel-content">
+            <h4>تعديل التقويم</h4>
+            <button onclick="changeOffset(1)">يوم +1</button>
+            <button onclick="changeOffset(-1)">يوم -1</button>
+            <button onclick="resetOffset()" style="background:var(--secondary); color:white">إعادة ضبط</button>
+            <div id="current-offset-text" style="font-size:0.7rem; margin-top:5px; color:#64748b"></div>
+        </div>
+        <div id="panel-toggle" title="لوحة تحكم التاريخ">
+            <i class="fas fa-cog"></i>
         </div>
     </div>
 
@@ -296,51 +358,79 @@
     </footer>
 
     <script>
-     
-  function updateSchoolClock() {
-    // 1. الحصول على الوقت الحالي
-    const now = new Date();
-    
-    // --- دالة إضافة الأيام لتعديل التاريخ (+1 أو -1) ---
-    const dayOffset = -1; // غير الرقم هنا إلى +1 للإضافة أو -1 للطرح
-    const adjustedDate = new Date(now);
-    adjustedDate.setDate(now.getDate() + dayOffset);
-    // -----------------------------------------------
+        // --- إدارة إزاحة التاريخ (Date Offset) ---
+        let dateOffset = parseInt(localStorage.getItem('school_date_offset')) || 0;
 
-    // 2. التاريخ الهجري (باستخدام التاريخ المعدل)
-    const hijriOptions = { day: 'numeric', month: 'long', year: 'numeric' };
-    let hijriDate = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', hijriOptions).format(adjustedDate);
-    
-    // التأكد من عدم تكرار رمز "هـ"
-    if (!hijriDate.includes("هـ")) {
-        hijriDate += " هـ";
-    }
-    
-    // 3. التاريخ الميلادي (يمكنك استخدام adjustedDate إذا أردت تعديله أيضاً أو now للتاريخ الفعلي)
-    const gregOptions = { day: 'numeric', month: 'numeric', year: 'numeric' };
-    let gregDate = new Intl.DateTimeFormat('ar-EG', gregOptions).format(now);
-    gregDate += " م"; 
-    
-    // 4. الوقت المباشر مع اختصار ص/م
-    const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
-    let timeString = now.toLocaleTimeString('ar-EG', timeOptions);
-    timeString = timeString.replace("صباحاً", "ص").replace("مساءً", "م");
+        function updateClock() {
+            const now = new Date();
+            
+            // تطبيق الإزاحة على التاريخ المعروض
+            const adjustedDate = new Date(now);
+            adjustedDate.setDate(now.getDate() + dateOffset);
 
-    // تحديث العناصر في الصفحة
-    const hEl = document.getElementById('hijri-clock');
-    const gEl = document.getElementById('gregorian-clock');
-    const tEl = document.getElementById('live-time-clock');
+            // 1. التاريخ الهجري مع فحص الرمز "هـ"
+            const hijriOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+            let hijriDate = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', hijriOptions).format(adjustedDate);
+            if (!hijriDate.includes("هـ")) {
+                hijriDate += " هـ";
+            }
+            
+            // 2. التاريخ الميلادي مع الرمز "م"
+            const gregOptions = { day: 'numeric', month: 'numeric', year: 'numeric' };
+            let gregDate = new Intl.DateTimeFormat('ar-EG', gregOptions).format(adjustedDate);
+            gregDate += " م"; 
+            
+            // 3. الوقت المباشر مع اختصارات ص/م
+            const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+            let timeString = now.toLocaleTimeString('ar-EG', timeOptions);
+            timeString = timeString.replace("صباحاً", "ص").replace("مساءً", "م");
 
-    if(hEl) hEl.textContent = hijriDate;
-    if(gEl) gEl.textContent = gregDate;
-    if(tEl) tEl.textContent = timeString;
-}
+            // تحديث العناصر في الصفحة
+            const hEl = document.getElementById('hijri-clock');
+            const gEl = document.getElementById('gregorian-clock');
+            const tEl = document.getElementById('live-time-clock');
 
-// البدء بالتحديث
-setInterval(updateSchoolClock, 1000);
-updateSchoolClock();
+            if(hEl) hEl.textContent = hijriDate;
+            if(gEl) gEl.textContent = gregDate;
+            if(tEl) tEl.textContent = timeString;
+            
+            // تحديث نص الإزاحة في لوحة التحكم
+            const offsetTextEl = document.getElementById('current-offset-text');
+            if(offsetTextEl) {
+                offsetTextEl.textContent = "الإزاحة الحالية: " + (dateOffset > 0 ? "+" : "") + dateOffset + " يوم";
+            }
+        }
 
-  
+        // وظائف لوحة التحكم
+        function changeOffset(val) {
+            dateOffset += val;
+            localStorage.setItem('school_date_offset', dateOffset);
+            updateClock();
+        }
+
+        function resetOffset() {
+            dateOffset = 0;
+            localStorage.setItem('school_date_offset', 0);
+            updateClock();
+        }
+
+        // تبديل ظهور لوحة التحكم
+        const toggleBtn = document.getElementById('panel-toggle');
+        if(toggleBtn) {
+            toggleBtn.onclick = function() {
+                const content = document.getElementById('panel-content');
+                if(content) {
+                    content.style.display = content.style.display === 'block' ? 'none' : 'block';
+                }
+            };
+        }
+
+        // البدء بالتحديث
+        setInterval(updateSchoolClock, 1000); // استخدام الاسم البرمجي الصحيح
+        function updateSchoolClock() { updateClock(); } // توافق مع الأسماء القديمة
+        updateClock();
+
+        // استعادة موقع التمرير
         window.addEventListener('scroll', function() {
             sessionStorage.setItem('scrollPosition', window.scrollY);
         });
@@ -354,6 +444,5 @@ updateSchoolClock();
             }
         });
     </script>
-
 </body>
 </html>
