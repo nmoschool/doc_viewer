@@ -291,6 +291,47 @@
         .cd-total-bar { margin-top: 10px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-radius: var(--r-md); padding: 10px 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 12px rgba(6, 78, 59, 0.25); }
         .cd-total-label { font-size: 0.85rem; font-weight: 700; color: rgba(255,255,255,0.9); display: flex; align-items: center; gap: 7px; }
 
+        /* --- تصميم الملاحظة المضافة --- */
+        .cd-special-note {
+            margin: 15px 16px;
+            padding: 16px;
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 1px solid #fbbf24;
+            border-radius: var(--r-md);
+            color: #92400e;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        .cd-special-note .main-icon {
+            font-size: 1.3rem;
+            color: #d97706;
+        }
+        .cd-special-note .main-text {
+            font-size: 0.95rem;
+            font-weight: 800;
+        }
+        .cd-special-note .close-hint {
+            font-size: 0.85rem;
+            color: #b45309;
+            font-weight: 700;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            border-top: 1px dashed rgba(217, 119, 6, 0.3);
+            padding-top: 12px;
+            width: 100%;
+        }
+        .cd-special-note .close-hint i {
+            font-size: 1.2rem;
+            animation: arrowBounce 1.5s infinite;
+        }
+
         #cdFooter { padding: 0 16px 16px; background: #fff; }
         #cdDismissBtn { width: 100%; padding: 13px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #fff; border: none; border-radius: var(--r-full); font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: var(--tr); box-shadow: 0 4px 14px rgba(6, 78, 59, 0.35); display: flex; align-items:center; justify-content:center; gap: 8px; font-family: 'Cairo'; }
         #cdDismissBtn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(6, 78, 59, 0.4); background: linear-gradient(135deg, var(--secondary), #a88546); }
@@ -302,11 +343,13 @@
             .links-title-wrapper h2 { font-size: 1.1rem; }
             .date-container { font-size: 0.7rem; padding: 10px 12px; gap: 6px; letter-spacing: -0.5px; }
             .date-container i { font-size: 0.8rem; }
+            .cd-special-note .main-text { font-size: 0.85rem; }
         }
     </style>
 </head>
 <body>
 
+    <!-- نافذة العد التنازلي -->
     <div id="cdOverlay">
         <div id="cdBox">
             <div id="cdHead">
@@ -371,6 +414,19 @@
                             <span class="cd-total-label"><span>💡</span> تمنياتنا لجميع الطلاب بالتوفيق والنجاح</span>
                         </div>
                     </div>
+                    
+                    <!-- الملاحظة المضافة مع تعليمات الخروج -->
+                    <div class="cd-special-note">
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;">
+                            <i class="fas fa-bullhorn main-icon"></i>
+                            <span class="main-text">ملاحظة: جداول الاختبارات تجدونها في ملفات الطلاب في قسم جداول الاختبارات كما تعودتم.</span>
+                        </div>
+                        <div class="close-hint">
+                            <span>للخروج اضغط على "حسناً، تم الاطلاع · بالتوفيق" في الأسفل</span>
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -381,6 +437,8 @@
             </div>
         </div>
     </div>
+    <!-- نهاية نافذة العد التنازلي -->
+
     <header>
         <div class="header-content">
             <h1>مدرسة تحفيظ القرآن الابتدائية بالبجادية</h1>
@@ -576,10 +634,9 @@
         // سكربت نافذة العد التنازلي المحدث
         // ══════════════════════════════════════════
         (function(){
-            // تم ضبط الوقت هنا برمجياً ليكون الساعة 7:00 صباحاً
             const EXAM = {
                 start: new Date('2026-06-14T07:00:00'),
-                end:   new Date('2026-06-18T12:00:00') // نهاية فترة الاختبارات كمثال
+                end:   new Date('2026-06-18T12:00:00') 
             };
 
             const els = {
