@@ -171,11 +171,12 @@
         .dev-brand { font-family: 'Marcellus', serif; font-size: 0.9rem; color: var(--secondary); font-weight: 900; letter-spacing: 3px; }
 
         /* ══════════════════════════════════════════
-           نافذة العد التنازلي المدمجة
+           نافذة العد التنازلي المدمجة (بتصميم أزرق مخصص)
         ══════════════════════════════════════════ */
         #cdOverlay {
             position: fixed; inset: 0; z-index: 9900;
-            background: rgba(4, 47, 36, 0.8); backdrop-filter: blur(10px);
+            background: rgba(15, 23, 42, 0.85); /* خلفية داكنة مائلة للأزرق */
+            backdrop-filter: blur(10px);
             display: flex; align-items: flex-start; justify-content: center;
             padding: 16px 12px; overflow-y: auto;
             animation: cdFadeIn 0.4s ease both;
@@ -185,9 +186,13 @@
         @keyframes cdFadeOut { from { opacity:1; } to { opacity:0; pointer-events:none; } }
 
         #cdBox {
+            /* تغيير متغيرات الألوان لتكون زرقاء داخل النافذة فقط */
+            --primary: #1e40af; 
+            --primary-dark: #1e3a8a; 
+            
             background: var(--bg);
             border-radius: var(--r-xl); overflow: hidden;
-            box-shadow: var(--shadow-xl), 0 0 0 1px rgba(6, 78, 59, 0.2);
+            box-shadow: var(--shadow-xl), 0 0 0 1px rgba(30, 64, 175, 0.2);
             width: 100%; max-width: 520px;
             margin: auto;
             animation: cdSlideUp 0.45s cubic-bezier(0.16,1,0.3,1) both;
@@ -219,7 +224,18 @@
         @keyframes cdIconFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 
         #cdHead h2 { font-family: 'Cairo'; font-size: 1.3rem; font-weight: 800; color: #fff; position: relative; z-index:1; margin: 0 0 6px; letter-spacing: 0.01em; }
-        #cdHead p  { font-family: 'Cairo'; font-size: 0.74rem; color: rgba(255,255,255,0.7); position: relative; z-index:1; margin:0; }
+        
+        /* تكبير وإبراز اسم المدرسة */
+        #cdHead p { 
+            font-family: 'Cairo'; 
+            font-size: 0.95rem; 
+            font-weight: 700; 
+            color: #ffffff; 
+            position: relative; 
+            z-index: 1; 
+            margin: 0; 
+            text-shadow: 0 1px 3px rgba(0,0,0,0.4); 
+        }
 
         #cdCloseBtn {
             position: absolute; top: 14px; left: 14px; z-index: 2;
@@ -264,77 +280,49 @@
         .cd-num {
             display: block; font-size: 1.8rem; font-weight: 900; color: var(--primary);
             line-height: 1; margin-bottom: 4px; font-variant-numeric: tabular-nums;
-            text-shadow: 0 2px 8px rgba(6, 78, 59, 0.15); transition: all 0.2s;
+            text-shadow: 0 2px 8px rgba(30, 64, 175, 0.15); transition: all 0.2s;
         }
         .cd-lbl { display: block; font-size: 0.63rem; font-weight: 800; color: var(--primary); opacity: 0.8; }
         .cd-num.flip { animation: numFlip 0.25s ease; }
         @keyframes numFlip { 0% { transform: scaleY(1); } 40% { transform: scaleY(0.6); opacity:0.5; } 100% { transform: scaleY(1); opacity:1; } }
 
-        .cd-done-msg { margin: 0 20px 20px; padding: 14px 18px; text-align: center; font-size: 1.05rem; font-weight: 700; border-radius: var(--r-lg); display: none; background: linear-gradient(135deg, #dcfce7, #fff); color: #166534; border: 1px solid #bbf7d0; }
+        .cd-done-msg { margin: 0 20px 20px; padding: 14px 18px; text-align: center; font-size: 1.05rem; font-weight: 700; border-radius: var(--r-lg); display: none; }
         .cd-live-msg { margin: 0 20px 20px; padding: 12px 18px; text-align: center; font-size: 0.92rem; font-weight: 700; display: none; border-radius: var(--r-lg); animation: livePulse 1.4s ease-in-out infinite; background: linear-gradient(135deg, #fef3c7, #fff); color: #b45309; border: 1px solid #fde68a; }
         @keyframes livePulse { 0%,100% { opacity:1; } 50% { opacity:0.65; } }
 
         .cd-syllabus { background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 14px 16px 16px; }
         .cd-syllabus-title { font-size: 0.86rem; font-weight: 800; color: var(--text-main); margin-bottom: 10px; display: flex; align-items: center; gap: 9px; }
-        .cd-syllabus-title-icon { width: 32px; height: 32px; border-radius: var(--r-md); background: linear-gradient(135deg, var(--primary), var(--primary-dark)); display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; color: #fff; box-shadow: 0 2px 8px rgba(6, 78, 59, 0.25); }
+        .cd-syllabus-title-icon { width: 32px; height: 32px; border-radius: var(--r-md); background: linear-gradient(135deg, var(--primary), var(--primary-dark)); display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; color: #fff; box-shadow: 0 2px 8px rgba(30, 64, 175, 0.25); }
         .cd-syllabus-title span { color: #64748b; font-size: 0.72rem; font-weight: 600; }
 
         .cd-syl-list { display: flex; flex-direction: column; gap: 6px; }
         .cd-syl-item { background: #fff; border-radius: var(--r-md); border: 1px solid #e2e8f0; padding: 8px 12px; display: flex; align-items: center; gap: 10px; box-shadow: var(--shadow-xs); transition: var(--tr); }
         .cd-syl-item:hover { box-shadow: var(--shadow-sm); border-color: var(--secondary); }
-        .cd-syl-num { width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 900; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #fff; box-shadow: 0 2px 6px rgba(6, 78, 59, 0.3); }
+        .cd-syl-num { width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 900; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #fff; box-shadow: 0 2px 6px rgba(30, 64, 175, 0.3); }
         .cd-syl-content { flex: 1; min-width: 0; }
         .cd-syl-name { font-size: 0.88rem; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 3px; }
         .cd-syl-sub { font-size: 0.72rem; color: #64748b; font-weight: 700; display: block; line-height: 1.6; }
         .cd-syl-score { font-size: 0.72rem; font-weight: 900; padding: 3px 10px; border-radius: var(--r-full); flex-shrink: 0; white-space: nowrap; background: #f1f5f9; color: var(--primary); border: 1px solid #e2e8f0; }
 
-        .cd-total-bar { margin-top: 10px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-radius: var(--r-md); padding: 10px 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 12px rgba(6, 78, 59, 0.25); }
+        .cd-total-bar { margin-top: 10px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-radius: var(--r-md); padding: 10px 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 12px rgba(30, 64, 175, 0.25); }
         .cd-total-label { font-size: 0.85rem; font-weight: 700; color: rgba(255,255,255,0.9); display: flex; align-items: center; gap: 7px; }
 
         /* --- تصميم الملاحظة المضافة --- */
         .cd-special-note {
             margin: 15px 16px;
             padding: 16px;
-            background: linear-gradient(135deg, #fef3c7, #fde68a);
-            border: 1px solid #fbbf24;
             border-radius: var(--r-md);
-            color: #92400e;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.15);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 12px;
         }
-        .cd-special-note .main-icon {
-            font-size: 1.3rem;
-            color: #d97706;
-        }
-        .cd-special-note .main-text {
-            font-size: 0.95rem;
-            font-weight: 800;
-        }
-        .cd-special-note .close-hint {
-            font-size: 0.85rem;
-            color: #b45309;
-            font-weight: 700;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            border-top: 1px dashed rgba(217, 119, 6, 0.3);
-            padding-top: 12px;
-            width: 100%;
-        }
-        .cd-special-note .close-hint i {
-            font-size: 1.2rem;
-            animation: arrowBounce 1.5s infinite;
-        }
 
         #cdFooter { padding: 0 16px 16px; background: #fff; }
-        #cdDismissBtn { width: 100%; padding: 13px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #fff; border: none; border-radius: var(--r-full); font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: var(--tr); box-shadow: 0 4px 14px rgba(6, 78, 59, 0.35); display: flex; align-items:center; justify-content:center; gap: 8px; font-family: 'Cairo'; }
-        #cdDismissBtn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(6, 78, 59, 0.4); background: linear-gradient(135deg, var(--secondary), #a88546); }
+        #cdDismissBtn { width: 100%; padding: 13px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #fff; border: none; border-radius: var(--r-full); font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: var(--tr); box-shadow: 0 4px 14px rgba(30, 64, 175, 0.35); display: flex; align-items:center; justify-content:center; gap: 8px; font-family: 'Cairo'; }
+        #cdDismissBtn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(30, 64, 175, 0.4); background: linear-gradient(135deg, var(--secondary), #a88546); }
         #cdDismissBtn:active { transform: scale(0.98); }
 
         @media (max-width: 768px) { 
@@ -345,35 +333,55 @@
             .date-container i { font-size: 0.8rem; }
             .cd-special-note .main-text { font-size: 0.85rem; }
         }
+
+        /* --- تصميم أيقونة النقل المدرسي --- */
+        .transport-icon-wrapper {
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            width: 75px; height: 75px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: -35px auto 15px; box-shadow: 0 10px 20px rgba(30, 64, 175, 0.25);
+            border: 4px solid #fff; position: relative; z-index: 2;
+        }
+        .transport-icon-wrapper i { 
+            font-size: 32px; color: #fff; 
+            animation: busMove 2s infinite alternate ease-in-out; 
+        }
+        @keyframes busMove { 
+            0% { transform: translateX(-3px) translateY(0); } 
+            100% { transform: translateX(3px) translateY(-2px); } 
+        }
     </style>
 </head>
 <body>
 
-    <!-- نافذة العد التنازلي -->
     <div id="cdOverlay">
         <div id="cdBox">
             <div id="cdHead">
                 <button id="cdCloseBtn" onclick="closeCountdown()" title="إغلاق">✕</button>
-                <div class="cd-head-badge">📅 موعد هام</div>
-                <span class="cd-head-icon">📖</span>
-                <h2>اختبارات الفصل الدراسي الثاني للعام ١٤٤٧ هـ</h2>
+                <div class="cd-head-badge">🚌 إعلان هام</div>
+                <h2>التسجيل في النقل المدرسي للعام القادم</h2>
                 <p>مدرسة تحفيظ القرآن الابتدائية بالبجادية</p>
             </div>
 
             <div id="cdBody">
                 <div class="cd-exam-card">
-                    <div class="cd-info-bar">
-                        <div class="cd-info-item"><span class="cd-info-icon">📆</span><div><span class="cd-info-label">بداية الاختبارات</span><span class="cd-info-val">الأحد ١٤٤٧/١٢/٢٨ هـ</span></div></div>
-                        <div class="cd-info-item"><span class="cd-info-icon">🟢</span><div><span class="cd-info-label">تبدأ</span><span class="cd-info-val">٧:٠٠ ص</span></div></div>
+                    
+                    <div class="transport-icon-wrapper">
+                        <i class="fas fa-bus"></i>
                     </div>
 
-                    <div class="cd-dur-strip">
-                        <span class="cd-dur-pill">⏱ فترة الاختبارات</span>
-                        <span class="cd-dur-note">الاختبارات المركزية والنهائية للفصل الدراسي الثاني</span>
+                    <div class="cd-info-bar" style="justify-content: center; text-align: center;">
+                        <div class="cd-info-item">
+                            <span class="cd-info-icon">⏳</span>
+                            <div>
+                                <span class="cd-info-label">ينتهي التسجيل في</span>
+                                <span class="cd-info-val">١٠ يوليو ٢٠٢٦ م | ٢٥ محرم ١٤٤٨ هـ</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="cd-timer-section">
-                        <div class="cd-timer-label">العد التنازلي حتى الاختبارات</div>
+                        <div class="cd-timer-label">المدة المتبقية لإغلاق التسجيل</div>
                         <div class="cd-blocks" id="cdBlocks">
                             <div class="cd-block"><span class="cd-num" id="cd2d">—</span><span class="cd-lbl">يوم</span></div>
                             <div class="cd-block"><span class="cd-num" id="cd2h">—</span><span class="cd-lbl">ساعة</span></div>
@@ -382,48 +390,17 @@
                         </div>
                     </div>
 
-                    <div class="cd-live-msg" id="cdLive">🖊 فترة الاختبارات جارية الآن — وُفِّقتم أيها الطلاب!</div>
-                    <div class="cd-done-msg" id="cdDone">✅ انتهت فترة الاختبارات — بالتوفيق والنجاح للجميع 🌟</div>
-
-                    <div class="cd-syllabus">
-                        <div class="cd-syllabus-title">
-                            <div class="cd-syllabus-title-icon">📝</div>
-                            <div>الاختبارات المركزية<span>الفصل الدراسي الثاني · ١٤٤٧ هـ</span></div>
-                        </div>
-
-                        <div class="cd-syl-list">
-                            <div class="cd-syl-item">
-                                <div class="cd-syl-num">٣</div>
-                                <div class="cd-syl-content">
-                                    <span class="cd-syl-name">الصف الثالث الابتدائي</span>
-                                    <span class="cd-syl-sub">رياضيات · لغتي</span>
-                                </div>
-                                <span class="cd-syl-score">مادتين</span>
-                            </div>
-                            <div class="cd-syl-item">
-                                <div class="cd-syl-num">٦</div>
-                                <div class="cd-syl-content">
-                                    <span class="cd-syl-name">الصف السادس الابتدائي</span>
-                                    <span class="cd-syl-sub">رياضيات · لغة إنجليزية (E) · لغتي · علوم</span>
-                                </div>
-                                <span class="cd-syl-score">٤ مواد</span>
-                            </div>
-                        </div>
-
-                        <div class="cd-total-bar">
-                            <span class="cd-total-label"><span>💡</span> تمنياتنا لجميع الطلاب بالتوفيق والنجاح</span>
-                        </div>
+                    <div class="cd-done-msg" id="cdDone" style="background: linear-gradient(135deg, #eff6ff, #fff); color: #1e3a8a; border: 1px solid #bfdbfe;">
+                        🔒 انتهت فترة التسجيل في النقل المدرسي.
                     </div>
-                    
-                    <!-- الملاحظة المضافة مع تعليمات الخروج -->
-                    <div class="cd-special-note">
+
+                    <div class="cd-special-note" style="background: linear-gradient(135deg, #eff6ff, #dbeafe); border: 1px solid #93c5fd; color: #1e3a8a; margin-top: 15px;">
                         <div style="display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;">
-                            <i class="fas fa-bullhorn main-icon"></i>
-                            <span class="main-text">ملاحظة: هذه الرسالة لتوضيح الاختبارات المركزية والصفوف المحددة لها الاختبارات ، جداول الاختبارات لجميع الصفوف تجدونها في ملفات الطلاب في قسم جداول الاختبارات كما تعودتم.</span>
+                            <i class="fas fa-laptop-house main-icon" style="color: #2563eb;"></i>
+                            <span class="main-text">التسجيل متاح الآن من خلال حساب ولي الأمر في <a href="https://noor.moe.gov.sa/" target="_blank" style="color:#2563eb; text-decoration:underline;">نظام نور</a>.</span>
                         </div>
-                        <div class="close-hint">
-                            <span>للخروج اضغط على "حسناً، تم الاطلاع · بالتوفيق" في الأسفل</span>
-                            <i class="fas fa-arrow-down"></i>
+                        <div style="margin-top: 12px; font-size: 0.9rem; color: #1e40af; font-weight: 800; border-top: 1px dashed rgba(37, 99, 235, 0.3); padding-top: 10px; width: 100%;">
+                            <i class="fas fa-headset" style="margin-left: 5px;"></i> من لديه إشكالية، يرجى التواصل مع وكيل المدرسة.
                         </div>
                     </div>
 
@@ -432,13 +409,11 @@
 
             <div id="cdFooter">
                 <button id="cdDismissBtn" onclick="closeCountdown()">
-                    <i class="fa fa-check-circle"></i> حسناً، تم الاطلاع · بالتوفيق
+                    <i class="fa fa-check-circle"></i> حسناً، تم الاطلاع
                 </button>
             </div>
         </div>
     </div>
-    <!-- نهاية نافذة العد التنازلي -->
-
     <header>
         <div class="header-content">
             <h1>مدرسة تحفيظ القرآن الابتدائية بالبجادية</h1>
@@ -555,7 +530,7 @@
     <footer>
         جميع الحقوق محفوظة لمدرسة تحفيظ القرآن بالبجادية &copy; 2026
         <div style="margin-top:20px; display:flex; justify-content:center; align-items:center; gap:10px;">
-            <span class="dev-brand">Nafal Al-Nufaie [ Abu Osama ]</span>
+            <span class="dev-brand">NMO</span>
             <span style="font-size:0.7rem; letter-spacing:2px; opacity:0.7;">DESIGNED BY</span>
         </div>
     </footer>
@@ -631,13 +606,11 @@
         });
 
         // ══════════════════════════════════════════
-        // سكربت نافذة العد التنازلي المحدث
+        // سكربت نافذة العد التنازلي (للنقل المدرسي)
         // ══════════════════════════════════════════
         (function(){
-            const EXAM = {
-                start: new Date('2026-06-14T07:00:00'),
-                end:   new Date('2026-06-18T12:00:00') 
-            };
+            // موعد إغلاق التسجيل
+            const DEADLINE = new Date('2026-07-10T23:59:59');
 
             const els = {
                 d: document.getElementById('cd2d'),
@@ -645,7 +618,6 @@
                 m: document.getElementById('cd2m'),
                 s: document.getElementById('cd2s'),
                 blocks: document.getElementById('cdBlocks'),
-                live:   document.getElementById('cdLive'),
                 done:   document.getElementById('cdDone')
             };
 
@@ -665,19 +637,16 @@
 
             function tick() {
                 const now  = new Date();
-                if (now >= EXAM.end) {
-                    els.blocks.style.display = 'none';
-                    els.live.style.display   = 'none';
-                    els.done.style.display   = 'block';
-                } else if (now >= EXAM.start) {
-                    els.blocks.style.display = 'none';
-                    els.done.style.display   = 'none';
-                    els.live.style.display   = 'block';
+                if (now >= DEADLINE) {
+                    // انتهت فترة التسجيل
+                    if(els.blocks) els.blocks.style.display = 'none';
+                    if(els.done) els.done.style.display   = 'block';
                 } else {
-                    els.live.style.display   = 'none';
-                    els.done.style.display   = 'none';
-                    els.blocks.style.display = 'grid';
-                    const diff = EXAM.start - now;
+                    // التسجيل لا يزال مفتوحاً
+                    if(els.done) els.done.style.display   = 'none';
+                    if(els.blocks) els.blocks.style.display = 'grid';
+                    
+                    const diff = DEADLINE - now;
                     setNum('d', Math.floor(diff / 86400000));
                     setNum('h', Math.floor((diff % 86400000) / 3600000));
                     setNum('m', Math.floor((diff % 3600000) / 60000));
@@ -690,9 +659,11 @@
 
             window.closeCountdown = function() {
                 const ov = document.getElementById('cdOverlay');
-                ov.classList.add('cd-hiding');
-                clearInterval(cdInterval);
-                setTimeout(() => { ov.style.display = 'none'; }, 360);
+                if(ov) {
+                    ov.classList.add('cd-hiding');
+                    clearInterval(cdInterval);
+                    setTimeout(() => { ov.style.display = 'none'; }, 360);
+                }
             };
         })();
     </script>
