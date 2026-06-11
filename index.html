@@ -175,7 +175,7 @@
         ══════════════════════════════════════════ */
         #cdOverlay {
             position: fixed; inset: 0; z-index: 9900;
-            background: rgba(15, 23, 42, 0.85); /* خلفية داكنة مائلة للأزرق */
+            background: rgba(15, 23, 42, 0.85); 
             backdrop-filter: blur(10px);
             display: flex; align-items: flex-start; justify-content: center;
             padding: 16px 12px; overflow-y: auto;
@@ -186,7 +186,6 @@
         @keyframes cdFadeOut { from { opacity:1; } to { opacity:0; pointer-events:none; } }
 
         #cdBox {
-            /* تغيير متغيرات الألوان لتكون زرقاء داخل النافذة فقط */
             --primary: #1e40af; 
             --primary-dark: #1e3a8a; 
             
@@ -224,8 +223,6 @@
         @keyframes cdIconFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 
         #cdHead h2 { font-family: 'Cairo'; font-size: 1.3rem; font-weight: 800; color: #fff; position: relative; z-index:1; margin: 0 0 6px; letter-spacing: 0.01em; }
-        
-        /* تكبير وإبراز اسم المدرسة */
         #cdHead p { 
             font-family: 'Cairo'; 
             font-size: 0.95rem; 
@@ -235,6 +232,58 @@
             z-index: 1; 
             margin: 0; 
             text-shadow: 0 1px 3px rgba(0,0,0,0.4); 
+        }
+
+        /* --- تصميم الشريط الإخباري الأحمر الجديد داخل النافذة المنبثقة (مُكبر وبارز) --- */
+        .popup-ticker-bar {
+            background: #dc2626; /* خلفية حمراء زاهية */
+            color: #ffffff;
+            height: 55px; /* زيادة ارتفاع الشريط ليكون أوضح */
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            border-bottom: 3px solid #b91c1c;
+            box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3); /* ظل يعطي بروز */
+        }
+        .popup-ticker-badge {
+            background: #991b1b;
+            font-weight: 900;
+            font-size: 1.1rem; /* تكبير خط عنوان التنويه */
+            padding: 0 20px; /* زيادة المسافة الجانبية */
+            height: 100%;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            z-index: 2;
+            box-shadow: 3px 0 10px rgba(0,0,0,0.3);
+        }
+        .popup-ticker-badge i {
+            font-size: 1.2rem;
+            margin-left: 8px;
+        }
+        .popup-ticker-container {
+            flex: 1;
+            overflow: hidden;
+            direction: ltr; /* لضمان انسيابية الحركة البرمجية */
+            position: relative;
+        }
+        .popup-ticker-wrapper {
+            display: inline-flex;
+            white-space: nowrap;
+            animation: popup-ticker-loop 18s linear infinite; /* حركة أبطأ قليلاً للقراءة */
+        }
+        .popup-ticker-item {
+            direction: rtl; /* لقراءة النص العربي بشكل صحيح */
+            padding: 0 50px;
+            font-size: 1.3rem; /* تكبير خط الإعلان بشكل كبير */
+            font-weight: 900; /* أسمك درجة خط */
+            letter-spacing: 0.5px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.4); /* ظل خفيف للنص ليكون أوضح */
+        }
+        /* حركة النص من اليمين إلى اليسار */
+        @keyframes popup-ticker-loop {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         #cdCloseBtn {
@@ -307,7 +356,6 @@
         .cd-total-bar { margin-top: 10px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-radius: var(--r-md); padding: 10px 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 12px rgba(30, 64, 175, 0.25); }
         .cd-total-label { font-size: 0.85rem; font-weight: 700; color: rgba(255,255,255,0.9); display: flex; align-items: center; gap: 7px; }
 
-        /* --- تصميم الملاحظة المضافة --- */
         .cd-special-note {
             margin: 15px 16px;
             padding: 16px;
@@ -325,6 +373,7 @@
         #cdDismissBtn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(30, 64, 175, 0.4); background: linear-gradient(135deg, var(--secondary), #a88546); }
         #cdDismissBtn:active { transform: scale(0.98); }
 
+        /* تناسق أحجام التنويه على شاشات الجوال */
         @media (max-width: 768px) { 
             header h1 { font-size: 1.7rem; } 
             .compact-card { width: 45%; } 
@@ -332,23 +381,10 @@
             .date-container { font-size: 0.7rem; padding: 10px 12px; gap: 6px; letter-spacing: -0.5px; }
             .date-container i { font-size: 0.8rem; }
             .cd-special-note .main-text { font-size: 0.85rem; }
-        }
-
-        /* --- تصميم أيقونة النقل المدرسي --- */
-        .transport-icon-wrapper {
-            background: linear-gradient(135deg, #3b82f6, #1e40af);
-            width: 75px; height: 75px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            margin: -35px auto 15px; box-shadow: 0 10px 20px rgba(30, 64, 175, 0.25);
-            border: 4px solid #fff; position: relative; z-index: 2;
-        }
-        .transport-icon-wrapper i { 
-            font-size: 32px; color: #fff; 
-            animation: busMove 2s infinite alternate ease-in-out; 
-        }
-        @keyframes busMove { 
-            0% { transform: translateX(-3px) translateY(0); } 
-            100% { transform: translateX(3px) translateY(-2px); } 
+            
+            .popup-ticker-bar { height: 45px; }
+            .popup-ticker-badge { font-size: 0.9rem; padding: 0 12px; }
+            .popup-ticker-item { font-size: 1.05rem; }
         }
     </style>
 </head>
@@ -363,14 +399,20 @@
                 <p>مدرسة تحفيظ القرآن الابتدائية بالبجادية</p>
             </div>
 
+            <div class="popup-ticker-bar">
+                <div class="popup-ticker-badge"><i class="fas fa-bell animate-bounce"></i> تنويه عاجل</div>
+                <div class="popup-ticker-container">
+                    <div class="popup-ticker-wrapper">
+                        <div class="popup-ticker-item">إشعارات اختبارات الفترة الثانية في قسم نتائج الطلاب</div>
+                        <div class="popup-ticker-item">إشعارات اختبارات الفترة الثانية في قسم نتائج الطلاب</div>
+                    </div>
+                </div>
+            </div>
+
             <div id="cdBody">
                 <div class="cd-exam-card">
                     
-                    <div class="transport-icon-wrapper">
-                        <i class="fas fa-bus"></i>
-                    </div>
-
-                    <div class="cd-info-bar" style="justify-content: center; text-align: center;">
+                    <div class="cd-info-bar" style="justify-content: center; text-align: center; margin-top: 10px;">
                         <div class="cd-info-item">
                             <span class="cd-info-icon">⏳</span>
                             <div>
@@ -414,6 +456,7 @@
             </div>
         </div>
     </div>
+
     <header>
         <div class="header-content">
             <h1>مدرسة تحفيظ القرآن الابتدائية بالبجادية</h1>
@@ -530,7 +573,7 @@
     <footer>
         جميع الحقوق محفوظة لمدرسة تحفيظ القرآن بالبجادية &copy; 2026
         <div style="margin-top:20px; display:flex; justify-content:center; align-items:center; gap:10px;">
-            <span class="dev-brand">NMO</span>
+            <span class="dev-brand">Nafal Al-Nufaie [ Abu Osama ]</span>
             <span style="font-size:0.7rem; letter-spacing:2px; opacity:0.7;">DESIGNED BY</span>
         </div>
     </footer>
@@ -609,7 +652,6 @@
         // سكربت نافذة العد التنازلي (للنقل المدرسي)
         // ══════════════════════════════════════════
         (function(){
-            // موعد إغلاق التسجيل
             const DEADLINE = new Date('2026-07-10T23:59:59');
 
             const els = {
@@ -638,11 +680,9 @@
             function tick() {
                 const now  = new Date();
                 if (now >= DEADLINE) {
-                    // انتهت فترة التسجيل
                     if(els.blocks) els.blocks.style.display = 'none';
                     if(els.done) els.done.style.display   = 'block';
                 } else {
-                    // التسجيل لا يزال مفتوحاً
                     if(els.done) els.done.style.display   = 'none';
                     if(els.blocks) els.blocks.style.display = 'grid';
                     
