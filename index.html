@@ -21,9 +21,6 @@
             --r-xl: 22px;
             --r-full: 9999px;
             --tr: 0.22s ease;
-            --shadow-xs: 0 1px 3px rgba(0,0,0,0.06);
-            --shadow-sm: 0 2px 10px rgba(0,0,0,0.08);
-            --shadow-xl: 0 28px 72px rgba(0,0,0,0.18);
         }
 
         html { scroll-behavior: smooth; }
@@ -94,7 +91,6 @@
             font-weight: 700;
             font-size: 0.9rem;
             white-space: nowrap; 
-            flex-wrap: nowrap;   
             overflow: hidden;
         }
 
@@ -171,12 +167,12 @@
         .dev-brand { font-family: 'Marcellus', serif; font-size: 0.9rem; color: var(--secondary); font-weight: 900; letter-spacing: 3px; }
 
         /* ══════════════════════════════════════════
-           نافذة التنبيه المدمجة (بتصميم داكن وذهبي متناسق مع الصورة)
+           نافذة التنبيه المدمجة (النسخة البيضاء + الخلفيات المتحركة)
         ══════════════════════════════════════════ */
         #cdOverlay {
             position: fixed; inset: 0; z-index: 9900;
-            background: rgba(15, 23, 42, 0.9); 
-            backdrop-filter: blur(8px);
+            background: rgba(15, 23, 42, 0.75); 
+            backdrop-filter: blur(6px);
             display: flex; align-items: flex-start; justify-content: center;
             padding: 30px 15px; overflow-y: auto;
             animation: cdFadeIn 0.4s ease both;
@@ -186,27 +182,80 @@
         @keyframes cdFadeOut { from { opacity:1; } to { opacity:0; pointer-events:none; } }
 
         #cdBox {
-            background: #111827; /* خلفية داكنة متناسقة */
-            border: 1px solid rgba(197, 160, 89, 0.4); /* إطار ذهبي */
+            background: #ffffff; /* خلفية بيضاء ناصعة */
+            border: 2px solid var(--secondary); /* إطار ذهبي */
             border-radius: var(--r-xl); 
             overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 30px rgba(197, 160, 89, 0.15);
+            box-shadow: 0 25px 50px -12px rgba(6, 78, 59, 0.25), 0 0 35px rgba(197, 160, 89, 0.2);
             width: 100%; max-width: 520px;
             margin: auto;
             animation: cdSlideUp 0.45s cubic-bezier(0.16,1,0.3,1) both;
             display: flex; flex-direction: column;
             position: relative;
+            color: var(--text-main);
         }
         @keyframes cdSlideUp { from { transform: translateY(32px) scale(0.96); opacity:0; } to { transform: translateY(0) scale(1); opacity:1; } }
 
+        /* --- حاوية الأشكال المتحركة (البالونات والقبعات) --- */
+        .popup-anim-container {
+            position: absolute; inset: 0;
+            overflow: hidden; pointer-events: none; z-index: 1;
+        }
+        .anim-item {
+            position: absolute; top: 100%;
+            opacity: 0;
+            animation: floatUpAnim 7s ease-in-out infinite;
+        }
+        .grad-cap {
+            color: rgba(197, 160, 89, 0.22); /* قبعة ذهبية شفافة */
+            font-size: 1.8rem;
+        }
+        .gold-balloon {
+            width: 22px; height: 28px;
+            background: linear-gradient(135deg, rgba(243, 218, 131, 0.55), rgba(197, 160, 89, 0.45));
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            position: relative;
+        }
+        .gold-balloon::after {
+            content: ""; position: absolute;
+            bottom: -4px; left: 8px;
+            border-left: 3px solid transparent; border-right: 3px solid transparent;
+            border-bottom: 5px solid rgba(197, 160, 89, 0.45);
+        }
+
+        /* توزيع العناصر بسرعات وأماكن مختلفة */
+        .ai-1 { left: 8%;  animation-duration: 8s;   animation-delay: 0s; }
+        .ai-2 { left: 25%; animation-duration: 6.5s; animation-delay: 2s; }
+        .ai-3 { left: 45%; animation-duration: 9s;   animation-delay: 1s; }
+        .ai-4 { left: 68%; animation-duration: 7s;   animation-delay: 3.5s; }
+        .ai-5 { left: 85%; animation-duration: 8.5s; animation-delay: 0.5s; }
+        .ai-6 { left: 92%; animation-duration: 6s;   animation-delay: 4s; }
+
+        @keyframes floatUpAnim {
+            0% { top: 100%; transform: translateX(0) rotate(-15deg); opacity: 0; }
+            15% { opacity: 1; }
+            85% { opacity: 1; }
+            100% { top: -15%; transform: translateX(25px) rotate(20deg); opacity: 0; }
+        }
+
+        /* --- أزرار النافذة --- */
         #cdCloseBtn {
             position: absolute; top: 15px; left: 15px; z-index: 10;
             width: 34px; height: 34px; border-radius: 50%;
-            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
-            color: rgba(255,255,255,0.8); display: flex; align-items: center; justify-content: center;
+            background: #f1f5f9; border: 1px solid #cbd5e1;
+            color: #64748b; display: flex; align-items: center; justify-content: center;
             font-size: 15px; cursor: pointer; transition: var(--tr);
         }
         #cdCloseBtn:hover { background: #ef4444; color:#fff; border-color: transparent; transform: rotate(90deg); }
+
+        .btn-dismiss {
+            width: 100%; padding: 14px; 
+            background: #f1f5f9; color: var(--primary-dark); 
+            border: 1px solid #cbd5e1; border-radius: 10px; 
+            font-size: 1rem; font-weight: 800; cursor: pointer; 
+            transition: 0.3s; font-family: 'Cairo';
+        }
+        .btn-dismiss:hover { background: var(--primary); color: white; border-color: var(--primary); }
 
         .survey-btn {
             display: inline-flex; align-items: center; gap: 8px; 
@@ -214,18 +263,18 @@
             padding: 12px 24px; border-radius: 8px; 
             font-weight: 800; font-size: 1.05rem;
             text-decoration: none; transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
+            box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3);
         }
-        .survey-btn:hover { background: #a88546; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(197, 160, 89, 0.6); }
+        .survey-btn:hover { background: #a88546; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(197, 160, 89, 0.5); }
 
-        /* تناسق أحجام التنويه على شاشات الجوال */
+        .popup-content-wrapper { position: relative; z-index: 2; } /* لضمان بقاء النصوص فوق الخلفية المتحركة */
+
         @media (max-width: 768px) { 
             header h1 { font-size: 1.7rem; } 
             .compact-card { width: 45%; } 
             .links-title-wrapper h2 { font-size: 1.1rem; }
             .date-container { font-size: 0.7rem; padding: 10px 12px; gap: 6px; letter-spacing: -0.5px; }
             .date-container i { font-size: 0.8rem; }
-            
             #cdBox { max-width: 95%; }
             .survey-btn { font-size: 0.95rem; padding: 10px 20px; }
         }
@@ -233,50 +282,56 @@
 </head>
 <body>
 
-    <!-- النافذة المنبثقة المحدثة -->
+    <!-- النافذة المنبثقة (البيضاء المحدثة) -->
     <div id="cdOverlay">
         <div id="cdBox">
+            
+            <!-- الخلفية المتحركة (قبعات وبالونات) -->
+            <div class="popup-anim-container">
+                <div class="anim-item ai-1"><i class="fas fa-graduation-cap grad-cap"></i></div>
+                <div class="anim-item ai-2"><div class="gold-balloon"></div></div>
+                <div class="anim-item ai-3"><i class="fas fa-graduation-cap grad-cap"></i></div>
+                <div class="anim-item ai-4"><div class="gold-balloon"></div></div>
+                <div class="anim-item ai-5"><i class="fas fa-graduation-cap grad-cap"></i></div>
+                <div class="anim-item ai-6"><div class="gold-balloon"></div></div>
+            </div>
+
             <button id="cdCloseBtn" onclick="closeCountdown()" title="إغلاق">✕</button>
             
-            <div style="padding: 35px 25px 25px; text-align: center;">
+            <div class="popup-content-wrapper" style="padding: 35px 25px 25px; text-align: center;">
                 
-                <div style="display: inline-block; background: rgba(197, 160, 89, 0.15); padding: 5px 15px; border-radius: 50px; color: var(--secondary); font-size: 0.8rem; font-weight: 900; margin-bottom: 15px; border: 1px solid rgba(197, 160, 89, 0.3);">
-                    <i class="fas fa-bullhorn"></i> إعلان هام
+                <div style="display: inline-block; background: #fefce8; padding: 6px 18px; border-radius: 50px; color: var(--primary-dark); font-size: 0.85rem; font-weight: 900; margin-bottom: 15px; border: 1px solid rgba(197, 160, 89, 0.4);">
+                    <i class="fas fa-bullhorn" style="color: var(--secondary);"></i> إعلان هام
                 </div>
 
-                <h2 style="color: #ffffff; font-size: 1.5rem; font-weight: 900; margin: 0 0 15px; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
-                    للتسجيل في النقل المدرسي للعام القادم
+                <h2 style="color: var(--primary-dark); font-size: 1.55rem; font-weight: 900; margin: 0 0 15px;">
+                    التسجيل في النقل المدرسي
                 </h2>
                 
-                <p style="color: #e2e8f0; font-size: 1.05rem; line-height: 1.6; margin-bottom: 12px;">
-                    تابعوا حساب تواصل وزارة التعليم في <a href="https://x.com/MOETawasul" target="_blank" style="color: var(--secondary); font-weight: 900; text-decoration: underline;">منصة X</a>.
+                <p style="color: #334155; font-size: 1.05rem; line-height: 1.6; margin-bottom: 12px; font-weight: 600;">
+                    للتسجيل في النقل المدرسي تابعوا حساب <a href="https://x.com/MOETawasul" target="_blank" style="color: var(--primary); font-weight: 900; text-decoration: underline;">تواصل وزارة التعليم على منصة X</a>.
                 </p>
                 
-                <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 25px;">
-                    <i class="fas fa-headset"></i> من لديه إشكالية، يرجى التواصل مع وكيل المدرسة.
-                </p>
+         
 
-                <!-- الصورة المرفقة بالرابط الجديد (بتنسيق يتناسب مع الخلفية الداكنة) -->
-                <div style="margin-bottom: 25px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(197, 160, 89, 0.2); box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
-                    <img src="https://up6.cc/2026/06/178188656974191.png" alt="مدرسة تحفيظ القرآن بالبجادية" style="width: 100%; display: block;">
+                <div style="margin-bottom: 25px; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 10px 20px rgba(0,0,0,0.06);">
+                    <img src="https://up6.cc/2026/06/178207139597211.png" alt="مدرسة تحفيظ القرآن بالبجادية" style="width: 100%; display: block;">
                 </div>
 
-                <!-- قسم الاستبيان -->
-                <div style="background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(197, 160, 89, 0.4); border-radius: 12px; padding: 20px 15px;">
+                <div style="background: #f8fafc; border: 1px dashed var(--secondary); border-radius: 12px; padding: 20px 15px;">
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSfiynijK3kcsYvBqMsobdx4hhp32tTD8AL4EHBt08abMLcGFw/viewform?pli=1" target="_blank" class="survey-btn">
                         <i class="fas fa-clipboard-list"></i> تعبئة الاستبيان
                     </a>
                     
-                    <div style="margin-top: 12px; color: #cbd5e1; font-size: 0.85rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 6px;">
-                        <i class="fas fa-user-secret" style="color: var(--secondary);"></i> 
+                    <div style="margin-top: 12px; color: #64748b; font-size: 0.85rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                        <i class="fas fa-user-secret" style="color: var(--primary);"></i> 
                         لا يطلع عليه إلا مصمم الموقع
                     </div>
                 </div>
             </div>
 
-            <!-- زر الإغلاق السفلي -->
-            <div style="padding: 0 25px 25px;">
-                <button onclick="closeCountdown()" style="width: 100%; padding: 14px; background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: 0.3s; font-family: 'Cairo';">
+            <div class="popup-content-wrapper" style="padding: 0 25px 25px;">
+                <button onclick="closeCountdown()" class="btn-dismiss">
                     حسناً، إغلاق النافذة
                 </button>
             </div>
@@ -405,7 +460,6 @@
     </footer>
 
     <script>
-        // --- إدارة إزاحة التاريخ (Date Offset) ---
         let dateOffset = parseInt(localStorage.getItem('school_date_offset')) || 0;
 
         function updateClock() {
@@ -474,7 +528,6 @@
             }
         });
 
-        // إغلاق النافذة المنبثقة
         window.closeCountdown = function() {
             const ov = document.getElementById('cdOverlay');
             if(ov) {
