@@ -21,6 +21,9 @@
             --r-xl: 22px;
             --r-full: 9999px;
             --tr: 0.22s ease;
+            --shadow-xs: 0 1px 3px rgba(0,0,0,0.06);
+            --shadow-sm: 0 2px 10px rgba(0,0,0,0.08);
+            --shadow-xl: 0 28px 72px rgba(0,0,0,0.18);
         }
 
         html { scroll-behavior: smooth; }
@@ -91,6 +94,7 @@
             font-weight: 700;
             font-size: 0.9rem;
             white-space: nowrap; 
+            flex-wrap: nowrap;   
             overflow: hidden;
         }
 
@@ -101,11 +105,11 @@
 
         /* --- لوحة التحكم --- */
         #admin-panel { position: fixed; bottom: 20px; left: 20px; z-index: 9999; }
-        #panel-toggle { width: 40px; height: 40px; background: var(--card-bg); border: 1px solid #e2e8f0; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0.3; transition: 0.3s; }
+        #panel-toggle { width: 40px; height: 40px; background: var(--card-bg); border: 1px solid #e2e8f0; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0.4; transition: 0.3s; box-shadow: var(--shadow-sm); }
         #panel-toggle:hover { opacity: 1; background: var(--secondary); color: white; }
         .panel-content { display: none; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); margin-bottom: 10px; border: 1px solid var(--secondary); text-align: center; width: 200px; }
         .panel-content h4 { margin: 0 0 10px; font-size: 0.9rem; color: var(--primary); }
-        .panel-content button { background: #f1f5f9; border: 1px solid #e2e8f0; padding: 5px 15px; border-radius: 5px; cursor: pointer; font-family: 'Cairo'; font-weight: 700; margin: 2px; }
+        .panel-content button { background: #f1f5f9; border: 1px solid #e2e8f0; padding: 5px 15px; border-radius: 5px; cursor: pointer; font-family: 'Cairo'; font-weight: 700; margin: 2px; transition:0.2s;}
         .panel-content button:hover { background: var(--secondary); color: white; }
 
         /* --- المحتوى العام --- */
@@ -127,6 +131,50 @@
         .ticker-wrapper { display: inline-flex; white-space: nowrap; animation: ticker-pro 25s linear infinite; }
         .ticker-item { direction: rtl; padding: 0 40px; color: var(--primary-dark); font-weight: 700; font-size: 0.9rem; }
         @keyframes ticker-pro { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+
+        /* ══════════════════════════════════════════
+           إضافات الأكورديون ونافذة الإدارة (CMS)
+        ══════════════════════════════════════════ */
+        .accordion-box { background: #fff; border: 1px solid #e2e8f0; border-radius: var(--r-lg); margin-bottom: 12px; overflow: hidden; box-shadow: var(--shadow-xs); transition: 0.3s; }
+        .accordion-box:hover { border-color: var(--secondary); box-shadow: var(--shadow-sm); }
+        .acc-header { padding: 15px 20px; display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; }
+        .acc-badge { padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: 900; flex-shrink: 0; }
+        
+        /* التعديل: لون خبر جديد */
+        .badge-new { background: #ef4444; color: #ffffff; } 
+        .badge-event { background: #fef3c7; color: #d97706; } 
+        .badge-info { background: #f1f5f9; color: var(--primary); }
+        
+        .acc-title { font-weight: 800; font-size: 1.05rem; flex: 1; color: var(--text-main); margin: 0; text-align: right; }
+        .acc-date { font-size: 0.85rem; color: #94a3b8; margin-left: 8px; }
+        .acc-arrow { color: var(--secondary); transition: transform 0.3s ease; }
+        .accordion-box.open .acc-arrow { transform: rotate(180deg); }
+        .acc-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.3s; background: #fafbfc; border-top: 1px solid #f1f5f9; padding: 0 20px; font-size: 0.95rem; line-height: 1.7; color: #475569; text-align: right; }
+        .accordion-box.open .acc-body { max-height: 800px; padding: 18px 20px; }
+        .acc-link { display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; color: var(--primary); font-weight: 800; text-decoration: none; background: #e2e8f0; padding: 4px 12px; border-radius: 6px; font-size: 0.85rem; }
+        .acc-link:hover { background: var(--secondary); color: white; }
+        
+        /* أزرار الإدارة (حذف وتعديل بشكل عمودي) */
+        .admin-actions-wrapper { display: none; flex-direction: column; gap: 6px; margin-left: 5px; }
+        body.admin-mode .admin-actions-wrapper { display: flex; }
+        .admin-del-btn { background: #fee2e2; color: #ef4444; border: 1px solid #fca5a5; padding: 5px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo'; font-size: 0.75rem; text-align: center; }
+        .admin-del-btn:hover { background: #ef4444; color: white; }
+        .admin-edit-btn { background: #e0f2fe; color: #0284c7; border: 1px solid #bae6fd; padding: 5px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo'; font-size: 0.75rem; text-align: center; }
+        .admin-edit-btn:hover { background: #0284c7; color: white; }
+
+        #cmsModal { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(6px); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 15px; }
+        #cmsModal.show { display: flex; animation: cdFadeIn 0.3s ease; }
+        @keyframes cdFadeIn  { from { opacity:0; } to { opacity:1; } }
+        .cms-box { background: #ffffff; border: 2px solid var(--secondary); border-radius: var(--r-xl); width: 100%; max-width: 500px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.6); text-align: right; }
+        .cms-hdr { background: var(--header-gradient); padding: 18px 25px; color: white; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--secondary); }
+        .cms-hdr h3 { margin: 0; font-size: 1.2rem; }
+        .cms-body-content { padding: 25px; }
+        .cms-lbl { display: block; font-weight: 800; font-size: 0.85rem; color: var(--primary); margin: 12px 0 5px; }
+        .cms-inp, .cms-txt { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: 'Cairo'; font-size: 0.95rem; outline: none; box-sizing: border-box; color: var(--text-main); }
+        .cms-inp:focus, .cms-txt:focus { border-color: var(--secondary); }
+        .cms-txt { height: 95px; resize: none; }
+        .cms-btn { width: 100%; padding: 12px; background: var(--secondary); color: white; border: none; border-radius: 8px; font-weight: 800; font-size: 1rem; margin-top: 20px; cursor: pointer; font-family: 'Cairo'; transition: 0.2s; box-shadow: 0 4px 12px rgba(197, 160, 89, 0.3); }
+        .cms-btn:hover { background: var(--primary); }
 
         .modern-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 40px; }
         .action-card {
@@ -166,219 +214,16 @@
         footer { background: var(--header-gradient); padding: 50px 20px; text-align: center; color: rgba(255, 255, 255, 0.8); border-top: 4px solid var(--secondary); }
         .dev-brand { font-family: 'Marcellus', serif; font-size: 0.9rem; color: var(--secondary); font-weight: 900; letter-spacing: 3px; }
 
-        /* ══════════════════════════════════════════
-           نافذة التنبيه المدمجة 
-        ══════════════════════════════════════════ */
-        #cdOverlay {
-            position: fixed; inset: 0; z-index: 9900;
-            background: rgba(15, 23, 42, 0.75); 
-            backdrop-filter: blur(6px);
-            display: flex; align-items: flex-start; justify-content: center;
-            padding: 30px 15px; overflow-y: auto;
-            animation: cdFadeIn 0.4s ease both;
-        }
-        #cdOverlay.cd-hiding { animation: cdFadeOut 0.35s ease forwards; }
-        @keyframes cdFadeIn  { from { opacity:0; } to { opacity:1; } }
-        @keyframes cdFadeOut { from { opacity:1; } to { opacity:0; pointer-events:none; } }
-
-        #cdBox {
-            background: #ffffff; 
-            border: 2px solid var(--secondary); 
-            border-radius: var(--r-xl); 
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(6, 78, 59, 0.25), 0 0 35px rgba(197, 160, 89, 0.2);
-            width: 100%; max-width: 520px;
-            margin: auto;
-            animation: cdSlideUp 0.45s cubic-bezier(0.16,1,0.3,1) both;
-            display: flex; flex-direction: column;
-            position: relative;
-            color: var(--text-main);
-        }
-        @keyframes cdSlideUp { from { transform: translateY(32px) scale(0.96); opacity:0; } to { transform: translateY(0) scale(1); opacity:1; } }
-
-        /* --- حاوية الأشكال المتحركة --- */
-        .popup-anim-container {
-            position: absolute; inset: 0;
-            overflow: hidden; pointer-events: none; z-index: 1;
-        }
-        .anim-item {
-            position: absolute; top: 100%;
-            opacity: 0;
-            animation: floatUpAnim 7s ease-in-out infinite;
-        }
-        .grad-cap {
-            color: rgba(197, 160, 89, 0.22); 
-            font-size: 1.8rem;
-        }
-        .gold-balloon {
-            width: 22px; height: 28px;
-            background: linear-gradient(135deg, rgba(243, 218, 131, 0.55), rgba(197, 160, 89, 0.45));
-            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
-            position: relative;
-        }
-        .gold-balloon::after {
-            content: ""; position: absolute;
-            bottom: -4px; left: 8px;
-            border-left: 3px solid transparent; border-right: 3px solid transparent;
-            border-bottom: 5px solid rgba(197, 160, 89, 0.45);
-        }
-
-        .ai-1 { left: 8%;  animation-duration: 8s;   animation-delay: 0s; }
-        .ai-2 { left: 25%; animation-duration: 6.5s; animation-delay: 2s; }
-        .ai-3 { left: 45%; animation-duration: 9s;   animation-delay: 1s; }
-        .ai-4 { left: 68%; animation-duration: 7s;   animation-delay: 3.5s; }
-        .ai-5 { left: 85%; animation-duration: 8.5s; animation-delay: 0.5s; }
-        .ai-6 { left: 92%; animation-duration: 6s;   animation-delay: 4s; }
-
-        @keyframes floatUpAnim {
-            0% { top: 100%; transform: translateX(0) rotate(-15deg); opacity: 0; }
-            15% { opacity: 1; }
-            85% { opacity: 1; }
-            100% { top: -15%; transform: translateX(25px) rotate(20deg); opacity: 0; }
-        }
-
-        /* --- أزرار النافذة --- */
-        #cdCloseBtn {
-            position: absolute; top: 15px; left: 15px; z-index: 10;
-            width: 34px; height: 34px; border-radius: 50%;
-            background: #f1f5f9; border: 1px solid #cbd5e1;
-            color: #64748b; display: flex; align-items: center; justify-content: center;
-            font-size: 15px; cursor: pointer; transition: var(--tr);
-        }
-        #cdCloseBtn:hover { background: #ef4444; color:#fff; border-color: transparent; transform: rotate(90deg); }
-
-        .btn-dismiss {
-            width: 100%; padding: 14px; 
-            background: #f1f5f9; color: var(--primary-dark); 
-            border: 1px solid #cbd5e1; border-radius: 10px; 
-            font-size: 1rem; font-weight: 800; cursor: pointer; 
-            transition: 0.3s; font-family: 'Cairo';
-        }
-        .btn-dismiss:hover { background: var(--primary); color: white; border-color: var(--primary); }
-
-        .survey-btn {
-            display: inline-flex; align-items: center; gap: 8px; 
-            background: var(--secondary); color: #fff; 
-            padding: 12px 24px; border-radius: 8px; 
-            font-weight: 800; font-size: 1.05rem;
-            text-decoration: none; transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3);
-        }
-        .survey-btn:hover { background: #a88546; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(197, 160, 89, 0.5); }
-
-        /* --- زر النتائج --- */
-        .result-btn-pro {
-            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-            color: #ffffff !important;
-            padding: 14px 28px;
-            border-radius: 12px;
-            font-weight: 900;
-            font-size: 1.1rem;
-            text-decoration: none;
-            box-shadow: 0 8px 25px -4px rgba(37, 99, 235, 0.4);
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            max-width: 100%;
-        }
-        .result-btn-pro:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 14px 30px -4px rgba(37, 99, 235, 0.6);
-            background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
-        }
-
-        .popup-content-wrapper { position: relative; z-index: 2; }
-
         @media (max-width: 768px) { 
             header h1 { font-size: 1.7rem; } 
             .compact-card { width: 45%; } 
             .links-title-wrapper h2 { font-size: 1.1rem; }
             .date-container { font-size: 0.7rem; padding: 10px 12px; gap: 6px; letter-spacing: -0.5px; }
             .date-container i { font-size: 0.8rem; }
-            #cdBox { max-width: 95%; }
-            .survey-btn { font-size: 0.95rem; padding: 10px 20px; }
-            .result-btn-pro { font-size: 1rem; padding: 12px 20px; }
         }
     </style>
 </head>
 <body>
-
-    <!-- النافذة المنبثقة المحدثة -->
-    <div id="cdOverlay">
-        <div id="cdBox">
-            
-            <div class="popup-anim-container">
-                <div class="anim-item ai-1"><i class="fas fa-graduation-cap grad-cap"></i></div>
-                <div class="anim-item ai-2"><div class="gold-balloon"></div></div>
-                <div class="anim-item ai-3"><i class="fas fa-graduation-cap grad-cap"></i></div>
-                <div class="anim-item ai-4"><div class="gold-balloon"></div></div>
-                <div class="anim-item ai-5"><i class="fas fa-graduation-cap grad-cap"></i></div>
-                <div class="anim-item ai-6"><div class="gold-balloon"></div></div>
-            </div>
-
-            <button id="cdCloseBtn" onclick="closeCountdown()" title="إغلاق">✕</button>
-            
-            <div class="popup-content-wrapper" style="padding: 35px 25px 25px; text-align: center;">
-                
-                <div style="display: inline-block; background: #fefce8; padding: 6px 18px; border-radius: 50px; color: var(--primary-dark); font-size: 0.85rem; font-weight: 900; margin-bottom: 15px; border: 1px solid rgba(197, 160, 89, 0.4);">
-                    <i class="fas fa-bullhorn" style="color: var(--secondary);"></i> إعلان هام
-                </div>
-
-                <h2 style="color: var(--primary-dark); font-size: 1.55rem; font-weight: 900; margin: 0 0 15px;">
-                    التسجيل في النقل المدرسي
-                </h2>
-                
-                <p style="color: #334155; font-size: 1.05rem; line-height: 1.6; margin-bottom: 25px; font-weight: 600;">
-                    للتسجيل في النقل المدرسي تابعوا حساب <a href="https://x.com/MOETawasul" target="_blank" style="color: var(--primary); font-weight: 900; text-decoration: underline;">تواصل وزارة التعليم على منصة X</a>.
-                </p>
-
-                <!-- 1. قسم النتائج (نُقل إلى الأعلى) -->
-                <div style="background: #eff6ff; border: 2px solid #bfdbfe; border-radius: 16px; padding: 22px 15px; margin-bottom: 25px; box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.1);">
-                    
-                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px;">
-                        <span style="background: #2563eb; color: white; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);">
-                            <i class="fas fa-award"></i>
-                        </span>
-                        <h3 style="margin: 0; color: #1e40af; font-size: 1.3rem; font-weight: 900;">
-                            نتائج الفصل الدراسي الثاني
-                        </h3>
-                    </div>
-
-                    <a href="https://c.autorasd.com/certificates/b0a58f5f8694310190b05d2d60beff99" target="_blank" class="result-btn-pro">
-                        <i class="fas fa-user-graduate"></i>
-                        <span>لمعرفة النتيجة اضغط هنا</span>
-                    </a>
-
-                    <div style="margin-top: 15px; background: #ffffff; border: 1px solid #dbeafe; border-radius: 10px; padding: 10px; color: #1e3a8a; font-size: 0.9rem; font-weight: 700;">
-                        <i class="fas fa-info-circle" style="color: #2563eb; margin-left: 4px;"></i>
-                        <span>ادخل رقم هوية الطالب &larr; اختر (<strong>النهائي</strong>) &larr; (<strong>الفصل الثاني</strong>)</span>
-                    </div>
-                </div>
-
-                <!-- 2. الصورة (مع الرابط الجديد) -->
-                <div style="margin-bottom: 25px; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 10px 20px rgba(0,0,0,0.06);">
-                    <img src="https://up6.cc/2026/06/178207139597211.png" alt="مدرسة تحفيظ القرآن بالبجادية" style="width: 100%; display: block;">
-                </div>
-
-                <!-- 3. قسم الاستبيان (الذهبي) -->
-                <div style="background: #f8fafc; border: 1px dashed var(--secondary); border-radius: 12px; padding: 20px 15px;">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfiynijK3kcsYvBqMsobdx4hhp32tTD8AL4EHBt08abMLcGFw/viewform?pli=1" target="_blank" class="survey-btn">
-                        <i class="fas fa-clipboard-list"></i> تعبئة الاستبيان
-                    </a>
-                    
-                    <div style="margin-top: 12px; color: #64748b; font-size: 0.85rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 6px;">
-                        <i class="fas fa-user-secret" style="color: var(--primary);"></i> 
-                        لا يطلع عليه إلا مصمم الموقع
-                    </div>
-                </div>
-            </div>
-
-            <div class="popup-content-wrapper" style="padding: 0 25px 25px;">
-                <button onclick="closeCountdown()" class="btn-dismiss">
-                    حسناً، إغلاق النافذة
-                </button>
-            </div>
-        </div>
-    </div>
 
     <header>
         <div class="header-content">
@@ -406,8 +251,13 @@
             <button onclick="changeOffset(-1)">يوم -1</button>
             <button onclick="resetOffset()" style="background:var(--secondary); color:white">إعادة ضبط</button>
             <div id="current-offset-text" style="font-size:0.7rem; margin-top:5px; color:#64748b"></div>
+
+            <hr style="margin:12px 0; border:none; border-top:1px dashed #cbd5e1;">
+
+            <h4>إدارة الموقع (CMS)</h4>
+            <button onclick="verifyAdmin()" style="background:var(--primary); color:white; width:100%;">نشر / تحرير الإعلانات</button>
         </div>
-        <div id="panel-toggle" title="لوحة تحكم التاريخ">
+        <div id="panel-toggle" title="لوحة تحكم الإدارة">
             <i class="fas fa-cog"></i>
         </div>
     </div>
@@ -428,6 +278,17 @@
             </div>
         </div>
 
+        <!-- ═════════ الأكورديون (لوحة الإعلانات الحية) ═════════ -->
+        <div class="links-title-wrapper">
+            <svg class="moving-arrow" viewBox="0 0 24 24"><path d="M11,4H13V16L18.5,10.5L19.92,11.92L12,19.84L4.08,11.92L5.5,10.5L11,16V4Z"/></svg>
+            <h2>لوحة الإعلانات والمستجدات</h2>
+            <svg class="moving-arrow" viewBox="0 0 24 24"><path d="M11,4H13V16L18.5,10.5L19.92,11.92L12,19.84L4.08,11.92L5.5,10.5L11,16V4Z"/></svg>
+        </div>
+
+        <div id="accordion-container" style="margin-bottom: 40px;">
+            <div style="text-align:center; padding:30px; color:#94a3b8;"><i class="fas fa-spinner fa-spin"></i> جارِ الربط بقاعدة البيانات...</div>
+        </div>
+
         <div class="modern-grid">
             <a href="https://nmoschool.github.io/Students/" class="action-card" target="_blank">
                 <div class="icon-wrapper">
@@ -435,10 +296,7 @@
                 </div>
                 <h3>ملفات الطلاب</h3>
                 <p>الوصول السريع لكافة ملفاتك الدراسية والمناهج المساعدة.</p>
-                <div class="smart-link">
-                    <span>عرض الملفات</span>
-                    <div class="arrow">←</div>
-                </div>
+                <div class="smart-link"><span>عرض الملفات</span><div class="arrow">←</div></div>
             </a>
 
             <a href="https://c.autorasd.com/certificates/b0a58f5f8694310190b05d2d60beff99" class="action-card" target="_blank">
@@ -447,10 +305,7 @@
                 </div>
                 <h3>نتائج الطلاب</h3>
                 <p>استعلم عن نتائج الاختبارات والتقارير الشهرية فور صدورها.</p>
-                <div class="smart-link">
-                    <span>عرض النتائج</span>
-                    <div class="arrow">←</div>
-                </div>
+                <div class="smart-link"><span>عرض النتائج</span><div class="arrow">←</div></div>
             </a>
         </div>
 
@@ -463,18 +318,15 @@
         <div class="mini-links-container">
             <a href="https://noor.moe.gov.sa/" class="compact-card" target="_blank">
                 <div class="compact-icon"><svg viewBox="0 0 24 24"><path d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z"/></svg></div>
-                <h3>نظام نور</h3>
-                <span>الخدمات التعليمية</span>
+                <h3>نظام نور</h3><span>الخدمات التعليمية</span>
             </a>
             <a href="https://schools.madrasati.sa/" class="compact-card" target="_blank">
                 <div class="compact-icon"><svg viewBox="0 0 24 24"><path d="M12,3L1,9L12,15L21,10.09V17H23V9M5,13.18V17.18L12,21L19,17.18V13.18L12,17L5,13.18Z"/></svg></div>
-                <h3>منصة مدرستي</h3>
-                <span>التعليم عن بُعد</span>
+                <h3>منصة مدرستي</h3><span>التعليم عن بُعد</span>
             </a>
             <a href="https://www.ien.edu.sa/" class="compact-card" target="_blank">
                 <div class="compact-icon"><svg viewBox="0 0 24 24"><path d="M18,22A2,2 0 0,0 20,20V4C20,2.89 19.1,2 18,2H12V9L9.5,7.5L7,9V2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18Z"/></svg></div>
-                <h3>بوابة عين</h3>
-                <span>الكتب الدراسية</span>
+                <h3>بوابة عين</h3><span>الكتب الدراسية</span>
             </a>
         </div>
 
@@ -493,6 +345,38 @@
         </div>
     </div>
 
+    <!-- ═════════ نافذة النشر المنبثقة للمدير (CMS Modal) ═════════ -->
+    <div id="cmsModal">
+        <div class="cms-box">
+            <div class="cms-hdr">
+                <h3 id="cmsModalTitle"><i class="fas fa-bullhorn"></i> نشر إعلان جديد</h3>
+                <button onclick="closeCMS()" style="background:none; border:none; color:white; font-size:1.3rem; cursor:pointer;">✕</button>
+            </div>
+            <div class="cms-body-content">
+                <label class="cms-lbl">التصنيف</label>
+                <select id="cmsBadge" class="cms-inp">
+                    <option value="badge-new">خبر جديد (أحمر)</option>
+                    <option value="badge-event">فعالية (ذهبي)</option>
+                    <option value="badge-info">تنبيه عام (أخضر)</option>
+                </select>
+
+                <label class="cms-lbl">عنوان الإعلان *</label>
+                <input type="text" id="cmsTitle" class="cms-inp" placeholder="اكتب العنوان هنا...">
+
+                <label class="cms-lbl">التاريخ (اختياري)</label>
+                <input type="text" id="cmsDate" class="cms-inp" placeholder="مثال: 20 شعبان 1447 هـ">
+
+                <label class="cms-lbl">نص الإعلان *</label>
+                <textarea id="cmsBody" class="cms-txt" placeholder="اكتب التفاصيل..."></textarea>
+
+                <label class="cms-lbl">رابط خارجي (اختياري)</label>
+                <input type="url" id="cmsLink" class="cms-inp" placeholder="https://...">
+
+                <button onclick="submitAnnouncement()" id="cmsSubmitBtn" class="cms-btn">نشر وتحديث الموقع الآن</button>
+            </div>
+        </div>
+    </div>
+
     <footer>
         جميع الحقوق محفوظة لمدرسة تحفيظ القرآن بالبجادية &copy; 2026
         <div style="margin-top:20px; display:flex; justify-content:center; align-items:center; gap:10px;">
@@ -502,6 +386,13 @@
     </footer>
 
     <script>
+        // ═════════════════ إعدادات قاعدة البيانات ═════════════════
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbxtzHqk0nSmIhxH1Rae7hic4NU2H9dLjG6-Ni4iRHr3g_wsfH11tdABhzZfUKe1CIQc/exec"; 
+        
+        // التعديل: الرقم السري الجديد للإدارة
+        const ADMIN_PASSWORD = "999555111"; 
+
+        // --- إدارة إزاحة التاريخ ---
         let dateOffset = parseInt(localStorage.getItem('school_date_offset')) || 0;
 
         function updateClock() {
@@ -533,17 +424,8 @@
             if(offsetTextEl) offsetTextEl.textContent = "الإزاحة الحالية: " + (dateOffset > 0 ? "+" : "") + dateOffset + " يوم";
         }
 
-        function changeOffset(val) {
-            dateOffset += val;
-            localStorage.setItem('school_date_offset', dateOffset);
-            updateClock();
-        }
-
-        function resetOffset() {
-            dateOffset = 0;
-            localStorage.setItem('school_date_offset', 0);
-            updateClock();
-        }
+        function changeOffset(val) { dateOffset += val; localStorage.setItem('school_date_offset', dateOffset); updateClock(); }
+        function resetOffset() { dateOffset = 0; localStorage.setItem('school_date_offset', 0); updateClock(); }
 
         const toggleBtn = document.getElementById('panel-toggle');
         if(toggleBtn) {
@@ -553,30 +435,165 @@
             };
         }
 
-        setInterval(updateSchoolClock, 1000); 
-        function updateSchoolClock() { updateClock(); } 
-        updateClock();
+        setInterval(updateClock, 1000); updateClock();
 
-        window.addEventListener('scroll', function() {
-            sessionStorage.setItem('scrollPosition', window.scrollY);
-        });
-
+        window.addEventListener('scroll', function() { sessionStorage.setItem('scrollPosition', window.scrollY); });
         window.addEventListener('load', function() {
             if (sessionStorage.getItem('scrollPosition') !== null) {
-                window.scrollTo({
-                    top: parseInt(sessionStorage.getItem('scrollPosition')),
-                    behavior: 'smooth'
-                });
+                window.scrollTo({ top: parseInt(sessionStorage.getItem('scrollPosition')), behavior: 'smooth' });
             }
+            loadAnnouncements(); 
         });
 
-        window.closeCountdown = function() {
-            const ov = document.getElementById('cdOverlay');
-            if(ov) {
-                ov.classList.add('cd-hiding');
-                setTimeout(() => { ov.style.display = 'none'; }, 360);
+        // ═════════════════ دوال لوحة الإعلانات (CMS) ═════════════════
+        let loadedAnnouncements = [];
+        let currentEditIdx = -1; // -1 يعني خبر جديد، أي رقم آخر يعني تعديل
+
+        function loadAnnouncements() {
+            const container = document.getElementById('accordion-container');
+            if(!container) return;
+
+            fetch(GAS_URL + '?action=getContent')
+                .then(res => res.json())
+                .then(data => {
+                    if(data.ok && data.announcements.length > 0) {
+                        loadedAnnouncements = data.announcements; // حفظ البيانات محلياً للتعديل
+                        container.innerHTML = data.announcements.map((a, i) => `
+                            <div class="accordion-box" id="acc-${i}">
+                                <div class="acc-header" onclick="toggleAcc(${i})">
+                                    <span class="acc-badge ${a.badge}">${a.label}</span>
+                                    <span class="acc-title">${a.title}</span>
+                                    <span class="acc-date" dir="rtl">${a.date}</span>
+                                    <div class="admin-actions-wrapper">
+                                        <button class="admin-edit-btn" onclick="editAnn(event, ${i})" title="تعديل هذا الخبر">تعديل</button>
+                                        <button class="admin-del-btn" onclick="delAnn(event, ${i})" title="حذف هذا الخبر">حذف</button>
+                                    </div>
+                                    <i class="fas fa-chevron-down acc-arrow" style="margin-right:auto; margin-left:5px;"></i>
+                                </div>
+                                <div class="acc-body">
+                                    <p style="margin-top:0;">${a.body}</p>
+                                    ${a.link ? `<a href="${a.link}" target="_blank" class="acc-link"><i class="fas fa-external-link-alt"></i> فتح الرابط المرفق</a>` : ''}
+                                </div>
+                            </div>
+                        `).join('');
+                    } else {
+                        container.innerHTML = '<div style="text-align:center; padding:20px; color:#64748b;">لا توجد إعلانات منشورة حالياً.</div>';
+                    }
+                }).catch(() => container.innerHTML = '<div style="text-align:center; padding:20px; color:#ef4444;">تعذر الاتصال بقاعدة البيانات</div>');
+        }
+
+        function toggleAcc(idx) {
+            const box = document.getElementById(`acc-${idx}`);
+            if(!box) return;
+            document.querySelectorAll('.accordion-box').forEach(el => { 
+                if(el.id !== `acc-${idx}`) el.classList.remove('open'); 
+            });
+            box.classList.toggle('open');
+        }
+
+        // دالة فتح نافذة إضافة خبر جديد
+        function openNewCMS() {
+            currentEditIdx = -1; // تهيئة للإضافة
+            document.getElementById('cmsTitle').value = ''; 
+            document.getElementById('cmsBody').value = ''; 
+            document.getElementById('cmsLink').value = '';
+            document.getElementById('cmsDate').value = '';
+            document.getElementById('cmsBadge').value = 'badge-new';
+            
+            document.getElementById('cmsModalTitle').innerHTML = '<i class="fas fa-bullhorn"></i> نشر إعلان جديد';
+            document.getElementById('cmsSubmitBtn').innerHTML = 'نشر وتحديث الموقع الآن';
+            
+            document.getElementById('cmsModal').classList.add('show');
+        }
+
+        // دالة فتح نافذة تعديل خبر موجود
+        function editAnn(event, idx) {
+            event.stopPropagation();
+            currentEditIdx = idx; // تحديد الخبر المراد تعديله
+            const a = loadedAnnouncements[idx];
+
+            document.getElementById('cmsTitle').value = a.title;
+            document.getElementById('cmsBody').value = a.body;
+            document.getElementById('cmsBadge').value = a.badge;
+            document.getElementById('cmsDate').value = a.date;
+            document.getElementById('cmsLink').value = a.link;
+
+            document.getElementById('cmsModalTitle').innerHTML = '<i class="fas fa-edit"></i> تعديل الإعلان';
+            document.getElementById('cmsSubmitBtn').innerHTML = 'حفظ التعديلات';
+
+            document.getElementById('cmsModal').classList.add('show');
+        }
+
+        function verifyAdmin() {
+            if (document.body.classList.contains('admin-mode')) {
+                openNewCMS();
+                document.getElementById('panel-content').style.display = 'none';
+                return;
             }
-        };
+            const pass = prompt("أدخل الرقم السري لإدارة الموقع (PIN):");
+            if(pass === ADMIN_PASSWORD) {
+                document.body.classList.add('admin-mode');
+                openNewCMS();
+                const panel = document.getElementById('panel-content');
+                if(panel) panel.style.display = 'none';
+            } else if(pass !== null) {
+                alert("الرقم السري غير صحيح!");
+            }
+        }
+
+        function closeCMS() { 
+            const modal = document.getElementById('cmsModal');
+            if(modal) modal.classList.remove('show'); 
+        }
+
+        function submitAnnouncement() {
+            const title = document.getElementById('cmsTitle').value.trim();
+            const body = document.getElementById('cmsBody').value.trim();
+            const badge = document.getElementById('cmsBadge').value;
+            const date = document.getElementById('cmsDate').value.trim();
+            const link = document.getElementById('cmsLink').value.trim();
+
+            if(!title || !body) { alert("يرجى تعبئة العنوان والنص!"); return; }
+
+            const btn = document.getElementById('cmsSubmitBtn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جارِ الحفظ...'; 
+            btn.disabled = true;
+
+            let url = `${GAS_URL}?action=saveAnn&title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}&badge=${badge}&date=${encodeURIComponent(date)}&link=${encodeURIComponent(link)}`;
+            
+            // إذا كان تعديلاً، أرسل رقم الإندكس
+            if (currentEditIdx > -1) {
+                url += `&idx=${currentEditIdx}`;
+            }
+
+            fetch(url)
+                .then(r => r.json())
+                .then(d => {
+                    btn.innerHTML = currentEditIdx > -1 ? 'حفظ التعديلات' : 'نشر وتحديث الموقع الآن'; 
+                    btn.disabled = false;
+                    if(d.ok) {
+                        closeCMS();
+                        loadAnnouncements(); 
+                        alert(currentEditIdx > -1 ? "تم التعديل بنجاح!" : "تم نشر الإعلان بنجاح!");
+                    } else {
+                        alert("حدث خطأ أثناء الحفظ.");
+                    }
+                }).catch(() => {
+                    btn.innerHTML = currentEditIdx > -1 ? 'حفظ التعديلات' : 'نشر وتحديث الموقع الآن'; 
+                    btn.disabled = false;
+                    alert("خطأ في الاتصال بالخادم.");
+                });
+        }
+
+        function delAnn(event, idx) {
+            event.stopPropagation();
+            if(!confirm("هل أنت متأكد من حذف هذا الإعلان نهائياً؟")) return;
+            const box = document.getElementById(`acc-${idx}`);
+            if(box) box.style.opacity = '0.4';
+            fetch(`${GAS_URL}?action=deleteAnn&idx=${idx}`)
+                .then(r => r.json())
+                .then(d => { if(d.ok) loadAnnouncements(); });
+        }
     </script>
 </body>
 </html>
