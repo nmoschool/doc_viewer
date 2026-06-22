@@ -167,7 +167,7 @@
         .dev-brand { font-family: 'Marcellus', serif; font-size: 0.9rem; color: var(--secondary); font-weight: 900; letter-spacing: 3px; }
 
         /* ══════════════════════════════════════════
-           نافذة التنبيه المدمجة (النسخة البيضاء + الخلفيات المتحركة)
+           نافذة التنبيه المدمجة 
         ══════════════════════════════════════════ */
         #cdOverlay {
             position: fixed; inset: 0; z-index: 9900;
@@ -182,8 +182,8 @@
         @keyframes cdFadeOut { from { opacity:1; } to { opacity:0; pointer-events:none; } }
 
         #cdBox {
-            background: #ffffff; /* خلفية بيضاء ناصعة */
-            border: 2px solid var(--secondary); /* إطار ذهبي */
+            background: #ffffff; 
+            border: 2px solid var(--secondary); 
             border-radius: var(--r-xl); 
             overflow: hidden;
             box-shadow: 0 25px 50px -12px rgba(6, 78, 59, 0.25), 0 0 35px rgba(197, 160, 89, 0.2);
@@ -196,7 +196,7 @@
         }
         @keyframes cdSlideUp { from { transform: translateY(32px) scale(0.96); opacity:0; } to { transform: translateY(0) scale(1); opacity:1; } }
 
-        /* --- حاوية الأشكال المتحركة (البالونات والقبعات) --- */
+        /* --- حاوية الأشكال المتحركة --- */
         .popup-anim-container {
             position: absolute; inset: 0;
             overflow: hidden; pointer-events: none; z-index: 1;
@@ -207,7 +207,7 @@
             animation: floatUpAnim 7s ease-in-out infinite;
         }
         .grad-cap {
-            color: rgba(197, 160, 89, 0.22); /* قبعة ذهبية شفافة */
+            color: rgba(197, 160, 89, 0.22); 
             font-size: 1.8rem;
         }
         .gold-balloon {
@@ -223,7 +223,6 @@
             border-bottom: 5px solid rgba(197, 160, 89, 0.45);
         }
 
-        /* توزيع العناصر بسرعات وأماكن مختلفة */
         .ai-1 { left: 8%;  animation-duration: 8s;   animation-delay: 0s; }
         .ai-2 { left: 25%; animation-duration: 6.5s; animation-delay: 2s; }
         .ai-3 { left: 45%; animation-duration: 9s;   animation-delay: 1s; }
@@ -267,7 +266,27 @@
         }
         .survey-btn:hover { background: #a88546; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(197, 160, 89, 0.5); }
 
-        .popup-content-wrapper { position: relative; z-index: 2; } /* لضمان بقاء النصوص فوق الخلفية المتحركة */
+        /* --- زر النتائج --- */
+        .result-btn-pro {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: #ffffff !important;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 900;
+            font-size: 1.1rem;
+            text-decoration: none;
+            box-shadow: 0 8px 25px -4px rgba(37, 99, 235, 0.4);
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 100%;
+        }
+        .result-btn-pro:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 14px 30px -4px rgba(37, 99, 235, 0.6);
+            background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+        }
+
+        .popup-content-wrapper { position: relative; z-index: 2; }
 
         @media (max-width: 768px) { 
             header h1 { font-size: 1.7rem; } 
@@ -277,16 +296,16 @@
             .date-container i { font-size: 0.8rem; }
             #cdBox { max-width: 95%; }
             .survey-btn { font-size: 0.95rem; padding: 10px 20px; }
+            .result-btn-pro { font-size: 1rem; padding: 12px 20px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- النافذة المنبثقة (البيضاء المحدثة) -->
+    <!-- النافذة المنبثقة المحدثة -->
     <div id="cdOverlay">
         <div id="cdBox">
             
-            <!-- الخلفية المتحركة (قبعات وبالونات) -->
             <div class="popup-anim-container">
                 <div class="anim-item ai-1"><i class="fas fa-graduation-cap grad-cap"></i></div>
                 <div class="anim-item ai-2"><div class="gold-balloon"></div></div>
@@ -308,16 +327,39 @@
                     التسجيل في النقل المدرسي
                 </h2>
                 
-                <p style="color: #334155; font-size: 1.05rem; line-height: 1.6; margin-bottom: 12px; font-weight: 600;">
+                <p style="color: #334155; font-size: 1.05rem; line-height: 1.6; margin-bottom: 25px; font-weight: 600;">
                     للتسجيل في النقل المدرسي تابعوا حساب <a href="https://x.com/MOETawasul" target="_blank" style="color: var(--primary); font-weight: 900; text-decoration: underline;">تواصل وزارة التعليم على منصة X</a>.
                 </p>
-                
-         
 
+                <!-- 1. قسم النتائج (نُقل إلى الأعلى) -->
+                <div style="background: #eff6ff; border: 2px solid #bfdbfe; border-radius: 16px; padding: 22px 15px; margin-bottom: 25px; box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.1);">
+                    
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px;">
+                        <span style="background: #2563eb; color: white; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);">
+                            <i class="fas fa-award"></i>
+                        </span>
+                        <h3 style="margin: 0; color: #1e40af; font-size: 1.3rem; font-weight: 900;">
+                            نتائج الفصل الدراسي الثاني
+                        </h3>
+                    </div>
+
+                    <a href="https://c.autorasd.com/certificates/b0a58f5f8694310190b05d2d60beff99" target="_blank" class="result-btn-pro">
+                        <i class="fas fa-user-graduate"></i>
+                        <span>لمعرفة النتيجة اضغط هنا</span>
+                    </a>
+
+                    <div style="margin-top: 15px; background: #ffffff; border: 1px solid #dbeafe; border-radius: 10px; padding: 10px; color: #1e3a8a; font-size: 0.9rem; font-weight: 700;">
+                        <i class="fas fa-info-circle" style="color: #2563eb; margin-left: 4px;"></i>
+                        <span>ادخل رقم هوية الطالب &larr; اختر (<strong>النهائي</strong>) &larr; (<strong>الفصل الثاني</strong>)</span>
+                    </div>
+                </div>
+
+                <!-- 2. الصورة (مع الرابط الجديد) -->
                 <div style="margin-bottom: 25px; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 10px 20px rgba(0,0,0,0.06);">
                     <img src="https://up6.cc/2026/06/178207139597211.png" alt="مدرسة تحفيظ القرآن بالبجادية" style="width: 100%; display: block;">
                 </div>
 
+                <!-- 3. قسم الاستبيان (الذهبي) -->
                 <div style="background: #f8fafc; border: 1px dashed var(--secondary); border-radius: 12px; padding: 20px 15px;">
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSfiynijK3kcsYvBqMsobdx4hhp32tTD8AL4EHBt08abMLcGFw/viewform?pli=1" target="_blank" class="survey-btn">
                         <i class="fas fa-clipboard-list"></i> تعبئة الاستبيان
