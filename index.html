@@ -7,19 +7,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Amiri:ital,wght@0,700;1,700&family=Marcellus&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- مكتبات Firebase المستقرة -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
     <style>
         :root {
-            --primary: #064e3b;
-            --primary-dark: #042f24;
-            --secondary: #c5a059;
-            --text-main: #1e293b;
-            --bg: #f8fafc;
-            --card-bg: #ffffff;
+            --primary: #064e3b; --primary-dark: #042f24; --secondary: #c5a059;
+            --text-main: #1e293b; --bg: #f8fafc; --card-bg: #ffffff;
             --header-gradient: linear-gradient(135deg, #064e3b 0%, #042f24 100%);
-            --r-md: 10px;
-            --r-lg: 14px;
-            --r-xl: 22px;
-            --r-full: 9999px;
+            --r-md: 10px; --r-lg: 14px; --r-xl: 22px; --r-full: 9999px;
             --tr: 0.22s ease;
             --shadow-xs: 0 1px 3px rgba(0,0,0,0.06);
             --shadow-sm: 0 2px 10px rgba(0,0,0,0.08);
@@ -27,124 +25,48 @@
         }
 
         html { scroll-behavior: smooth; }
-        body { 
-            font-family: 'Cairo', sans-serif; 
-            background-color: var(--bg); 
-            margin: 0; padding: 0; 
-            color: var(--text-main); 
-            overflow-x: hidden; 
-            background-image: url('https://www.transparenttextures.com/patterns/islamic-art.png');
-        }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--bg); margin: 0; padding: 0; color: var(--text-main); overflow-x: hidden; background-image: url('https://www.transparenttextures.com/patterns/islamic-art.png'); }
 
-        header {
-            background: var(--header-gradient);
-            color: white;
-            padding: 80px 20px 120px;
-            text-align: center;
-            clip-path: ellipse(150% 100% at 50% 0%);
-            border-bottom: 5px solid var(--secondary);
-            position: relative;
-        }
-
+        header { background: var(--header-gradient); color: white; padding: 80px 20px 120px; text-align: center; clip-path: ellipse(150% 100% at 50% 0%); border-bottom: 5px solid var(--secondary); position: relative; }
         .header-content { position: relative; z-index: 3; }
+        h1 { font-size: 2.4rem; font-weight: 900; margin-bottom: 20px; background: linear-gradient(to bottom, #ffffff 60%, var(--secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); }
 
-        h1 { 
-            font-size: 2.4rem; 
-            font-weight: 900; 
-            margin-bottom: 20px; 
-            background: linear-gradient(to bottom, #ffffff 60%, var(--secondary) 100%);
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
-        }
+        .portal-badge { display: inline-flex; padding: 8px 30px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(197, 160, 89, 0.4); border-radius: 50px; font-size: 1rem; color: #fff; backdrop-filter: blur(10px); font-weight: 700; }
 
-        .portal-badge {
-            display: inline-flex; 
-            padding: 8px 30px; 
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(197, 160, 89, 0.4); 
-            border-radius: 50px; 
-            font-size: 1rem;
-            color: #fff; 
-            backdrop-filter: blur(10px); 
-            font-weight: 700;
-        }
-
-        /* --- شريط الوقت والتاريخ --- */
-        .live-date-bar {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-            margin: -30px auto 30px;
-            width: 98%;
-            max-width: 800px;
-        }
-        
-        .date-container {
-            background: var(--card-bg);
-            padding: 12px 20px;
-            border-radius: 50px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-            border: 1px solid #eef2f6;
-            color: var(--text-main);
-            font-weight: 700;
-            font-size: 0.9rem;
-            white-space: nowrap; 
-            flex-wrap: nowrap;   
-            overflow: hidden;
-        }
-
-        .date-container i { color: var(--secondary); font-size: 1rem; animation: gold-pulse 2s infinite ease-in-out; flex-shrink: 0; }
+        .live-date-bar { position: relative; z-index: 10; text-align: center; margin: -30px auto 30px; width: 98%; max-width: 800px; }
+        .date-container { background: var(--card-bg); padding: 12px 20px; border-radius: 50px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 15px 35px rgba(0,0,0,0.08); border: 1px solid #eef2f6; font-weight: 700; font-size: 0.9rem; overflow: hidden; }
+        .date-container i { color: var(--secondary); font-size: 1rem; animation: gold-pulse 2s infinite ease-in-out; }
         @keyframes gold-pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.6; } }
-        .date-container span.sep { color: var(--secondary); opacity: 0.3; font-weight: 300; flex-shrink: 0; }
-        .date-text-item { flex-shrink: 0; }
+        .date-container span.sep { color: var(--secondary); opacity: 0.3; font-weight: 300; }
 
-        /* --- لوحة التحكم --- */
         #admin-panel { position: fixed; bottom: 20px; left: 20px; z-index: 9999; }
-        #panel-toggle { width: 40px; height: 40px; background: var(--card-bg); border: 1px solid #e2e8f0; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0.4; transition: 0.3s; box-shadow: var(--shadow-sm); }
-        #panel-toggle:hover { opacity: 1; background: var(--secondary); color: white; }
-        .panel-content { display: none; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); margin-bottom: 10px; border: 1px solid var(--secondary); text-align: center; width: 200px; }
-        .panel-content h4 { margin: 0 0 10px; font-size: 0.9rem; color: var(--primary); }
-        .panel-content button { background: #f1f5f9; border: 1px solid #e2e8f0; padding: 5px 15px; border-radius: 5px; cursor: pointer; font-family: 'Cairo'; font-weight: 700; margin: 2px; transition:0.2s;}
-        .panel-content button:hover { background: var(--secondary); color: white; }
+        #panel-toggle { width: 45px; height: 45px; background: var(--primary-dark); border: 2px solid var(--secondary); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; color: white; transition: 0.3s; box-shadow: var(--shadow-sm); font-size: 1.2rem;}
+        #panel-toggle:hover { transform: scale(1.1); background: var(--secondary); border-color: white;}
+        
+        .panel-content { display: none; background: white; padding: 22px; border-radius: 18px; box-shadow: 0 15px 40px rgba(0,0,0,0.25); margin-bottom: 15px; border: 1px solid #e2e8f0; text-align: center; width: 260px; }
+        .panel-content h4 { margin: 0 0 15px; font-size: 1rem; color: var(--primary-dark); font-weight: 900; }
+        .panel-content button { border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-family: 'Cairo'; font-weight: 800; margin: 4px 0; width: 100%; transition:0.2s; font-size: 0.9rem;}
+        .panel-content button:hover { transform: translateY(-2px); opacity: 0.9; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
 
-        /* --- المحتوى العام --- */
         .container { max-width: 900px; margin: 0 auto 60px; padding: 0 20px; position: relative; z-index: 5; }
 
-        .quote-card {
-            background: var(--card-bg); padding: 35px; border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.06); text-align: center; margin-bottom: 30px;
-            border-right: 6px solid var(--secondary);
-        }
+        .quote-card { background: var(--card-bg); padding: 35px; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.06); text-align: center; margin-bottom: 30px; border-right: 6px solid var(--secondary); }
         .quote-card p { font-family: 'Amiri', serif; font-size: 1.3rem; color: var(--primary); line-height: 1.7; font-weight: 700; margin: 0; }
 
-        .news-marquee-pro {
-            margin-bottom: 30px; background: #ffffff; height: 45px; display: flex; align-items: center;
-            border-radius: 12px; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05); border: 1px solid #eef2f6; overflow: hidden;
-        }
+        .news-marquee-pro { margin-bottom: 30px; background: #ffffff; height: 45px; display: flex; align-items: center; border-radius: 12px; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05); border: 1px solid #eef2f6; overflow: hidden; }
         .news-badge-pro { background: var(--primary); color: #fff; height: 100%; padding: 0 20px; display: flex; align-items: center; font-weight: 900; font-size: 0.9rem; }
         .ticker-container { flex: 1; overflow: hidden; direction: ltr; }
         .ticker-wrapper { display: inline-flex; white-space: nowrap; animation: ticker-pro 25s linear infinite; }
-        .ticker-item { direction: rtl; padding: 0 40px; color: var(--primary-dark); font-weight: 700; font-size: 0.9rem; }
+        .ticker-item { direction: rtl; padding: 0 40px; color: var(--primary-dark); font-weight: 700; font-size: 0.9rem; position: relative;}
+        .ticker-item::after { content: '•'; position: absolute; left: 0; top: 50%; transform: translateY(-50%); color: var(--secondary); font-size: 1.2rem; }
+        .ticker-item:last-child::after { content: ''; }
         @keyframes ticker-pro { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
 
-        /* ══════════════════════════════════════════
-           إضافات الأكورديون ونافذة الإدارة (CMS)
-        ══════════════════════════════════════════ */
         .accordion-box { background: #fff; border: 1px solid #e2e8f0; border-radius: var(--r-lg); margin-bottom: 12px; overflow: hidden; box-shadow: var(--shadow-xs); transition: 0.3s; }
         .accordion-box:hover { border-color: var(--secondary); box-shadow: var(--shadow-sm); }
         .acc-header { padding: 15px 20px; display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; }
         .acc-badge { padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: 900; flex-shrink: 0; }
-        
-        /* التعديل: لون خبر جديد */
-        .badge-new { background: #ef4444; color: #ffffff; } 
-        .badge-event { background: #fef3c7; color: #d97706; } 
-        .badge-info { background: #f1f5f9; color: var(--primary); }
-        
+        .badge-new { background: #ef4444; color: #ffffff; } .badge-event { background: #fef3c7; color: #d97706; } .badge-info { background: #f1f5f9; color: var(--primary); }
         .acc-title { font-weight: 800; font-size: 1.05rem; flex: 1; color: var(--text-main); margin: 0; text-align: right; }
         .acc-date { font-size: 0.85rem; color: #94a3b8; margin-left: 8px; }
         .acc-arrow { color: var(--secondary); transition: transform 0.3s ease; }
@@ -154,21 +76,21 @@
         .acc-link { display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; color: var(--primary); font-weight: 800; text-decoration: none; background: #e2e8f0; padding: 4px 12px; border-radius: 6px; font-size: 0.85rem; }
         .acc-link:hover { background: var(--secondary); color: white; }
         
-        /* أزرار الإدارة (حذف وتعديل بشكل عمودي) */
         .admin-actions-wrapper { display: none; flex-direction: column; gap: 6px; margin-left: 5px; }
         body.admin-mode .admin-actions-wrapper { display: flex; }
-        .admin-del-btn { background: #fee2e2; color: #ef4444; border: 1px solid #fca5a5; padding: 5px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo'; font-size: 0.75rem; text-align: center; }
-        .admin-del-btn:hover { background: #ef4444; color: white; }
-        .admin-edit-btn { background: #e0f2fe; color: #0284c7; border: 1px solid #bae6fd; padding: 5px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo'; font-size: 0.75rem; text-align: center; }
-        .admin-edit-btn:hover { background: #0284c7; color: white; }
+        .admin-del-btn, .admin-edit-btn { padding: 4px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Cairo'; font-size: 0.75rem; border: none; }
+        .admin-del-btn { background: #fee2e2; color: #ef4444; border: 1px solid #fca5a5; }
+        .admin-edit-btn { background: #e0f2fe; color: #0284c7; border: 1px solid #bae6fd; }
 
-        #cmsModal { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(6px); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 15px; }
-        #cmsModal.show { display: flex; animation: cdFadeIn 0.3s ease; }
-        @keyframes cdFadeIn  { from { opacity:0; } to { opacity:1; } }
-        .cms-box { background: #ffffff; border: 2px solid var(--secondary); border-radius: var(--r-xl); width: 100%; max-width: 500px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.6); text-align: right; }
-        .cms-hdr { background: var(--header-gradient); padding: 18px 25px; color: white; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--secondary); }
-        .cms-hdr h3 { margin: 0; font-size: 1.2rem; }
-        .cms-body-content { padding: 25px; }
+        /* النوافذ المنبثقة */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(6px); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 15px; }
+        .modal-overlay.show { display: flex; animation: cdFadeIn 0.3s ease; }
+        @keyframes cdFadeIn { from { opacity:0; transform:scale(0.95); } to { opacity:1; transform:scale(1); } }
+        
+        .cms-box { background: #ffffff; border: 2px solid var(--secondary); border-radius: var(--r-xl); width: 100%; max-width: 500px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.6); text-align: right; display: flex; flex-direction: column; max-height: 92vh; }
+        .cms-hdr { background: var(--header-gradient); padding: 18px 25px; color: white; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--secondary); flex-shrink: 0; }
+        .cms-hdr h3 { margin: 0; font-size: 1.15rem; }
+        .cms-body-content { padding: 20px 25px; overflow-y: auto; }
         .cms-lbl { display: block; font-weight: 800; font-size: 0.85rem; color: var(--primary); margin: 12px 0 5px; }
         .cms-inp, .cms-txt { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: 'Cairo'; font-size: 0.95rem; outline: none; box-sizing: border-box; color: var(--text-main); }
         .cms-inp:focus, .cms-txt:focus { border-color: var(--secondary); }
@@ -176,22 +98,22 @@
         .cms-btn { width: 100%; padding: 12px; background: var(--secondary); color: white; border: none; border-radius: 8px; font-weight: 800; font-size: 1rem; margin-top: 20px; cursor: pointer; font-family: 'Cairo'; transition: 0.2s; box-shadow: 0 4px 12px rgba(197, 160, 89, 0.3); }
         .cms-btn:hover { background: var(--primary); }
 
+        .config-section-card { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+        .config-section-card h4 { margin: 0 0 12px 0; color: var(--primary); border-bottom: 2px solid var(--secondary); padding-bottom: 6px; font-size: 1rem; }
+        .config-section-card b { display: block; font-size: 0.85rem; color: var(--primary-dark); margin: 12px 0 4px 0; }
+        .btn-group-row { display: flex; gap: 10px; margin-top: 20px; }
+        .btn-group-row button { flex: 1; padding: 12px 5px; font-size: 0.9rem; border-radius: 8px; cursor: pointer; font-family: 'Cairo'; font-weight: 800; border: none; transition: 0.2s; color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .btn-group-row button:hover { opacity: 0.9; transform: translateY(-2px); }
+
         .modern-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 40px; }
-        .action-card {
-            background: var(--card-bg); padding: 20px 25px; border-radius: 20px;
-            display: flex; flex-direction: column; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid #e2e8f0; text-decoration: none; color: inherit; position: relative;
-        }
+        .action-card { background: var(--card-bg); padding: 20px 25px; border-radius: 20px; display: flex; flex-direction: column; transition: 0.4s; border: 1px solid #e2e8f0; text-decoration: none; color: var(--text-main); }
         .action-card:hover { transform: translateY(-8px); border-color: var(--secondary); box-shadow: 0 20px 40px rgba(6, 78, 59, 0.08); }
-        .icon-wrapper { width: 50px; height: 50px; background: #f1f5f9; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; transition: 0.3s; }
+        .icon-wrapper { width: 50px; height: 50px; background: #f1f5f9; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
         .icon-wrapper svg { width: 26px; height: 26px; fill: var(--secondary); }
-        .action-card:hover .icon-wrapper { background: var(--secondary); transform: rotate(-5deg); }
-        .action-card:hover .icon-wrapper svg { fill: white; }
-        .action-card h3 { margin: 5px 0; font-size: 1.15rem; color: var(--text-main); font-weight: 800; }
+        .action-card h3 { margin: 5px 0; font-size: 1.15rem; font-weight: 900; color: var(--primary-dark); }
         .action-card p { color: #64748b; font-size: 0.85rem; margin: 5px 0 15px; line-height: 1.5; }
         .smart-link { margin-top: auto; display: flex; align-items: center; gap: 10px; color: var(--primary); font-weight: 800; font-size: 0.95rem; }
-        .arrow { width: 28px; height: 28px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; font-size: 1rem; }
-        .action-card:hover .arrow { background: var(--secondary); transform: translateX(-5px); }
+        .arrow { width: 28px; height: 28px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
 
         .links-title-wrapper { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px; color: var(--primary); }
         .links-title-wrapper h2 { font-size: 1.25rem; font-weight: 800; margin: 0; }
@@ -199,28 +121,31 @@
         @keyframes arrowBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
 
         .mini-links-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 40px; }
-        .compact-card {
-            background: #ffffff; border: 1px solid #e2e8f0; border-radius: 18px; padding: 15px;
-            width: 160px; display: flex; flex-direction: column; align-items: center; text-align: center;
-            text-decoration: none; transition: 0.3s; flex-grow: 1; max-width: 220px;
-        }
-        .compact-card:hover { transform: translateY(-5px); border-color: var(--secondary); background: #fffdf9; }
+        .compact-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 18px; padding: 15px; width: 160px; display: flex; flex-direction: column; align-items: center; text-align: center; text-decoration: none; transition: 0.3s; flex-grow: 1; max-width: 220px; color: var(--text-main); }
+        .compact-card:hover { transform: translateY(-5px); border-color: var(--secondary); }
         .compact-icon { width: 42px; height: 42px; background: #f1f5f9; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
         .compact-icon svg { width: 20px; height: 20px; fill: var(--secondary); }
-        .compact-card h3 { color: var(--text-main); font-size: 1rem; margin: 5px 0 0; font-weight: 800; }
+        .compact-card h3 { font-size: 1.1rem; margin: 5px 0 0; font-weight: 900; color: var(--primary-dark); }
         .compact-card span { font-size: 0.75rem; color: var(--secondary); font-weight: 700; margin-top: 3px; }
 
         .contact-section { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 24px; padding: 40px; margin-top: 20px; text-align: center; }
         footer { background: var(--header-gradient); padding: 50px 20px; text-align: center; color: rgba(255, 255, 255, 0.8); border-top: 4px solid var(--secondary); }
         .dev-brand { font-family: 'Marcellus', serif; font-size: 0.9rem; color: var(--secondary); font-weight: 900; letter-spacing: 3px; }
 
-        @media (max-width: 768px) { 
-            header h1 { font-size: 1.7rem; } 
-            .compact-card { width: 45%; } 
-            .links-title-wrapper h2 { font-size: 1.1rem; }
-            .date-container { font-size: 0.7rem; padding: 10px 12px; gap: 6px; letter-spacing: -0.5px; }
-            .date-container i { font-size: 0.8rem; }
-        }
+        /* المساعد الذكي */
+        .chatbot-wrapper { position: fixed; bottom: 20px; right: 20px; z-index: 9999; }
+        .chat-trigger { width: 55px; height: 55px; background: var(--primary); border: 2px solid var(--secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; cursor: pointer; box-shadow: var(--shadow-xl); transition: 0.3s; }
+        .chat-trigger:hover { transform: scale(1.1); background: var(--secondary); }
+        .chat-window { position: absolute; bottom: 70px; right: 0; width: 330px; background: white; border-radius: var(--r-xl); border: 2px solid var(--secondary); box-shadow: var(--shadow-xl); display: none; flex-direction: column; overflow: hidden; text-align: right; }
+        .chat-window.open { display: flex; animation: cdFadeIn 0.3s ease; }
+        .chat-hdr { background: var(--header-gradient); padding: 15px; color: white; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--secondary); }
+        .chat-body { height: 280px; padding: 15px; overflow-y: auto; background: #f8fafc; display: flex; flex-direction: column; gap: 10px; font-size: 0.9rem; }
+        .chat-msg { padding: 10px 14px; border-radius: 14px; max-width: 85%; line-height: 1.5; }
+        .msg-bot { background: #e2e8f0; color: #0f172a; align-self: flex-start; border-bottom-right-radius: 2px; font-weight: 600; }
+        .msg-user { background: var(--primary); color: white; align-self: flex-end; border-bottom-left-radius: 2px; }
+        .chat-options { padding: 12px; background: white; border-top: 1px solid #e2e8f0; display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+        .chat-chip { background: #f1f5f9; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 50px; font-size: 0.8rem; cursor: pointer; color: var(--primary); font-weight: 700; transition: 0.2s; }
+        .chat-chip:hover { background: var(--secondary); color: white; }
     </style>
 </head>
 <body>
@@ -235,29 +160,33 @@
     <div class="live-date-bar">
         <div class="date-container" dir="rtl">
             <i class="fas fa-calendar-alt"></i>
-            <span id="hijri-clock" class="date-text-item"></span>
-            <span class="sep">|</span>
-            <span id="gregorian-clock" class="date-text-item"></span>
-            <span class="sep">|</span>
-            <i class="fas fa-clock"></i>
-            <span id="live-time-clock" class="date-text-item"></span>
+            <span id="hijri-clock"></span> <span class="sep">|</span>
+            <span id="gregorian-clock"></span> <span class="sep">|</span>
+            <i class="fas fa-clock"></i> <span id="live-time-clock"></span>
         </div>
     </div>
 
+    <!-- لوحة التحكم الجانبية الشاملة (الجديدة) -->
     <div id="admin-panel">
         <div class="panel-content" id="panel-content">
             <h4>تعديل التقويم</h4>
-            <button onclick="changeOffset(1)">يوم +1</button>
-            <button onclick="changeOffset(-1)">يوم -1</button>
-            <button onclick="resetOffset()" style="background:var(--secondary); color:white">إعادة ضبط</button>
+            <div style="display:flex; gap:8px;">
+                <button onclick="changeOffset(1)" style="background:#f1f5f9; color:var(--text-main);">يوم +1</button>
+                <button onclick="changeOffset(-1)" style="background:#f1f5f9; color:var(--text-main);">يوم -1</button>
+            </div>
+            <button onclick="resetOffset()" style="background:var(--secondary); color:white;">إعادة ضبط التقويم</button>
             <div id="current-offset-text" style="font-size:0.7rem; margin-top:5px; color:#64748b"></div>
 
-            <hr style="margin:12px 0; border:none; border-top:1px dashed #cbd5e1;">
+            <hr style="margin:15px 0; border:none; border-top:1px dashed #cbd5e1;">
 
-            <h4>إدارة الموقع (CMS)</h4>
-            <button onclick="verifyAdmin()" style="background:var(--primary); color:white; width:100%;">نشر / تحرير الإعلانات</button>
+            <h4>إدارة الموقع الشاملة</h4>
+            <button onclick="verifyAdmin()" id="adminAuthBtn" style="background:var(--primary); color:white;">🔒 الدخول للإدارة</button>
+            <button onclick="openUrgentAdminCMS()" id="urgentBtnAdmin" style="background:#ea580c; color:white; display:none;">🚨 إشعار منبثق عاجل</button>
+            <button onclick="openTickerCMS()" id="tickerBtn" style="background:#0284c7; color:white; display:none;">⚡ تحديث شريط الأخبار</button>
+            <button onclick="openConfigCMS()" id="configBtn" style="background:var(--primary-dark); color:white; display:none;">⚙️ إدارة الأقسام والاتصال</button>
+            <button onclick="logoutAdmin()" id="adminLogoutBtn" style="background:#ef4444; color:white; display:none;">تسجيل الخروج</button>
         </div>
-        <div id="panel-toggle" title="لوحة تحكم الإدارة">
+        <div id="panel-toggle" title="لوحة تحكم الإدارة" onclick="togglePanel()">
             <i class="fas fa-cog"></i>
         </div>
     </div>
@@ -271,14 +200,12 @@
         <div class="news-marquee-pro">
             <div class="news-badge-pro">تحديثات</div>
             <div class="ticker-container">
-                <div class="ticker-wrapper">
-                    
-                    <div class="ticker-item">إجازة سعيدة نتمناها لكم </div>
+                <div class="ticker-wrapper" id="tickerWrapper">
+                    <div class="ticker-item" style="color:#94a3b8;">جاري الاتصال بالنظام...</div>
                 </div>
             </div>
         </div>
 
-        <!-- ═════════ الأكورديون (لوحة الإعلانات الحية) ═════════ -->
         <div class="links-title-wrapper">
             <svg class="moving-arrow" viewBox="0 0 24 24"><path d="M11,4H13V16L18.5,10.5L19.92,11.92L12,19.84L4.08,11.92L5.5,10.5L11,16V4Z"/></svg>
             <h2>لوحة الإعلانات والمستجدات</h2>
@@ -286,25 +213,18 @@
         </div>
 
         <div id="accordion-container" style="margin-bottom: 40px;">
-            <div style="text-align:center; padding:30px; color:#94a3b8;"><i class="fas fa-spinner fa-spin"></i> جارِ الربط بقاعدة البيانات...</div>
+            <div style="text-align:center; padding:30px; color:#94a3b8;"><i class="fas fa-spinner fa-spin"></i> تتصل بقاعدة البيانات...</div>
         </div>
 
         <div class="modern-grid">
-            <a href="https://nmoschool.github.io/Students/" class="action-card" target="_blank">
-                <div class="icon-wrapper">
-                    <svg viewBox="0 0 24 24"><path d="M13,9h5.5L13,3.5V9M6,2h8l6,6v12a2,2 0 0,1-2,2H6a2,2 0 0,1-2-2V4A2,2 0 0,1 6,2M7,20H17V18H7V20M7,16H17V14H7V16M7,12H12V10H7V12Z"/></svg>
-                </div>
-                <h3>ملفات الطلاب</h3>
-                <p>الوصول السريع لكافة ملفاتك الدراسية والمناهج المساعدة.</p>
+            <a href="https://nmoschool.github.io/Students/" id="gridLink1" class="action-card" target="_blank">
+                <div class="icon-wrapper"><svg viewBox="0 0 24 24"><path d="M13,9h5.5L13,3.5V9M6,2h8l6,6v12a2,2 0 0,1-2,2H6a2,2 0 0,1-2-2V4A2,2 0 0,1 6,2M7,20H17V18H7V20M7,16H17V14H7V16M7,12H12V10H7V12Z"/></svg></div>
+                <h3 id="gridTitle1">ملفات الطلاب</h3><p id="gridSub1">الوصول السريع لكافة ملفاتك الدراسية والمناهج المساعدة.</p>
                 <div class="smart-link"><span>عرض الملفات</span><div class="arrow">←</div></div>
             </a>
-
-            <a href="https://c.autorasd.com/certificates/b0a58f5f8694310190b05d2d60beff99" class="action-card" target="_blank">
-                <div class="icon-wrapper">
-                    <svg viewBox="0 0 24 24"><path d="M19,3H5C3.89,3 3,3.9 3,5V19C3,20.1 3.89,21 5,21H19C20.11,21 21,20.1 21,19V5C21,3.9 20.11,3 19,3M9,17H7V10H9V17M13,17H11V7H13V17M17,17H15V13H17V17Z"/></svg>
-                </div>
-                <h3>نتائج الطلاب</h3>
-                <p>استعلم عن نتائج الاختبارات والتقارير الشهرية فور صدورها.</p>
+            <a href="https://c.autorasd.com/certificates/b0a58f5f8694310190b05d2d60beff99" id="gridLink2" class="action-card" target="_blank">
+                <div class="icon-wrapper"><svg viewBox="0 0 24 24"><path d="M19,3H5C3.89,3 3,3.9 3,5V19C3,20.1 3.89,21 5,21H19C20.11,21 21,20.1 21,19V5C21,3.9 20.11,3 19,3M9,17H7V10H9V17M13,17H11V7H13V17M17,17H15V13H17V17Z"/></svg></div>
+                <h3 id="gridTitle2">نتائج الطلاب</h3><p id="gridSub2">استعلم عن نتائج الاختبارات والتقارير الشهرية فور صدورها.</p>
                 <div class="smart-link"><span>عرض النتائج</span><div class="arrow">←</div></div>
             </a>
         </div>
@@ -316,283 +236,386 @@
         </div>
 
         <div class="mini-links-container">
-            <a href="https://noor.moe.gov.sa/" class="compact-card" target="_blank">
+            <a href="https://noor.moe.gov.sa/" id="miniLink3" class="compact-card" target="_blank">
                 <div class="compact-icon"><svg viewBox="0 0 24 24"><path d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z"/></svg></div>
-                <h3>نظام نور</h3><span>الخدمات التعليمية</span>
+                <h3 id="miniTitle3">نظام نور</h3><span id="miniSub3">الخدمات التعليمية</span>
             </a>
-            <a href="https://schools.madrasati.sa/" class="compact-card" target="_blank">
+            <a href="https://schools.madrasati.sa/" id="miniLink4" class="compact-card" target="_blank">
                 <div class="compact-icon"><svg viewBox="0 0 24 24"><path d="M12,3L1,9L12,15L21,10.09V17H23V9M5,13.18V17.18L12,21L19,17.18V13.18L12,17L5,13.18Z"/></svg></div>
-                <h3>منصة مدرستي</h3><span>التعليم عن بُعد</span>
+                <h3 id="miniTitle4">منصة مدرستي</h3><span id="miniSub4">التعليم عن بُعد</span>
             </a>
-            <a href="https://www.ien.edu.sa/" class="compact-card" target="_blank">
+            <a href="https://www.ien.edu.sa/" id="miniLink5" class="compact-card" target="_blank">
                 <div class="compact-icon"><svg viewBox="0 0 24 24"><path d="M18,22A2,2 0 0,0 20,20V4C20,2.89 19.1,2 18,2H12V9L9.5,7.5L7,9V2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18Z"/></svg></div>
-                <h3>بوابة عين</h3><span>الكتب الدراسية</span>
+                <h3 id="miniTitle5">بوابة عين</h3><span id="miniSub5">الكتب الدراسية</span>
             </a>
         </div>
 
         <div class="contact-section">
             <h4 style="color:#64748b; font-size:0.85rem; margin-bottom: 5px;">للإستفسار التواصل مع وكيل المدرسة</h4>
-            <p style="font-size:1.4rem; font-weight:900; color:var(--primary-dark); margin:0 0 20px 0;">الأستاذ/ نوار الذيابي</p>
+            <p id="contactNameTxt" style="font-size:1.4rem; font-weight:900; color:var(--primary-dark); margin:0 0 20px 0;">الأستاذ/ نوار الذيابي</p>
             <div style="display:flex; justify-content:center; gap:20px; align-items:center;">
-                <a href="https://wa.me/966555578299" target="_blank">
-                    <svg style="width:28px; fill:var(--secondary);" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.819 9.819 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.183 8.183 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.2-.32a8.188 8.188 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24M8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.86-.87 2.07 0 1.22.89 2.39 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.23-.17-.48-.3s-1.47-.73-1.7-.81c-.23-.08-.4-.12-.56.12-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.26-.13-1.08-.4-2.05-1.27-.76-.68-1.27-1.52-1.42-1.77-.15-.25-.02-.39.11-.52.11-.11.26-.3.38-.46.13-.15.17-.26.25-.43.08-.17.04-.32-.02-.45-.06-.13-.56-1.35-.77-1.84-.2-.48-.4-.41-.56-.42-.14 0-.3-.01-.47-.01Z"/></svg>
-                </a>
+                <a href="https://wa.me/966555578299" id="contactWaLink" target="_blank"><svg style="width:28px; fill:var(--secondary);" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.819 9.819 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.183 8.183 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.2-.32a8.188 8.188 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24M8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.86-.87 2.07 0 1.22.89 2.39 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.23-.17-.48-.3s-1.47-.73-1.7-.81c-.23-.08-.4-.12-.56.12-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.26-.13-1.08-.4-2.05-1.27-.76-.68-1.27-1.52-1.42-1.77-.15-.25-.02-.39.11-.52.11-.11.26-.3.38-.46.13-.15.17-.26.25-.43.08-.17.04-.32-.02-.45-.06-.13-.56-1.35-.77-1.84-.2-.48-.4-.41-.56-.42-.14 0-.3-.01-.47-.01Z"/></svg></a>
                 <div style="width:1px; height:25px; background:var(--secondary); opacity:0.3;"></div>
-                <a href="tel:0555578299">
-                    <svg style="width:28px; fill:var(--secondary);" viewBox="0 0 24 24"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/></svg>
-                </a>
+                <a href="tel:0555578299" id="contactPhoneLink"><svg style="width:28px; fill:var(--secondary);" viewBox="0 0 24 24"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/></svg></a>
             </div>
         </div>
     </div>
 
-    <!-- ═════════ نافذة النشر المنبثقة للمدير (CMS Modal) ═════════ -->
-    <div id="cmsModal">
-        <div class="cms-box">
-            <div class="cms-hdr">
-                <h3 id="cmsModalTitle"><i class="fas fa-bullhorn"></i> نشر إعلان جديد</h3>
-                <button onclick="closeCMS()" style="background:none; border:none; color:white; font-size:1.3rem; cursor:pointer;">✕</button>
+    <!-- ═════════════════════ النوافذ المنبثقة الستة ═════════════════════ -->
+
+    <!-- 1. نافذة التنبيه العاجل للزوار -->
+    <div id="urgentVisitorModal" class="modal-overlay" style="z-index: 100000;">
+        <div class="cms-box" style="max-width: 420px; border: 3px solid #ef4444; box-shadow: 0 25px 50px -12px rgba(239, 68, 68, 0.5);">
+            <div class="cms-hdr" style="background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); border-bottom-color: #f87171;">
+                <h3 id="urgVisTitle"><i class="fas fa-exclamation-triangle"></i> تنبيه هام وعاجل</h3>
+                <button onclick="closeUrgentVisitor()" style="background:none; border:none; color:white; font-size:1.3rem; cursor:pointer;">✕</button>
             </div>
-            <div class="cms-body-content">
-                <label class="cms-lbl">التصنيف</label>
-                <select id="cmsBadge" class="cms-inp">
-                    <option value="badge-new">خبر جديد (أحمر)</option>
-                    <option value="badge-event">فعالية (ذهبي)</option>
-                    <option value="badge-info">تنبيه عام (أخضر)</option>
-                </select>
-
-                <label class="cms-lbl">عنوان الإعلان *</label>
-                <input type="text" id="cmsTitle" class="cms-inp" placeholder="اكتب العنوان هنا...">
-
-                <label class="cms-lbl">التاريخ (اختياري)</label>
-                <input type="text" id="cmsDate" class="cms-inp" placeholder="مثال: 20 شعبان 1447 هـ">
-
-                <label class="cms-lbl">نص الإعلان *</label>
-                <textarea id="cmsBody" class="cms-txt" placeholder="اكتب التفاصيل..."></textarea>
-
-                <label class="cms-lbl">رابط خارجي (اختياري)</label>
-                <input type="url" id="cmsLink" class="cms-inp" placeholder="https://...">
-
-                <button onclick="submitAnnouncement()" id="cmsSubmitBtn" class="cms-btn">نشر وتحديث الموقع الآن</button>
+            <div class="cms-body-content" style="text-align: center; padding: 30px 20px;">
+                <p id="urgVisText" style="font-size: 1.15rem; font-weight: 800; color: var(--text-main); line-height: 1.7; margin: 0 0 20px 0;"></p>
+                <a href="" id="urgVisLink" target="_blank" class="acc-link" style="display:inline-flex; margin:0 auto; background:#fee2e2; color:#ef4444; border:1px solid #fca5a5;">🔗 اضغط هنا للتفاصيل</a>
+                <button onclick="closeUrgentVisitor()" class="cms-btn" style="background: #ef4444; margin-top: 25px; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);">حسناً، فهمت</button>
             </div>
         </div>
+    </div>
+
+    <!-- 2. نافذة تحكم المدير في التنبيه العاجل -->
+    <div id="urgentAdminModal" class="modal-overlay">
+        <div class="cms-box" style="max-width: 450px;">
+            <div class="cms-hdr" style="background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%); border-bottom-color: #fb923c;">
+                <h3><i class="fas fa-bell"></i> التحكم بالإشعار العاجل المنبثق</h3>
+                <button onclick="closeUrgentAdmin()" style="background:none; border:none; color:white; font-size:1.3rem; cursor:pointer;">✕</button>
+            </div>
+            <div class="cms-body-content">
+                <label class="cms-lbl">حالة الإشعار الآن</label>
+                <select id="urgAdminStatus" class="cms-inp" style="font-weight:bold;">
+                    <option value="false">🔴 معطل (لا يظهر للزوار)</option><option value="true">🟢 مفعل (يظهر فور فتح الموقع)</option>
+                </select>
+                <label class="cms-lbl">عنوان التنبيه</label><input type="text" id="urgAdminTitle" class="cms-inp" placeholder="مثال: تعليق الدراسة لهذا اليوم">
+                <label class="cms-lbl">نص التنبيه العاجل *</label><textarea id="urgAdminText" class="cms-txt" placeholder="اكتب تفاصيل الخبر العاجل..."></textarea>
+                <label class="cms-lbl">رابط إضافي (اختياري)</label><input type="url" id="urgAdminLink" class="cms-inp" placeholder="https://..." dir="ltr">
+                <button onclick="saveUrgentNoticeCMS()" id="urgSaveBtnExec" class="cms-btn" style="background:#ea580c;">🚀 حفظ ونشر التنبيه المباشر</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. نافذة تسجيل الدخول -->
+    <div id="loginModal" class="modal-overlay">
+        <div class="cms-box" style="max-width: 380px;">
+            <div class="cms-hdr"><h3><i class="fas fa-lock"></i> تسجيل دخول الإدارة</h3><button onclick="closeLogin()" style="background:none; border:none; color:white; font-size:1.3rem; cursor:pointer;">✕</button></div>
+            <div class="cms-body-content"><label class="cms-lbl">البريد الإلكتروني المعتمد</label><input type="email" id="loginEmail" class="cms-inp" placeholder="admin@school.com" dir="ltr"><label class="cms-lbl">كلمة المرور</label><input type="password" id="loginPass" class="cms-inp" placeholder="•••••••••" dir="ltr"><button onclick="executeLogin()" id="loginBtnExec" class="cms-btn">تحقق ودخول</button><div id="loginErrMsg" style="color:#ef4444; font-size:0.85rem; margin-top:10px; text-align:center; display:none; font-weight:bold;"></div></div>
+        </div>
+    </div>
+
+    <!-- 4. نافذة نشر الإعلانات -->
+    <div id="cmsModal" class="modal-overlay">
+        <div class="cms-box">
+            <div class="cms-hdr"><h3 id="cmsModalTitle"><i class="fas fa-bullhorn"></i> نشر إعلان جديد</h3><button onclick="closeCMS()" style="background:none; border:none; color:white; font-size:1.3rem; cursor:pointer;">✕</button></div>
+            <div class="cms-body-content"><label class="cms-lbl">التصنيف</label><select id="cmsBadge" class="cms-inp"><option value="badge-new">خبر جديد (أحمر)</option><option value="badge-event">فعالية (ذهبي)</option><option value="badge-info">تنبيه عام (أخضر)</option></select><label class="cms-lbl">عنوان الإعلان *</label><input type="text" id="cmsTitle" class="cms-inp" placeholder="اكتب العنوان هنا..."><label class="cms-lbl">التاريخ (اختياري)</label><input type="text" id="cmsDate" class="cms-inp" placeholder="مثال: 20 شعبان 1447 هـ"><label class="cms-lbl">نص الإعلان *</label><textarea id="cmsBody" class="cms-txt" placeholder="اكتب التفاصيل..."></textarea><label class="cms-lbl">رابط خارجي (اختياري)</label><input type="url" id="cmsLink" class="cms-inp" placeholder="https://..."><button onclick="submitAnnouncement()" id="cmsSubmitBtn" class="cms-btn">نشر وتحديث الموقع الآن</button></div>
+        </div>
+    </div>
+
+    <!-- 5. نافذة تحديث شريط الأخبار المتحرك -->
+    <div id="tickerModal" class="modal-overlay">
+        <div class="cms-box" style="max-width: 450px;">
+            <div class="cms-hdr" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); border-bottom-color: #38bdf8;"><h3><i class="fas fa-bolt"></i> تحديث الشريط المتحرك</h3><button onclick="closeTickerCMS()" style="background:none; border:none; color:white; font-size:1.3rem; cursor:pointer;">✕</button></div>
+            <div class="cms-body-content"><label class="cms-lbl" style="color: #64748b; margin-top:0; margin-bottom:15px; font-size:0.8rem;">* اكتب كل خبر في سطر مستقل ليفصل بينها النظام تلقائياً.</label><textarea id="tickerText" class="cms-txt" style="height: 110px; line-height: 1.8;" placeholder="الخبر الأول هنا...&#10;الخبر الثاني هنا..."></textarea><button onclick="submitTicker()" id="tickerSubmitBtn" class="cms-btn" style="background:#0284c7;">حفظ وتحديث الشريط الآن</button></div>
+        </div>
+    </div>
+
+    <!-- 6. نافذة إدارة الأقسام والاتصال والردود الآلية -->
+    <div id="configModal" class="modal-overlay">
+        <div class="cms-box" style="max-width: 650px;">
+            <div class="cms-hdr"><h3><i class="fas fa-sliders-h"></i> إعدادات الأقسام والمساعد الذكي</h3><button onclick="closeConfigCMS()" style="background:none; border:none; color:white; font-size:1.3rem; cursor:pointer;">✕</button></div>
+            <div class="cms-body-content">
+                <div class="config-section-card"><h4><i class="fas fa-user-tie"></i> بيانات وكيل المدرسة والاتصال</h4><label class="cms-lbl">اسم وكيل المدرسة</label><input type="text" id="cfgContactName" class="cms-inp" placeholder="الأستاذ/ نوار الذيابي"><label class="cms-lbl">رقم الواتساب (بالصيغة الدولية 9665xxxxxxxx)</label><input type="text" id="cfgContactWa" class="cms-inp" placeholder="966555578299" dir="ltr"><label class="cms-lbl">رقم الاتصال المباشر</label><input type="text" id="cfgContactPhone" class="cms-inp" placeholder="0555578299" dir="ltr"></div>
+                
+                <div class="config-section-card">
+                    <h4><i class="fas fa-robot"></i> إعدادات المساعد الذكي (الردود الآلية)</h4>
+                    <b>السؤال الأول:</b><input type="text" id="cfgBotQ1" class="cms-inp" placeholder="نص السؤال 1"><textarea id="cfgBotA1" class="cms-txt" style="height:55px; margin-top:6px;" placeholder="الإجابة 1..."></textarea><hr style="margin:12px 0; border:none; border-top:1px dashed #cbd5e1;">
+                    <b>السؤال الثاني:</b><input type="text" id="cfgBotQ2" class="cms-inp" placeholder="نص السؤال 2"><textarea id="cfgBotA2" class="cms-txt" style="height:55px; margin-top:6px;" placeholder="الإجابة 2..."></textarea><hr style="margin:12px 0; border:none; border-top:1px dashed #cbd5e1;">
+                    <b>السؤال الثالث:</b><input type="text" id="cfgBotQ3" class="cms-inp" placeholder="نص السؤال 3"><textarea id="cfgBotA3" class="cms-txt" style="height:55px; margin-top:6px;" placeholder="الإجابة 3..."></textarea><hr style="margin:12px 0; border:none; border-top:1px dashed #cbd5e1;">
+                    <b>السؤال الرابع:</b><input type="text" id="cfgBotQ4" class="cms-inp" placeholder="نص السؤال 4"><textarea id="cfgBotA4" class="cms-txt" style="height:55px; margin-top:6px;" placeholder="الإجابة 4..."></textarea>
+                </div>
+
+                <div class="config-section-card"><h4><i class="fas fa-folder-open"></i> القسمين الرئيسيين (ملفات ونتائج الطلاب)</h4><b>1. البطاقة الأولى (ملفات الطلاب):</b><input type="text" id="cfgTitle1" class="cms-inp" placeholder="عنوان القسم (ملفات الطلاب)"><input type="text" id="cfgSub1" class="cms-inp" style="margin-top:6px;" placeholder="الوصف الصغير..."><input type="url" id="cfgUrl1" class="cms-inp" style="margin-top:6px;" placeholder="الرابط (https://...)" dir="ltr"><hr style="margin:16px 0; border:none; border-top:1px dashed #cbd5e1;"><b>2. البطاقة الثانية (نتائج الطلاب):</b><input type="text" id="cfgTitle2" class="cms-inp" placeholder="عنوان القسم (نتائج الطلاب)"><input type="text" id="cfgSub2" class="cms-inp" style="margin-top:6px;" placeholder="الوصف الصغير..."><input type="url" id="cfgUrl2" class="cms-inp" style="margin-top:6px;" placeholder="الرابط (https://...)" dir="ltr"></div>
+                <div class="config-section-card"><h4><i class="fas fa-link"></i> الروابط السريعة الثلاثة (نور، مدرستي، عين)</h4><b>3. الرابط الأول (نظام نور):</b><div style="display:flex; gap:10px; margin-top:6px;"><input type="text" id="cfgTitle3" class="cms-inp" placeholder="الاسم (نظام نور)"><input type="text" id="cfgSub3" class="cms-inp" placeholder="الوصف (الخدمات التعليمية)"></div><input type="url" id="cfgUrl3" class="cms-inp" style="margin-top:6px;" placeholder="الرابط..." dir="ltr"><hr style="margin:16px 0; border:none; border-top:1px dashed #cbd5e1;"><b>4. الرابط الثاني (منصة مدرستي):</b><div style="display:flex; gap:10px; margin-top:6px;"><input type="text" id="cfgTitle4" class="cms-inp" placeholder="الاسم (منصة مدرستي)"><input type="text" id="cfgSub4" class="cms-inp" placeholder="الوصف (التعليم عن بُعد)"></div><input type="url" id="cfgUrl4" class="cms-inp" style="margin-top:6px;" placeholder="الرابط..." dir="ltr"><hr style="margin:16px 0; border:none; border-top:1px dashed #cbd5e1;"><b>5. الرابط الثالث (بوابة عين):</b><div style="display:flex; gap:10px; margin-top:6px;"><input type="text" id="cfgTitle5" class="cms-inp" placeholder="الاسم (بوابة عين)"><input type="text" id="cfgSub5" class="cms-inp" placeholder="الوصف (الكتب الدراسية)"></div><input type="url" id="cfgUrl5" class="cms-inp" style="margin-top:6px;" placeholder="الرابط..." dir="ltr"></div>
+                <div class="btn-group-row"><button onclick="saveConfigCMS()" style="background:var(--primary);">💾 حفظ النشر</button><button onclick="revertConfigCMS()" style="background:#d97706;" title="استعادة النسخة قبل الأخيرة">↩️ تراجع</button><button onclick="resetDefaultConfig()" style="background:#64748b;" title="استعادة أرقام وروابط الوزارة الأصلية">🔄 الافتراضي</button></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- المساعد الذكي -->
+    <div class="chatbot-wrapper">
+        <div id="botWindow" class="chat-window" dir="rtl">
+            <div class="chat-hdr"><div><i class="fas fa-robot" style="color:var(--secondary); margin-left:5px;"></i><b>مرشد البجادية الذكي</b><span style="display:block; font-size:0.7rem; color:#86efac;">متصل آلياً</span></div><button onclick="toggleBot()" style="background:none; border:none; color:white; cursor:pointer; font-size:1.1rem;">✕</button></div>
+            <div id="botChatArea" class="chat-body"><div class="chat-msg msg-bot">أهلاً بك ولي الأمر الكريم! أنا المساعد الذكي لمدرسة تحفيظ القرآن بالبجادية. اختر أحد الاستفسارات التالية:</div></div>
+            <div class="chat-options">
+                <span class="chat-chip" id="chipQ1" onclick="botAnswer(1)">⏰ أوقات الدوام؟</span>
+                <span class="chat-chip" id="chipQ2" onclick="botAnswer(2)">📁 شروط القبول؟</span>
+                <span class="chat-chip" id="chipQ3" onclick="botAnswer(3)">📅 موعد الاختبارات؟</span>
+                <span class="chat-chip" id="chipQ4" onclick="botAnswer(4)">📞 التواصل مع الإدارة</span>
+            </div>
+        </div>
+        <div class="chat-trigger" onclick="toggleBot()"><i class="fas fa-comments"></i></div>
     </div>
 
     <footer>
         جميع الحقوق محفوظة لمدرسة تحفيظ القرآن بالبجادية &copy; 2026
-        <div style="margin-top:20px; display:flex; justify-content:center; align-items:center; gap:10px;">
-            <span class="dev-brand">NMO</span>
-            <span style="font-size:0.7rem; letter-spacing:2px; opacity:0.7;">DESIGNED BY</span>
-        </div>
+        <div style="margin-top:20px; display:flex; justify-content:center; align-items:center; gap:10px;"><span class="dev-brand">NMO</span><span style="font-size:0.7rem; letter-spacing:2px; opacity:0.7;">DESIGNED BY</span></div>
     </footer>
 
     <script>
-        // ═════════════════ إعدادات قاعدة البيانات ═════════════════
-        const GAS_URL = "https://script.google.com/macros/s/AKfycbxtzHqk0nSmIhxH1Rae7hic4NU2H9dLjG6-Ni4iRHr3g_wsfH11tdABhzZfUKe1CIQc/exec"; 
-        
-        // التعديل: الرقم السري الجديد للإدارة
-        const ADMIN_PASSWORD = "999555111"; 
+        // ═════════════════ إعدادات اتصال Firebase الحقيقية ═════════════════
+        const firebaseConfig = {
+            apiKey: "AIzaSyB5FcIMji2MIh9c3DTlGTbx1hurfuNvMqA",
+            authDomain: "bjadiah-school-98eb5.firebaseapp.com",
+            databaseURL: "https://bjadiah-school-98eb5-default-rtdb.firebaseio.com",
+            projectId: "bjadiah-school-98eb5",
+            storageBucket: "bjadiah-school-98eb5.firebasestorage.app",
+            messagingSenderId: "593336638829",
+            appId: "1:593336638829:web:8ca7656b3d95d054bc0e64"
+        };
 
-        // --- إدارة إزاحة التاريخ ---
-        let dateOffset = parseInt(localStorage.getItem('school_date_offset')) || 0;
+        if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+        const db = firebase.database(); const auth = firebase.auth();
 
-        function updateClock() {
-            const now = new Date();
-            const adjustedDate = new Date(now);
-            adjustedDate.setDate(now.getDate() + dateOffset);
-
-            const hijriOptions = { day: 'numeric', month: 'long', year: 'numeric' };
-            let hijriDate = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', hijriOptions).format(adjustedDate);
-            if (!hijriDate.includes("هـ")) hijriDate += " هـ";
-            
-            const gregOptions = { day: 'numeric', month: 'numeric', year: 'numeric' };
-            let gregDate = new Intl.DateTimeFormat('ar-EG', gregOptions).format(adjustedDate);
-            gregDate += " م"; 
-            
-            const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
-            let timeString = now.toLocaleTimeString('ar-EG', timeOptions);
-            timeString = timeString.replace("صباحاً", "ص").replace("مساءً", "م");
-
-            const hEl = document.getElementById('hijri-clock');
-            const gEl = document.getElementById('gregorian-clock');
-            const tEl = document.getElementById('live-time-clock');
-
-            if(hEl) hEl.textContent = hijriDate;
-            if(gEl) gEl.textContent = gregDate;
-            if(tEl) tEl.textContent = timeString;
-            
-            const offsetTextEl = document.getElementById('current-offset-text');
-            if(offsetTextEl) offsetTextEl.textContent = "الإزاحة الحالية: " + (dateOffset > 0 ? "+" : "") + dateOffset + " يوم";
-        }
-
-        function changeOffset(val) { dateOffset += val; localStorage.setItem('school_date_offset', dateOffset); updateClock(); }
-        function resetOffset() { dateOffset = 0; localStorage.setItem('school_date_offset', 0); updateClock(); }
-
-        const toggleBtn = document.getElementById('panel-toggle');
-        if(toggleBtn) {
-            toggleBtn.onclick = function() {
-                const content = document.getElementById('panel-content');
-                if(content) content.style.display = content.style.display === 'block' ? 'none' : 'block';
-            };
-        }
-
-        setInterval(updateClock, 1000); updateClock();
-
-        window.addEventListener('scroll', function() { sessionStorage.setItem('scrollPosition', window.scrollY); });
-        window.addEventListener('load', function() {
-            if (sessionStorage.getItem('scrollPosition') !== null) {
-                window.scrollTo({ top: parseInt(sessionStorage.getItem('scrollPosition')), behavior: 'smooth' });
+        const defaultPageConfig = {
+            contact: { name: "الأستاذ/ نوار الذيابي", phone: "0555578299", whatsapp: "966555578299" },
+            links: {
+                card1: { title: "ملفات الطلاب", subtitle: "الوصول السريع لكافة ملفاتك الدراسية والمناهج المساعدة.", url: "https://nmoschool.github.io/Students/" },
+                card2: { title: "نتائج الطلاب", subtitle: "استعلم عن نتائج الاختبارات والتقارير الشهرية فور صدورها.", url: "https://c.autorasd.com/certificates/b0a58f5f8694310190b05d2d60beff99" },
+                card3: { title: "نظام نور", subtitle: "الخدمات التعليمية", url: "https://noor.moe.gov.sa/" },
+                card4: { title: "منصة مدرستي", subtitle: "التعليم عن بُعد", url: "https://schools.madrasati.sa/" },
+                card5: { title: "بوابة عين", subtitle: "الكتب الدراسية", url: "https://www.ien.edu.sa/" }
+            },
+            chatbot: {
+                q1: { q: "⏰ أوقات الدوام؟", a: "الطابور <b>6:45 صباحاً</b>، والحصة الأولى 7:00 تماماً. الانصراف 1:15 ظهراً." },
+                q2: { q: "📁 شروط القبول؟", a: "1. أن يكون الطالب سعودي الجنسية أو يعامل معاملتهم.<br>2. اجتياز المقابلة الشخصية واختبار النطق السليم.<br>3. التسجيل إلكترونياً عبر نظام نور." },
+                q3: { q: "📅 موعد الاختبارات؟", a: "حسب التقويم المعتمد من وزارة التعليم. يرجى متابعة قسم (لوحة الإعلانات) في الموقع لأي تحديثات فورية." },
+                q4: { q: "📞 التواصل مع الإدارة", a: "بكل سرور، يمكنك التواصل مباشرة مع وكيل المدرسة الأستاذ/ <b>نوار الذيابي</b> عبر الواتساب بالضغط على الأيقونة الخضراء أسفل الصفحة." }
             }
-            loadAnnouncements(); 
+        };
+
+        let currentPageConfig = null;
+
+        // --- مراقب تسجيل الدخول ---
+        let currentUser = null;
+        auth.onAuthStateChanged((user) => {
+            currentUser = user;
+            const loginBtn = document.getElementById('adminAuthBtn'); const logoutBtn = document.getElementById('adminLogoutBtn');
+            const tickerBtn = document.getElementById('tickerBtn'); const configBtn = document.getElementById('configBtn');
+            const urgentBtn = document.getElementById('urgentBtnAdmin');
+            
+            if (user) {
+                document.body.classList.add('admin-mode');
+                loginBtn.innerHTML = '📢 نشر إعلان جديد'; loginBtn.style.background = 'var(--secondary)'; loginBtn.onclick = openNewCMS;
+                if(urgentBtn) urgentBtn.style.display = 'block';
+                if(tickerBtn) tickerBtn.style.display = 'block';
+                if(configBtn) configBtn.style.display = 'block';
+                if(logoutBtn) logoutBtn.style.display = 'block';
+            } else {
+                document.body.classList.remove('admin-mode');
+                loginBtn.innerHTML = '🔒 الدخول للإدارة'; loginBtn.style.background = 'var(--primary)'; loginBtn.onclick = verifyAdmin;
+                if(urgentBtn) urgentBtn.style.display = 'none';
+                if(tickerBtn) tickerBtn.style.display = 'none';
+                if(configBtn) configBtn.style.display = 'none';
+                if(logoutBtn) logoutBtn.style.display = 'none';
+                closeCMS(); closeTickerCMS(); closeConfigCMS(); closeUrgentAdmin();
+            }
         });
 
-        // ═════════════════ دوال لوحة الإعلانات (CMS) ═════════════════
-        let loadedAnnouncements = [];
-        let currentEditIdx = -1; // -1 يعني خبر جديد، أي رقم آخر يعني تعديل
-
-        function loadAnnouncements() {
-            const container = document.getElementById('accordion-container');
-            if(!container) return;
-
-            fetch(GAS_URL + '?action=getContent')
-                .then(res => res.json())
-                .then(data => {
-                    if(data.ok && data.announcements.length > 0) {
-                        loadedAnnouncements = data.announcements; // حفظ البيانات محلياً للتعديل
-                        container.innerHTML = data.announcements.map((a, i) => `
-                            <div class="accordion-box" id="acc-${i}">
-                                <div class="acc-header" onclick="toggleAcc(${i})">
-                                    <span class="acc-badge ${a.badge}">${a.label}</span>
-                                    <span class="acc-title">${a.title}</span>
-                                    <span class="acc-date" dir="rtl">${a.date}</span>
-                                    <div class="admin-actions-wrapper">
-                                        <button class="admin-edit-btn" onclick="editAnn(event, ${i})" title="تعديل هذا الخبر">تعديل</button>
-                                        <button class="admin-del-btn" onclick="delAnn(event, ${i})" title="حذف هذا الخبر">حذف</button>
-                                    </div>
-                                    <i class="fas fa-chevron-down acc-arrow" style="margin-right:auto; margin-left:5px;"></i>
-                                </div>
-                                <div class="acc-body">
-                                    <p style="margin-top:0;">${a.body}</p>
-                                    ${a.link ? `<a href="${a.link}" target="_blank" class="acc-link"><i class="fas fa-external-link-alt"></i> فتح الرابط المرفق</a>` : ''}
-                                </div>
-                            </div>
-                        `).join('');
-                    } else {
-                        container.innerHTML = '<div style="text-align:center; padding:20px; color:#64748b;">لا توجد إعلانات منشورة حالياً.</div>';
-                    }
-                }).catch(() => container.innerHTML = '<div style="text-align:center; padding:20px; color:#ef4444;">تعذر الاتصال بقاعدة البيانات</div>');
+        function togglePanel() { const c = document.getElementById('panel-content'); c.style.display = c.style.display === 'block' ? 'none' : 'block'; }
+        function verifyAdmin() { if (currentUser) { openNewCMS(); document.getElementById('panel-content').style.display = 'none'; } else { document.getElementById('loginModal').classList.add('show'); document.getElementById('panel-content').style.display = 'none'; } }
+        function executeLogin() {
+            const email = document.getElementById('loginEmail').value.trim(); const pass = document.getElementById('loginPass').value;
+            const btn = document.getElementById('loginBtnExec'); const err = document.getElementById('loginErrMsg');
+            if(!email || !pass) { err.innerText = "أدخل البريد وكلمة المرور!"; err.style.display = 'block'; return; }
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> يتحقق...'; btn.disabled = true; err.style.display = 'none';
+            auth.signInWithEmailAndPassword(email, pass).then(() => { closeLogin(); document.getElementById('panel-content').style.display = 'block'; }).catch(() => { err.innerText = "بيانات الدخول غير صحيحة!"; err.style.display = 'block'; }).finally(() => { btn.innerText = 'تحقق ودخول'; btn.disabled = false; });
         }
+        function logoutAdmin() { auth.signOut().then(() => alert("تم تسجيل الخروج بأمان")); }
+        function closeLogin() { document.getElementById('loginModal').classList.remove('show'); }
 
-        function toggleAcc(idx) {
-            const box = document.getElementById(`acc-${idx}`);
-            if(!box) return;
-            document.querySelectorAll('.accordion-box').forEach(el => { 
-                if(el.id !== `acc-${idx}`) el.classList.remove('open'); 
+        // ═════════════════ 1. التنبيه العاجل المنبثق ═════════════════
+        function loadUrgentNotice() {
+            db.ref('urgent_notice').on('value', snap => {
+                const d = snap.val(); const modal = document.getElementById('urgentVisitorModal'); if(!modal) return;
+                if (d && (d.active === true || d.active === 'true')) {
+                    document.getElementById('urgVisTitle').innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${d.title || 'تنبيه هام وعاجل'}`;
+                    document.getElementById('urgVisText').innerText = d.text || '';
+                    const linkEl = document.getElementById('urgVisLink');
+                    if(d.link) { linkEl.href = d.link; linkEl.style.display = 'inline-flex'; } else { linkEl.style.display = 'none'; }
+                    const lastSeenTimestamp = sessionStorage.getItem('seen_urgent_notice');
+                    if (lastSeenTimestamp !== String(d.timestamp)) { modal.classList.add('show'); }
+                } else { modal.classList.remove('show'); }
             });
-            box.classList.toggle('open');
+        }
+        function closeUrgentVisitor() { document.getElementById('urgentVisitorModal').classList.remove('show'); db.ref('urgent_notice/timestamp').once('value').then(s => { sessionStorage.setItem('seen_urgent_notice', String(s.val())); }); }
+        function openUrgentAdminCMS() {
+            if(!currentUser) return; document.getElementById('urgentAdminModal').classList.add('show'); document.getElementById('panel-content').style.display = 'none';
+            db.ref('urgent_notice').once('value').then(snap => { const d = snap.val() || {}; document.getElementById('urgAdminStatus').value = (d.active === true || d.active === 'true') ? 'true' : 'false'; document.getElementById('urgAdminTitle').value = d.title || ''; document.getElementById('urgAdminText').value = d.text || ''; document.getElementById('urgAdminLink').value = d.link || ''; });
+        }
+        function closeUrgentAdmin() { document.getElementById('urgentAdminModal').classList.remove('show'); }
+        function saveUrgentNoticeCMS() {
+            const active = document.getElementById('urgAdminStatus').value === 'true'; const title = document.getElementById('urgAdminTitle').value.trim() || 'تنبيه هام وعاجل'; const text = document.getElementById('urgAdminText').value.trim(); const link = document.getElementById('urgAdminLink').value.trim();
+            if(active && !text) { alert("يرجى كتابة نص التنبيه!"); return; }
+            const btn = document.getElementById('urgSaveBtnExec'); btn.innerHTML = 'يُحفظ...'; btn.disabled = true;
+            db.ref('urgent_notice').set({ active, title, text, link, timestamp: Date.now() }).then(() => { closeUrgentAdmin(); alert(active ? "تم تفعيل التنبيه العاجل ويظهر الآن لجميع الزوار!" : "تم إيقاف التنبيه العاجل."); }).finally(() => { btn.innerHTML = '🚀 حفظ ونشر التنبيه المباشر'; btn.disabled = false; });
         }
 
-        // دالة فتح نافذة إضافة خبر جديد
+        // ═════════════════ 2. إعدادات الصفحة والأقسام والمساعد ═════════════════
+        function loadPageConfig() {
+            db.ref('page_config').on('value', (snap) => {
+                const data = snap.val();
+                if (data && data.links && data.contact) { currentPageConfig = data; applyConfigToDOM(data); } 
+                else { db.ref('page_config').set(defaultPageConfig); currentPageConfig = defaultPageConfig; applyConfigToDOM(defaultPageConfig); }
+            });
+        }
+
+        function applyConfigToDOM(cfg) {
+            if(document.getElementById('gridTitle1')) document.getElementById('gridTitle1').innerText = cfg.links.card1.title; if(document.getElementById('gridSub1')) document.getElementById('gridSub1').innerText = cfg.links.card1.subtitle; if(document.getElementById('gridLink1')) document.getElementById('gridLink1').href = cfg.links.card1.url;
+            if(document.getElementById('gridTitle2')) document.getElementById('gridTitle2').innerText = cfg.links.card2.title; if(document.getElementById('gridSub2')) document.getElementById('gridSub2').innerText = cfg.links.card2.subtitle; if(document.getElementById('gridLink2')) document.getElementById('gridLink2').href = cfg.links.card2.url;
+            if(document.getElementById('miniTitle3')) document.getElementById('miniTitle3').innerText = cfg.links.card3.title; if(document.getElementById('miniSub3')) document.getElementById('miniSub3').innerText = cfg.links.card3.subtitle; if(document.getElementById('miniLink3')) document.getElementById('miniLink3').href = cfg.links.card3.url;
+            if(document.getElementById('miniTitle4')) document.getElementById('miniTitle4').innerText = cfg.links.card4.title; if(document.getElementById('miniSub4')) document.getElementById('miniSub4').innerText = cfg.links.card4.subtitle; if(document.getElementById('miniLink4')) document.getElementById('miniLink4').href = cfg.links.card4.url;
+            if(document.getElementById('miniTitle5')) document.getElementById('miniTitle5').innerText = cfg.links.card5.title; if(document.getElementById('miniSub5')) document.getElementById('miniSub5').innerText = cfg.links.card5.subtitle; if(document.getElementById('miniLink5')) document.getElementById('miniLink5').href = cfg.links.card5.url;
+            if(document.getElementById('contactNameTxt')) document.getElementById('contactNameTxt').innerText = cfg.contact.name; if(document.getElementById('contactWaLink')) document.getElementById('contactWaLink').href = `https://wa.me/${cfg.contact.whatsapp}`; if(document.getElementById('contactPhoneLink')) document.getElementById('contactPhoneLink').href = `tel:${cfg.contact.phone}`;
+            
+            if(cfg.chatbot) {
+                if(document.getElementById('chipQ1')) document.getElementById('chipQ1').innerText = cfg.chatbot.q1.q;
+                if(document.getElementById('chipQ2')) document.getElementById('chipQ2').innerText = cfg.chatbot.q2.q;
+                if(document.getElementById('chipQ3')) document.getElementById('chipQ3').innerText = cfg.chatbot.q3.q;
+                if(document.getElementById('chipQ4')) document.getElementById('chipQ4').innerText = cfg.chatbot.q4.q;
+            }
+        }
+
+        function openConfigCMS() {
+            if(!currentUser) return; const cfg = currentPageConfig || defaultPageConfig;
+            document.getElementById('cfgContactName').value = cfg.contact.name; document.getElementById('cfgContactWa').value = cfg.contact.whatsapp; document.getElementById('cfgContactPhone').value = cfg.contact.phone;
+            
+            const bot = cfg.chatbot || defaultPageConfig.chatbot;
+            document.getElementById('cfgBotQ1').value = bot.q1.q; document.getElementById('cfgBotA1').value = bot.q1.a;
+            document.getElementById('cfgBotQ2').value = bot.q2.q; document.getElementById('cfgBotA2').value = bot.q2.a;
+            document.getElementById('cfgBotQ3').value = bot.q3.q; document.getElementById('cfgBotA3').value = bot.q3.a;
+            document.getElementById('cfgBotQ4').value = bot.q4.q; document.getElementById('cfgBotA4').value = bot.q4.a;
+
+            document.getElementById('cfgTitle1').value = cfg.links.card1.title; document.getElementById('cfgSub1').value = cfg.links.card1.subtitle; document.getElementById('cfgUrl1').value = cfg.links.card1.url;
+            document.getElementById('cfgTitle2').value = cfg.links.card2.title; document.getElementById('cfgSub2').value = cfg.links.card2.subtitle; document.getElementById('cfgUrl2').value = cfg.links.card2.url;
+            document.getElementById('cfgTitle3').value = cfg.links.card3.title; document.getElementById('cfgSub3').value = cfg.links.card3.subtitle; document.getElementById('cfgUrl3').value = cfg.links.card3.url;
+            document.getElementById('cfgTitle4').value = cfg.links.card4.title; document.getElementById('cfgSub4').value = cfg.links.card4.subtitle; document.getElementById('cfgUrl4').value = cfg.links.card4.url;
+            document.getElementById('cfgTitle5').value = cfg.links.card5.title; document.getElementById('cfgSub5').value = cfg.links.card5.subtitle; document.getElementById('cfgUrl5').value = cfg.links.card5.url;
+            
+            document.getElementById('configModal').classList.add('show'); document.getElementById('panel-content').style.display = 'none';
+        }
+        function closeConfigCMS() { document.getElementById('configModal').classList.remove('show'); }
+        function saveConfigCMS() {
+            if(!currentUser) return;
+            const newConfig = {
+                contact: { name: document.getElementById('cfgContactName').value.trim() || "الأستاذ/ نوار الذيابي", whatsapp: document.getElementById('cfgContactWa').value.trim().replace(/\+/g, '') || "966555578299", phone: document.getElementById('cfgContactPhone').value.trim() || "0555578299" },
+                links: {
+                    card1: { title: document.getElementById('cfgTitle1').value.trim() || "ملفات الطلاب", subtitle: document.getElementById('cfgSub1').value.trim() || "الوصول السريع لكافة ملفاتك الدراسية والمناهج المساعدة.", url: document.getElementById('cfgUrl1').value.trim() || "https://nmoschool.github.io/Students/" },
+                    card2: { title: document.getElementById('cfgTitle2').value.trim() || "نتائج الطلاب", subtitle: document.getElementById('cfgSub2').value.trim() || "استعلم عن نتائج الاختبارات والتقارير الشهرية فور صدورها.", url: document.getElementById('cfgUrl2').value.trim() || "https://c.autorasd.com/certificates/b0a58f5f8694310190b05d2d60beff99" },
+                    card3: { title: document.getElementById('cfgTitle3').value.trim() || "نظام نور", subtitle: document.getElementById('cfgSub3').value.trim() || "الخدمات التعليمية", url: document.getElementById('cfgUrl3').value.trim() || "https://noor.moe.gov.sa/" },
+                    card4: { title: document.getElementById('cfgTitle4').value.trim() || "منصة مدرستي", subtitle: document.getElementById('cfgSub4').value.trim() || "التعليم عن بُعد", url: document.getElementById('cfgUrl4').value.trim() || "https://schools.madrasati.sa/" },
+                    card5: { title: document.getElementById('cfgTitle5').value.trim() || "بوابة عين", subtitle: document.getElementById('cfgSub5').value.trim() || "الكتب الدراسية", url: document.getElementById('cfgUrl5').value.trim() || "https://www.ien.edu.sa/" }
+                },
+                chatbot: {
+                    q1: { q: document.getElementById('cfgBotQ1').value.trim(), a: document.getElementById('cfgBotA1').value.trim() },
+                    q2: { q: document.getElementById('cfgBotQ2').value.trim(), a: document.getElementById('cfgBotA2').value.trim() },
+                    q3: { q: document.getElementById('cfgBotQ3').value.trim(), a: document.getElementById('cfgBotA3').value.trim() },
+                    q4: { q: document.getElementById('cfgBotQ4').value.trim(), a: document.getElementById('cfgBotA4').value.trim() }
+                }
+            };
+            if (currentPageConfig) { db.ref('page_config_backup').set(currentPageConfig); }
+            db.ref('page_config').set(newConfig).then(() => { closeConfigCMS(); alert("تم الحفظ بنجاح!"); });
+        }
+        function revertConfigCMS() { if(!currentUser || !confirm("استعادة النسخة السابقة؟")) return; db.ref('page_config_backup').once('value').then(snap => { const backup = snap.val(); if (backup) { db.ref('page_config').set(backup).then(() => { openConfigCMS(); alert("تم التراجع بنجاح!"); }); } else { alert("لا توجد نسخة سابقة."); } }); }
+        function resetDefaultConfig() { if(!currentUser || !confirm("استعادة الإعدادات الأصلية؟")) return; if (currentPageConfig) { db.ref('page_config_backup').set(currentPageConfig); } db.ref('page_config').set(defaultPageConfig).then(() => { openConfigCMS(); alert("تمت الاستعادة."); }); }
+
+        // ═════════════════ 3. الأكورديون والشريط المتحرك ═════════════════
+        let loadedAnnouncements = []; let currentEditingId = null;
+        function loadAnnouncements() {
+            const container = document.getElementById('accordion-container'); if(!container) return;
+            db.ref('announcements').on('value', (snapshot) => {
+                loadedAnnouncements = []; const data = snapshot.val();
+                if (data) {
+                    Object.keys(data).forEach(key => { loadedAnnouncements.push({ id: key, ...data[key] }); });
+                    loadedAnnouncements.reverse(); 
+                    container.innerHTML = loadedAnnouncements.map(a => `
+                        <div class="accordion-box" id="acc-${a.id}">
+                            <div class="acc-header" onclick="toggleAcc('${a.id}')">
+                                <span class="acc-badge ${a.badge}">${getBadgeName(a.badge)}</span>
+                                <span class="acc-title">${a.title}</span><span class="acc-date" dir="rtl">${a.date || ''}</span>
+                                <div class="admin-actions-wrapper"><button class="admin-edit-btn" onclick="editAnn(event, '${a.id}')">تعديل</button><button class="admin-del-btn" onclick="delAnn(event, '${a.id}')">حذف</button></div>
+                                <i class="fas fa-chevron-down acc-arrow" style="margin-right:auto; margin-left:5px;"></i>
+                            </div>
+                            <div class="acc-body"><p style="margin-top:0;">${a.body}</p>${a.link ? `<a href="${a.link}" target="_blank" class="acc-link">فتح الرابط</a>` : ''}</div>
+                        </div>
+                    `).join('');
+                } else { container.innerHTML = '<div style="text-align:center; padding:20px; color:#64748b;">لا توجد إعلانات منشورة حالياً.</div>'; }
+            }, () => { container.innerHTML = `<div style="text-align:center; color:#ef4444;">تعذر الاتصال بقاعدة البيانات</div>`; });
+        }
+        function getBadgeName(b) { return b === 'badge-new' ? 'خبر جديد' : (b === 'badge-event' ? 'فعالية' : 'تنبيه'); }
+        function toggleAcc(id) { const box = document.getElementById(`acc-${id}`); document.querySelectorAll('.accordion-box').forEach(el => { if(el.id !== `acc-${id}`) el.classList.remove('open'); }); if(box) box.classList.toggle('open'); }
         function openNewCMS() {
-            currentEditIdx = -1; // تهيئة للإضافة
-            document.getElementById('cmsTitle').value = ''; 
-            document.getElementById('cmsBody').value = ''; 
-            document.getElementById('cmsLink').value = '';
-            document.getElementById('cmsDate').value = '';
-            document.getElementById('cmsBadge').value = 'badge-new';
-            
-            document.getElementById('cmsModalTitle').innerHTML = '<i class="fas fa-bullhorn"></i> نشر إعلان جديد';
-            document.getElementById('cmsSubmitBtn').innerHTML = 'نشر وتحديث الموقع الآن';
-            
-            document.getElementById('cmsModal').classList.add('show');
+            currentEditingId = null; document.getElementById('cmsTitle').value = ''; document.getElementById('cmsBody').value = ''; document.getElementById('cmsLink').value = ''; document.getElementById('cmsDate').value = ''; document.getElementById('cmsBadge').value = 'badge-new';
+            document.getElementById('cmsModalTitle').innerHTML = '<i class="fas fa-bullhorn"></i> نشر إعلان جديد'; document.getElementById('cmsModal').classList.add('show'); document.getElementById('panel-content').style.display = 'none';
         }
-
-        // دالة فتح نافذة تعديل خبر موجود
-        function editAnn(event, idx) {
-            event.stopPropagation();
-            currentEditIdx = idx; // تحديد الخبر المراد تعديله
-            const a = loadedAnnouncements[idx];
-
-            document.getElementById('cmsTitle').value = a.title;
-            document.getElementById('cmsBody').value = a.body;
-            document.getElementById('cmsBadge').value = a.badge;
-            document.getElementById('cmsDate').value = a.date;
-            document.getElementById('cmsLink').value = a.link;
-
-            document.getElementById('cmsModalTitle').innerHTML = '<i class="fas fa-edit"></i> تعديل الإعلان';
-            document.getElementById('cmsSubmitBtn').innerHTML = 'حفظ التعديلات';
-
-            document.getElementById('cmsModal').classList.add('show');
+        function editAnn(e, id) {
+            e.stopPropagation(); const target = loadedAnnouncements.find(x => x.id === id); if(!target) return; currentEditingId = id;
+            document.getElementById('cmsTitle').value = target.title; document.getElementById('cmsBody').value = target.body; document.getElementById('cmsBadge').value = target.badge; document.getElementById('cmsDate').value = target.date; document.getElementById('cmsLink').value = target.link || '';
+            document.getElementById('cmsModalTitle').innerHTML = '<i class="fas fa-edit"></i> تعديل الإعلان'; document.getElementById('cmsModal').classList.add('show'); document.getElementById('panel-content').style.display = 'none';
         }
-
-        function verifyAdmin() {
-            if (document.body.classList.contains('admin-mode')) {
-                openNewCMS();
-                document.getElementById('panel-content').style.display = 'none';
-                return;
-            }
-            const pass = prompt("أدخل الرقم السري لإدارة الموقع (PIN):");
-            if(pass === ADMIN_PASSWORD) {
-                document.body.classList.add('admin-mode');
-                openNewCMS();
-                const panel = document.getElementById('panel-content');
-                if(panel) panel.style.display = 'none';
-            } else if(pass !== null) {
-                alert("الرقم السري غير صحيح!");
-            }
-        }
-
-        function closeCMS() { 
-            const modal = document.getElementById('cmsModal');
-            if(modal) modal.classList.remove('show'); 
-        }
-
+        function closeCMS() { document.getElementById('cmsModal').classList.remove('show'); }
         function submitAnnouncement() {
-            const title = document.getElementById('cmsTitle').value.trim();
-            const body = document.getElementById('cmsBody').value.trim();
-            const badge = document.getElementById('cmsBadge').value;
-            const date = document.getElementById('cmsDate').value.trim();
-            const link = document.getElementById('cmsLink').value.trim();
+            if(!currentUser) return;
+            const title = document.getElementById('cmsTitle').value.trim(); const body = document.getElementById('cmsBody').value.trim(); const badge = document.getElementById('cmsBadge').value; const date = document.getElementById('cmsDate').value.trim() || document.getElementById('hijri-clock').innerText; const link = document.getElementById('cmsLink').value.trim();
+            if(!title || !body) { alert("العنوان والنص مطلوبان!"); return; }
+            const payload = { title, body, badge, date, link, timestamp: firebase.database.ServerValue.TIMESTAMP }; const btn = document.getElementById('cmsSubmitBtn'); btn.innerHTML = 'يُحفظ...'; btn.disabled = true;
+            const request = currentEditingId ? db.ref(`announcements/${currentEditingId}`).update(payload) : db.ref('announcements').push(payload);
+            request.then(() => { closeCMS(); }).finally(() => { btn.innerText = 'نشر وتحديث الموقع الآن'; btn.disabled = false; });
+        }
+        function delAnn(e, id) { e.stopPropagation(); if(!currentUser || !confirm("حذف الإعلان نهائياً؟")) return; db.ref(`announcements/${id}`).remove(); }
 
-            if(!title || !body) { alert("يرجى تعبئة العنوان والنص!"); return; }
-
-            const btn = document.getElementById('cmsSubmitBtn');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جارِ الحفظ...'; 
-            btn.disabled = true;
-
-            let url = `${GAS_URL}?action=saveAnn&title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}&badge=${badge}&date=${encodeURIComponent(date)}&link=${encodeURIComponent(link)}`;
-            
-            // إذا كان تعديلاً، أرسل رقم الإندكس
-            if (currentEditIdx > -1) {
-                url += `&idx=${currentEditIdx}`;
-            }
-
-            fetch(url)
-                .then(r => r.json())
-                .then(d => {
-                    btn.innerHTML = currentEditIdx > -1 ? 'حفظ التعديلات' : 'نشر وتحديث الموقع الآن'; 
-                    btn.disabled = false;
-                    if(d.ok) {
-                        closeCMS();
-                        loadAnnouncements(); 
-                        alert(currentEditIdx > -1 ? "تم التعديل بنجاح!" : "تم نشر الإعلان بنجاح!");
-                    } else {
-                        alert("حدث خطأ أثناء الحفظ.");
-                    }
-                }).catch(() => {
-                    btn.innerHTML = currentEditIdx > -1 ? 'حفظ التعديلات' : 'نشر وتحديث الموقع الآن'; 
-                    btn.disabled = false;
-                    alert("خطأ في الاتصال بالخادم.");
-                });
+        function loadTicker() {
+            db.ref('ticker').on('value', (snapshot) => {
+                const wrapper = document.getElementById('tickerWrapper'); if(!wrapper) return; const data = snapshot.val();
+                if (data && data.text) { const lines = data.text.split('\n').filter(l => l.trim() !== ''); wrapper.innerHTML = lines.length > 0 ? lines.map(l => `<div class="ticker-item">${l.trim()}</div>`).join('') : `<div class="ticker-item">لا توجد تحديثات حالياً...</div>`; } 
+                else { wrapper.innerHTML = `<div class="ticker-item">أهلاً بكم في الموقع الرسمي لمدرسة تحفيظ القرآن بالبجادية</div>`; }
+            });
+        }
+        function openTickerCMS() {
+            if(!currentUser) return; const btn = document.getElementById('tickerSubmitBtn'); btn.innerHTML = 'جاري الجلب...'; btn.disabled = true; document.getElementById('tickerModal').classList.add('show'); document.getElementById('panel-content').style.display = 'none';
+            db.ref('ticker').once('value').then(snap => { const data = snap.val(); document.getElementById('tickerText').value = data && data.text ? data.text : ''; btn.innerHTML = 'حفظ وتحديث الشريط الآن'; btn.disabled = false; });
+        }
+        function closeTickerCMS() { document.getElementById('tickerModal').classList.remove('show'); }
+        function submitTicker() {
+            const text = document.getElementById('tickerText').value.trim(); const btn = document.getElementById('tickerSubmitBtn'); btn.innerHTML = 'يُحفظ...'; btn.disabled = true;
+            db.ref('ticker').set({ text }).then(() => { closeTickerCMS(); }).finally(() => { btn.innerHTML = 'حفظ وتحديث الشريط الآن'; btn.disabled = false; });
         }
 
-        function delAnn(event, idx) {
-            event.stopPropagation();
-            if(!confirm("هل أنت متأكد من حذف هذا الإعلان نهائياً؟")) return;
-            const box = document.getElementById(`acc-${idx}`);
-            if(box) box.style.opacity = '0.4';
-            fetch(`${GAS_URL}?action=deleteAnn&idx=${idx}`)
-                .then(r => r.json())
-                .then(d => { if(d.ok) loadAnnouncements(); });
+        let dateOffset = parseInt(localStorage.getItem('school_date_offset')) || 0;
+        function updateClock() {
+            const now = new Date(); const adj = new Date(now); adj.setDate(now.getDate() + dateOffset);
+            let hDate = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {day:'numeric',month:'long',year:'numeric'}).format(adj);
+            let gDate = new Intl.DateTimeFormat('ar-EG', {day:'numeric',month:'numeric',year:'numeric'}).format(adj) + " م";
+            let tStr = now.toLocaleTimeString('ar-EG', {hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true}).replace("صباحاً","ص").replace("مساءً","م");
+            document.getElementById('hijri-clock').textContent = hDate; document.getElementById('gregorian-clock').textContent = gDate; document.getElementById('live-time-clock').textContent = tStr;
+            const offEl = document.getElementById('current-offset-text'); if(offEl) offEl.textContent = "الإزاحة: " + (dateOffset>0?"+":"") + dateOffset;
+        }
+        function changeOffset(v) { dateOffset += v; localStorage.setItem('school_date_offset', dateOffset); updateClock(); }
+        function resetOffset() { dateOffset = 0; localStorage.setItem('school_date_offset', 0); updateClock(); }
+        setInterval(updateClock, 1000); updateClock();
+        
+        window.addEventListener('load', () => { loadAnnouncements(); loadTicker(); loadPageConfig(); loadUrgentNotice(); });
+
+        function toggleBot() { document.getElementById("botWindow").classList.toggle("open"); }
+        function botAnswer(qId) {
+            const area = document.getElementById("botChatArea"); 
+            const cfg = (currentPageConfig && currentPageConfig.chatbot) ? currentPageConfig.chatbot : defaultPageConfig.chatbot;
+            let q="", a="";
+            if(qId===1){ q = cfg.q1.q; a = cfg.q1.a; } else if(qId===2){ q = cfg.q2.q; a = cfg.q2.a; } else if(qId===3){ q = cfg.q3.q; a = cfg.q3.a; } else if(qId===4){ q = cfg.q4.q; a = cfg.q4.a; }
+            area.innerHTML += `<div class="chat-msg msg-user">${q}</div>`;
+            setTimeout(() => { area.innerHTML += `<div class="chat-msg msg-bot">${a}</div>`; area.scrollTop = area.scrollHeight; }, 300);
         }
     </script>
 </body>
