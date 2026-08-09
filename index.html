@@ -13,15 +13,15 @@
 
     <style>
         :root {
-            --primary: #064e3b; 
-            --primary-dark: #042f24; 
+            --primary: #0f2c4c; 
+            --primary-dark: #081b30; 
             --secondary: #c5a059;
             /* ألوان مخصصة للتصميم الزجاجي الداكن */
             --text-main: #f8fafc; 
-            --bg: #022c22; 
+            --bg: #071223; 
             --card-bg: rgba(255, 255, 255, 0.06);
             --glass-border: rgba(255, 255, 255, 0.15);
-            --header-gradient: linear-gradient(135deg, rgba(6, 78, 59, 0.5) 0%, rgba(4, 47, 36, 0.5) 100%);
+            --header-gradient: linear-gradient(135deg, rgba(15, 44, 76, 0.5) 0%, rgba(8, 27, 48, 0.5) 100%);
             --r-lg: 14px; --r-xl: 22px;
             --shadow-xs: 0 4px 15px rgba(0,0,0,0.1);
             --shadow-sm: 0 8px 32px rgba(0,0,0,0.2);
@@ -37,7 +37,7 @@
         body { 
             font-family: 'Cairo', sans-serif; 
             margin: 0; padding: 0; color: var(--text-main); overflow-x: hidden; 
-            background: linear-gradient(135deg, #022c22 0%, #064e3b 50%, #0f172a 100%);
+            background: linear-gradient(135deg, #071223 0%, #0f2c4c 50%, #0f172a 100%);
             background-attachment: fixed;
             min-height: 100vh; /* لضمان امتداد الخلفية لكامل الشاشة دائماً */
             position: relative;
@@ -82,8 +82,8 @@
 
         /* لوحة التحكم (زجاجية) */
         #admin-panel { position: fixed; bottom: 20px; left: 20px; z-index: 9999; }
-        #panel-toggle { width: 48px; height: 48px; background: rgba(4, 47, 36, 0.8); backdrop-filter: blur(10px); border: 1px solid var(--secondary); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; color: white; transition: 0.3s; box-shadow: var(--shadow-sm); font-size: 1.3rem;}
-        #panel-toggle:hover { transform: scale(1.1); background: var(--secondary); border-color: white;}
+        #panel-toggle { display: none !important; }
+        .portal-badge { cursor: default; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
         
         .panel-content { display: none; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border-radius: 18px; box-shadow: var(--shadow-xl); margin-bottom: 15px; border: 1px solid var(--glass-border); width: 260px; max-height: 72vh; overflow-y: auto; overflow-x: hidden; color: white;}
         .panel-header-sticky { position: sticky; top: 0; background: rgba(0,0,0,0.2); padding: 12px 15px 8px; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; z-index: 10; }
@@ -221,7 +221,7 @@
     <header>
         <div class="header-content">
             <h1 id="main-header-title">مدرسة تحفيظ القرآن الابتدائية بالبجادية</h1>
-            <div class="portal-badge">بوابة الطالب الذكية</div>
+            <div class="portal-badge" id="portalBadgeTrigger" onclick="handlePortalBadgeTap()">بوابة الطالب الذكية</div>
         </div>
     </header>
 
@@ -253,10 +253,10 @@
                 <hr style="margin:12px 0; border:none; border-top:1px dashed var(--glass-border);">
 
                 <h4>أقسام الموقع (بالترتيب)</h4>
-                <button onclick="verifyAdmin()" id="adminAuthBtn" style="background:rgba(6, 78, 59, 0.8); color:white; text-align:center;">🔒 الدخول للإدارة</button>
+                <button onclick="verifyAdmin()" id="adminAuthBtn" style="background:rgba(15, 44, 76, 0.8); color:white; text-align:center;">🔒 الدخول للإدارة</button>
                 
                 <div id="adminButtonsWrapper" style="display:none; flex-direction: column; gap: 5px;">
-                    <button onclick="openHeaderCMS()" style="background:rgba(6, 78, 59, 0.6); color:white;">1. 🎨 الهيدر والفوتر والألوان</button>
+                    <button onclick="openHeaderCMS()" style="background:rgba(15, 44, 76, 0.6); color:white;">1. 🎨 الهيدر والفوتر والألوان</button>
                     <button onclick="openQuoteCMS()" style="background:rgba(4, 120, 87, 0.6); color:white;">2. 💬 قسم الاقتباس</button>
                     <button onclick="openTickerCMS()" style="background:rgba(5, 150, 105, 0.6); color:white;">3. ⚡ شريط التحديثات</button>
                     <button onclick="openAnnouncementsManager()" style="background:rgba(16, 185, 129, 0.6); color:white;">4. 📢 الإعلانات والمستجدات</button>
@@ -342,7 +342,7 @@
 
     <div class="chatbot-wrapper">
         <div id="botWindow" class="chat-window" dir="rtl">
-            <div class="chat-hdr"><div><i class="fas fa-robot" style="color:var(--secondary); margin-left:5px;"></i><b id="botNameDisplay">مرشد المدرسة الذكي</b><span style="display:block; font-size:0.7rem; color:#86efac;">متصل آلياً</span></div><button onclick="toggleBot()" style="background:none; border:none; color:white; cursor:pointer; font-size:1.1rem;">✕</button></div>
+            <div class="chat-hdr"><div><i class="fas fa-robot" style="color:var(--secondary); margin-left:5px;"></i><b id="botNameDisplay">مرشد المدرسة الذكي</b><span style="display:block; font-size:0.7rem; color:#e0b98d;">متصل آلياً</span></div><button onclick="toggleBot()" style="background:none; border:none; color:white; cursor:pointer; font-size:1.1rem;">✕</button></div>
             <div id="botChatArea" class="chat-body"><div class="chat-msg msg-bot">أهلاً بك ولي الأمر الكريم! اختر أحد الاستفسارات التالية:</div></div>
             <div class="chat-options">
                 <span class="chat-chip" id="chipQ1" onclick="botAnswer(1)">⏰ أوقات الدوام؟</span>
@@ -375,7 +375,7 @@
 
     <div id="headerModal" class="modal-overlay">
         <div class="cms-box" style="max-width: 550px;">
-            <div class="cms-hdr" style="background: rgba(6, 78, 59, 0.4);">
+            <div class="cms-hdr" style="background: rgba(15, 44, 76, 0.4);">
                 <h3><i class="fas fa-paint-brush"></i> الهيدر والفوتر والألوان</h3>
                 <button onclick="closeAllModals()" style="background:none; border:none; color:white; font-size:1.3rem; cursor:pointer;">✕</button>
             </div>
@@ -387,14 +387,14 @@
                             <label class="cms-lbl">اللون الأساسي</label>
                             <div class="color-input-group">
                                 <input type="color" id="cfgColor1Picker" oninput="document.getElementById('cfgColor1Hex').value = this.value">
-                                <input type="text" id="cfgColor1Hex" class="cms-inp" dir="ltr" placeholder="#064e3b" oninput="document.getElementById('cfgColor1Picker').value = this.value">
+                                <input type="text" id="cfgColor1Hex" class="cms-inp" dir="ltr" placeholder="#0f2c4c" oninput="document.getElementById('cfgColor1Picker').value = this.value">
                             </div>
                         </div>
                         <div style="flex:1; min-width: 190px;">
                             <label class="cms-lbl">لون التدرج</label>
                             <div class="color-input-group">
                                 <input type="color" id="cfgColor2Picker" oninput="document.getElementById('cfgColor2Hex').value = this.value">
-                                <input type="text" id="cfgColor2Hex" class="cms-inp" dir="ltr" placeholder="#042f24" oninput="document.getElementById('cfgColor2Picker').value = this.value">
+                                <input type="text" id="cfgColor2Hex" class="cms-inp" dir="ltr" placeholder="#081b30" oninput="document.getElementById('cfgColor2Picker').value = this.value">
                             </div>
                         </div>
                     </div>
@@ -612,7 +612,7 @@
 
         const defaultPageConfig = {
             appearance: {
-                colors: { color1: "#064e3b", color2: "#042f24" },
+                colors: { color1: "#0f2c4c", color2: "#081b30" },
                 texts: { headerTitle: "مدرسة تحفيظ القرآن الابتدائية بالبجادية", footerText: "جميع الحقوق محفوظة لمدرسة تحفيظ القرآن بالبجادية &copy; 2026" },
                 quote: { visible: true, text: "« إنَّ عظمة طموحك هي التي تحدد حجم نجاحك؛ فاستثمر وقتك في طلب العلم بكل شغف، فالقمم لا تُنال إلا بصبر المجتهدين وعزيمة المبدعين »", author: "كُن أنت صانع مستقبلك المشرق" },
                 ticker: { visible: true },
@@ -643,6 +643,20 @@
         function closeAllModals() { document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('show')); }
         function openModal(id) { closeAllModals(); document.getElementById(id).classList.add('show'); document.getElementById('panel-content').style.display = 'none'; }
         function togglePanel() { const c = document.getElementById('panel-content'); c.style.display = c.style.display === 'block' ? 'none' : 'block'; }
+
+        // فتح لوحة الإدارة بالضغط 3 مرات متتالية على شارة "بوابة الطالب الذكية" (مخفية عن الزوار)
+        let portalTapCount = 0;
+        let portalTapTimer = null;
+        function handlePortalBadgeTap() {
+            portalTapCount++;
+            if (portalTapTimer) clearTimeout(portalTapTimer);
+            if (portalTapCount >= 3) {
+                portalTapCount = 0;
+                togglePanel();
+                return;
+            }
+            portalTapTimer = setTimeout(() => { portalTapCount = 0; }, 1200);
+        }
 
         auth.onAuthStateChanged((user) => {
             currentUser = user;
