@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="browser-title">مدرسة تحفيظ القرآن بالبجادية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Amiri:ital,wght@0,700;1,700&family=Marcellus&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Amiri:ital,wght@0,700;1,700&family=Marcellus&family=Tajawal:wght@400;700;900&family=Almarai:wght@400;700;800&family=Lalezar&family=Reem+Kufi:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=El+Messiri:wght@400;700&family=Changa:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -13,13 +13,12 @@
 
     <style>
         :root {
-            /* الألوان الجديدة المستوحاة من التصميم المرفق */
-            --primary: #5d3e24; /* البني الغامق للنصوص */
+            --primary: #5d3e24;
             --primary-dark: #412b19; 
-            --secondary: #c7a464; /* الذهبي للأيقونات */
+            --secondary: #c7a464;
             --text-main: #5d3e24; 
-            --bg: #fbf6ec; /* لون الخلفية البيج الفاتح */
-            --card-bg: #fffdfa; /* لون البطاقات */
+            --bg: #fbf6ec;
+            --card-bg: #fffdfa;
             --glass-border: #efe4d1;
             --header-gradient: linear-gradient(135deg, rgba(251, 246, 236, 0.9) 0%, rgba(255, 253, 250, 0.9) 100%);
             --r-lg: 14px; --r-xl: 22px;
@@ -28,89 +27,39 @@
             --shadow-xl: 0 28px 72px rgba(93, 62, 36, 0.15);
         }
 
-        html { 
-            scroll-behavior: smooth; 
-            background-color: var(--bg); 
-        }
-        
-        body { 
-            font-family: 'Cairo', sans-serif; 
-            margin: 0; padding: 0; color: var(--text-main); overflow-x: hidden; 
-            background: var(--bg);
-            background-attachment: fixed;
-            min-height: 100vh;
-            position: relative;
-        }
-        
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://www.transparenttextures.com/patterns/islamic-art.png');
-            opacity: 0.03; /* تقليل الشفافية لتناسب اللون الفاتح */
-            z-index: -1;
-            pointer-events: none;
-        }
+        html { scroll-behavior: smooth; background-color: var(--bg); }
+        body { font-family: 'Cairo', sans-serif; margin: 0; padding: 0; color: var(--text-main); overflow-x: hidden; background: var(--bg); background-attachment: fixed; min-height: 100vh; position: relative; }
+        body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('https://www.transparenttextures.com/patterns/islamic-art.png'); opacity: 0.03; z-index: -1; pointer-events: none; }
 
-        header { 
-            background: var(--header-gradient); 
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            color: var(--primary); padding: 80px 20px 120px; text-align: center; 
-            clip-path: ellipse(150% 100% at 50% 0%); 
-            border-bottom: 2px solid var(--glass-border); 
-            position: relative; 
-        }
-        
+        header { background: var(--header-gradient); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); color: var(--primary); padding: 80px 20px 120px; text-align: center; clip-path: ellipse(150% 100% at 50% 0%); border-bottom: 2px solid var(--glass-border); position: relative; }
         .header-content { position: relative; z-index: 3; }
-        
-        /* تنسيق الأيقونات الجديدة */
-        .header-icons {
-            font-size: 2.2rem;
-            color: var(--secondary);
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
+        .header-icons { font-size: 2.2rem; color: var(--secondary); margin-bottom: 15px; display: flex; justify-content: center; gap: 20px; }
         h1 { font-size: 2.4rem; font-weight: 900; margin-bottom: 20px; color: var(--primary); }
 
-        .portal-badge { display: inline-flex; padding: 8px 30px; background: #f6eedf; border: 1px solid var(--glass-border); border-radius: 50px; font-size: 1rem; color: var(--primary); font-weight: 700; box-shadow: var(--shadow-sm); }
+        .portal-badge { display: inline-flex; padding: 8px 30px; background: #f6eedf; border: 1px solid var(--glass-border); border-radius: 50px; font-size: 1rem; color: var(--primary); font-weight: 700; box-shadow: var(--shadow-sm); cursor: default; user-select: none; }
 
-        .live-date-bar { position: relative; z-index: 10; text-align: center; margin: -30px auto 30px; width: 98%; max-width: 800px; }
-        .date-container { 
-            background: var(--card-bg); padding: 12px 20px; border-radius: 50px; 
-            display: inline-flex; align-items: center; justify-content: center; gap: 10px; 
-            box-shadow: var(--shadow-sm); border: 1px solid var(--glass-border); 
-            font-weight: 700; font-size: 0.9rem; flex-wrap: wrap; color: var(--primary);
-        }
+        .live-date-bar { position: relative; z-index: 10; text-align: center; margin: -30px auto 30px; width: 98%; max-width: 850px; }
+        .date-container { background: var(--card-bg); padding: 12px 20px; border-radius: 50px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; box-shadow: var(--shadow-sm); border: 1px solid var(--glass-border); font-weight: 700; font-size: 0.9rem; flex-wrap: wrap; color: var(--primary); }
         .date-container i { color: var(--secondary); font-size: 1rem; animation: gold-pulse 2s infinite ease-in-out; }
         @keyframes gold-pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.6; } }
         .date-container span.sep { color: var(--secondary); opacity: 0.5; font-weight: 300; }
 
         #admin-panel { position: fixed; bottom: 20px; left: 20px; z-index: 9999; }
-        #panel-toggle { display: none !important; }
-        .portal-badge { cursor: default; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
+        #panel-toggle { display: none; }
         
-        .panel-content { display: none; background: rgba(251, 246, 236, 0.95); backdrop-filter: blur(25px); border-radius: 18px; box-shadow: var(--shadow-xl); margin-bottom: 15px; border: 1px solid var(--glass-border); width: 260px; max-height: 72vh; overflow-y: auto; overflow-x: hidden; color: var(--primary);}
+        .panel-content { display: none; background: rgba(251, 246, 236, 0.98); backdrop-filter: blur(25px); border-radius: 18px; box-shadow: var(--shadow-xl); margin-bottom: 15px; border: 1px solid var(--glass-border); width: 280px; max-height: 75vh; overflow-y: auto; overflow-x: hidden; color: var(--primary); }
         .panel-header-sticky { position: sticky; top: 0; background: #f6eedf; padding: 12px 15px 8px; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; z-index: 10; }
         .panel-body-padding { padding: 15px; text-align: center; }
         .panel-body-padding h4 { margin: 0 0 10px; font-size: 0.9rem; color: var(--secondary); font-weight: 900; }
-        .panel-body-padding button { border: 1px solid var(--glass-border); padding: 9px 12px; border-radius: 8px; cursor: pointer; font-family: 'Cairo'; font-weight: 800; margin: 4px 0; width: 100%; transition:0.2s; font-size: 0.85rem; text-align: right; color: var(--primary);}
+        .panel-body-padding button { border: 1px solid var(--glass-border); padding: 9px 12px; border-radius: 8px; cursor: pointer; font-family: 'Cairo'; font-weight: 800; margin: 4px 0; width: 100%; transition:0.2s; font-size: 0.85rem; text-align: right; color: var(--primary); }
         .panel-body-padding button:hover { transform: translateY(-2px); box-shadow: var(--shadow-xs); }
         
-        .btn-close-panel { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 50%; color: #ef4444; font-size: 1rem; cursor: pointer; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-weight: bold; transition: 0.2s;}
+        .btn-close-panel { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 50%; color: #ef4444; font-size: 1rem; cursor: pointer; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-weight: bold; transition: 0.2s; }
         .btn-close-panel:hover { background: #ef4444; color: white; }
 
-        .container { max-width: 900px; margin: 0 auto 60px; padding: 0 20px; position: relative; z-index: 5; }
+        .container { max-width: 950px; margin: 0 auto 60px; padding: 0 20px; position: relative; z-index: 5; }
 
-        .glass-card {
-            background: var(--card-bg); 
-            border: 1px solid var(--glass-border); 
-            border-radius: 24px; 
-            box-shadow: var(--shadow-sm);
-        }
-
+        .glass-card { background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 24px; box-shadow: var(--shadow-sm); }
         .quote-card { padding: 35px; text-align: center; margin-bottom: 30px; border-right: 6px solid var(--secondary); }
         .quote-card p { font-family: 'Amiri', serif; font-size: 1.4rem; color: var(--primary); line-height: 1.7; font-weight: 700; margin: 0; }
 
@@ -118,14 +67,14 @@
         .news-badge-pro { background: var(--secondary); color: #fff; height: 100%; padding: 0 20px; display: flex; align-items: center; font-weight: 900; font-size: 0.9rem; }
         .ticker-container { flex: 1; overflow: hidden; direction: ltr; }
         .ticker-wrapper { display: inline-flex; white-space: nowrap; animation: ticker-pro 25s linear infinite; }
-        .ticker-item { direction: rtl; padding: 0 40px; color: var(--primary) !important; font-weight: 700; font-size: 0.9rem; position: relative;}
+        .ticker-item { direction: rtl; padding: 0 40px; color: var(--primary) !important; font-weight: 700; font-size: 0.9rem; position: relative; }
         .ticker-item::after { content: '•'; position: absolute; left: 0; top: 50%; transform: translateY(-50%); color: var(--secondary); font-size: 1.2rem; }
         .ticker-item:last-child::after { content: ''; }
         @keyframes ticker-pro { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
 
         .accordion-box { background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: var(--r-lg); margin-bottom: 12px; overflow: hidden; box-shadow: var(--shadow-xs); transition: 0.3s; }
         .accordion-box:hover { border-color: var(--secondary); box-shadow: var(--shadow-sm); }
-        .acc-header { padding: 15px 20px; display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; color: var(--primary);}
+        .acc-header { padding: 15px 20px; display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; color: var(--primary); }
         .acc-badge { padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: 900; flex-shrink: 0; }
         .badge-new { background: #ef4444; color: #ffffff; } .badge-event { background: var(--secondary); color: #fff; } .badge-info { background: #f6eedf; color: var(--primary); border: 1px solid var(--glass-border); }
         .acc-title { font-weight: 800; font-size: 1.05rem; flex: 1; color: var(--primary); margin: 0; text-align: right; }
@@ -134,27 +83,44 @@
         .accordion-box.open .acc-arrow { transform: rotate(180deg); }
         .acc-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; background: #fdfbf7; border-top: 1px solid var(--glass-border); padding: 0 20px; font-size: 0.95rem; line-height: 1.7; color: var(--primary); text-align: right; }
         .accordion-box.open .acc-body { max-height: 800px; padding: 18px 20px; }
-        .acc-link { display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; color: var(--primary); font-weight: 800; text-decoration: none; background: #f6eedf; padding: 4px 12px; border-radius: 6px; font-size: 0.85rem; border: 1px solid var(--glass-border);}
-        .acc-link:hover { background: var(--secondary); color: white; border-color: var(--secondary);}
-        
+        .acc-link { display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; color: var(--primary); font-weight: 800; text-decoration: none; background: #f6eedf; padding: 4px 12px; border-radius: 6px; font-size: 0.85rem; border: 1px solid var(--glass-border); }
+        .acc-link:hover { background: var(--secondary); color: white; border-color: var(--secondary); }
+
+        /* تنسيق جدول التقويم الدراسي */
+        .school-calendar-section { background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 24px; padding: 25px; margin-bottom: 40px; box-shadow: var(--shadow-sm); }
+        .calendar-table-wrapper { width: 100%; overflow-x: auto; margin-top: 15px; border-radius: 12px; border: 1px solid var(--glass-border); }
+        .school-cal-table { width: 100%; border-collapse: collapse; text-align: right; font-size: 0.9rem; background: #fff; }
+        .school-cal-table th { background: #1e3a8a; color: white; padding: 12px 15px; font-weight: 800; text-align: center; border: 1px solid #172554; }
+        .school-cal-table td { padding: 12px 15px; border-bottom: 1px solid var(--glass-border); border-left: 1px solid var(--glass-border); color: var(--primary); font-weight: 700; vertical-align: middle; }
+        .school-cal-table tr:nth-child(even) { background: #fdfbf7; }
+        .school-cal-table tr:hover { background: #f6eedf55; }
+        .cal-tag-box { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; margin-left: 5px; }
+        .tag-from { background: rgba(16, 185, 129, 0.15); color: #047857; }
+        .tag-to { background: rgba(239, 68, 68, 0.15); color: #dc2626; }
+
+        /* ويدجت العد التنازلي لأقرب حدث في التقويم الدراسي */
+        .countdown-widget { display: inline-flex; align-items: center; gap: 10px; background: var(--secondary); color: #fff; padding: 9px 22px; border-radius: 50px; font-size: 0.85rem; font-weight: 800; margin-top: 10px; box-shadow: var(--shadow-sm); cursor: pointer; transition: 0.3s; border: 1px solid rgba(255,255,255,0.25); }
+        .countdown-widget:hover { transform: translateY(-2px); box-shadow: var(--shadow-xl); }
+        .countdown-widget i { font-size: 0.95rem; }
+        .countdown-widget b { font-weight: 900; }
+        .countdown-widget .cd-days { background: rgba(255,255,255,0.22); padding: 2px 10px; border-radius: 50px; margin: 0 2px; }
+
         .modal-overlay { position: fixed; inset: 0; background: rgba(93, 62, 36, 0.4); backdrop-filter: blur(5px); z-index: 100000; display: none; align-items: center; justify-content: center; padding: 15px; }
         .modal-overlay.show { display: flex; animation: cdFadeIn 0.25s ease; }
         @keyframes cdFadeIn { from { opacity:0; transform:scale(0.96); } to { opacity:1; transform:scale(1); } }
         
-        .cms-box { background: rgba(251, 246, 236, 0.98); border: 1px solid var(--glass-border); border-radius: var(--r-xl); width: 100%; max-width: 500px; overflow: hidden; box-shadow: var(--shadow-xl); text-align: right; display: flex; flex-direction: column; max-height: 90vh; color: var(--primary);}
+        .cms-box { background: rgba(251, 246, 236, 0.98); border: 1px solid var(--glass-border); border-radius: var(--r-xl); width: 100%; max-width: 550px; overflow: hidden; box-shadow: var(--shadow-xl); text-align: right; display: flex; flex-direction: column; max-height: 90vh; color: var(--primary); }
         .cms-hdr { background: #f6eedf; padding: 16px 22px; color: var(--primary); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); flex-shrink: 0; }
         .cms-hdr h3 { margin: 0; font-size: 1.1rem; }
-        .cms-hdr button { color: var(--primary) !important; }
+        .cms-hdr button { color: var(--primary) !important; background: none; border: none; font-size: 1.3rem; cursor: pointer; }
         .cms-body-content { padding: 20px 22px; overflow-y: auto; }
         .cms-lbl { display: block; font-weight: 800; font-size: 0.85rem; color: var(--secondary); margin: 12px 0 5px; }
         
         .cms-inp, .cms-txt, select.cms-inp { width: 100%; padding: 10px 12px; border: 1px solid var(--glass-border); border-radius: 8px; font-family: 'Cairo'; font-size: 0.95rem; outline: none; box-sizing: border-box; background: #fff; color: var(--primary); }
         .cms-inp:focus, .cms-txt:focus { border-color: var(--secondary); }
-        .cms-inp::placeholder, .cms-txt::placeholder { color: #bcaaa4; }
-        select.cms-inp option { background: #fff; color: var(--primary); }
         .cms-txt { height: 85px; resize: none; }
         
-        .cms-btn { width: 100%; padding: 12px; background: var(--secondary); color: white; border: 1px solid var(--glass-border); border-radius: 8px; font-weight: 800; font-size: 1rem; margin-top: 20px; cursor: pointer; font-family: 'Cairo'; transition: 0.2s; text-align: center;}
+        .cms-btn { width: 100%; padding: 12px; background: var(--secondary); color: white; border: 1px solid var(--glass-border); border-radius: 8px; font-weight: 800; font-size: 1rem; margin-top: 20px; cursor: pointer; font-family: 'Cairo'; transition: 0.2s; text-align: center; }
         .cms-btn:hover { opacity: 0.9; }
 
         .config-section-card { background: #fffdfa; border: 1px solid var(--glass-border); border-radius: 12px; padding: 14px; margin-bottom: 14px; }
@@ -194,7 +160,6 @@
         .chat-window { position: absolute; bottom: 70px; right: 0; width: 330px; background: rgba(251, 246, 236, 0.98); backdrop-filter: blur(25px); border-radius: var(--r-xl); border: 1px solid var(--glass-border); box-shadow: var(--shadow-xl); display: none; flex-direction: column; overflow: hidden; text-align: right; color: var(--primary); }
         .chat-window.open { display: flex; animation: cdFadeIn 0.3s ease; }
         .chat-hdr { background: #f6eedf; padding: 15px; color: var(--primary); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); }
-        .chat-hdr button { color: var(--primary) !important; }
         .chat-body { height: 280px; padding: 15px; overflow-y: auto; background: transparent; display: flex; flex-direction: column; gap: 10px; font-size: 0.9rem; }
         .chat-msg { padding: 10px 14px; border-radius: 14px; max-width: 85%; line-height: 1.5; }
         .msg-bot { background: #fff; border: 1px solid var(--glass-border); color: var(--primary); align-self: flex-start; border-bottom-right-radius: 2px; font-weight: 600; }
@@ -206,9 +171,9 @@
         .admin-list-item { display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 10px 14px; border: 1px solid var(--glass-border); border-radius: 8px; margin-bottom: 8px; }
         .admin-list-item span { font-weight: 800; font-size: 0.85rem; color: var(--primary); flex: 1; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .admin-list-btns { display: flex; gap: 5px; margin-right: 8px; }
-        .admin-list-btns button { padding: 4px 10px; border-radius: 5px; cursor: pointer; font-family: 'Cairo'; font-size: 0.75rem; border: none; font-weight: bold; width: auto;}
-        .btn-edit { background: rgba(2, 132, 199, 0.1); color: #0284c7; border: 1px solid rgba(2, 132, 199, 0.3);}
-        .btn-del { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3);}
+        .admin-list-btns button { padding: 4px 10px; border-radius: 5px; cursor: pointer; font-family: 'Cairo'; font-size: 0.75rem; border: none; font-weight: bold; width: auto; }
+        .btn-edit { background: rgba(2, 132, 199, 0.1); color: #0284c7; border: 1px solid rgba(2, 132, 199, 0.3); }
+        .btn-del { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
 
         .color-input-group { display: flex; gap: 6px; align-items: center; }
         .color-input-group input[type="color"] { width: 45px; height: 38px; cursor: pointer; padding: 1px; border: 1px solid var(--glass-border); border-radius: 6px; background: #fff; }
@@ -217,21 +182,22 @@
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg); }
         ::-webkit-scrollbar-thumb { background: #dccaaf; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--secondary); }
     </style>
 </head>
 <body>
 
     <header>
         <div class="header-content">
-            <!-- الأيقونات المضافة أعلى العنوان -->
             <div class="header-icons" dir="ltr">
                 <i class="fas fa-pen-nib"></i>
                 <i class="fas fa-book-open"></i>
                 <i class="fas fa-leaf"></i>
             </div>
             <h1 id="main-header-title">مدرسة تحفيظ القرآن الابتدائية بالبجادية</h1>
-            <div class="portal-badge" id="portalBadgeTrigger" onclick="handlePortalBadgeTap()">بوابة الطالب الذكية</div>
+            <div class="portal-badge" id="portalBadgeTrigger"
+                 onmousedown="startPortalPress()" onmouseup="cancelPortalPress()" onmouseleave="cancelPortalPress()"
+                 ontouchstart="startPortalPress()" ontouchend="cancelPortalPress()" ontouchcancel="cancelPortalPress()"
+                 oncontextmenu="return false;">بوابة الطالب الذكية</div>
         </div>
     </header>
 
@@ -241,6 +207,12 @@
             <span id="hijri-clock"></span> <span class="sep">|</span>
             <span id="gregorian-clock"></span> <span class="sep">|</span>
             <i class="fas fa-clock"></i> <span id="live-time-clock"></span>
+        </div>
+        <div>
+            <div class="countdown-widget" id="countdownWidget" onclick="openSchoolCalendarViewModal()" title="اضغط لعرض التقويم الدراسي كاملاً">
+                <i class="fas fa-hourglass-half"></i>
+                <span id="countdownText">جاري حساب الأيام المتبقية...</span>
+            </div>
         </div>
     </div>
 
@@ -252,17 +224,12 @@
                 <div style="width:28px;"></div>
             </div>
             <div class="panel-body-padding">
-                <h4>تعديل التقويم</h4>
-                <div style="display:flex; gap:6px;">
-                    <button onclick="changeOffset(1)" style="background:#f6eedf;">يوم +1</button>
-                    <button onclick="changeOffset(-1)" style="background:#f6eedf;">يوم -1</button>
-                </div>
-                <button onclick="resetOffset()" style="background:var(--secondary); color:white; text-align:center;">إعادة ضبط التقويم</button>
-                <div id="current-offset-text" style="font-size:0.7rem; margin-top:5px; color:#8c7361;"></div>
+                <h4>إعدادات التواريخ والتقويم</h4>
+                <button onclick="openCalendarOffsetCMS()" style="background:#f6eedf;">⚙️ ضبط إزاحة التقويم (هجري/ميلادي)</button>
 
                 <hr style="margin:12px 0; border:none; border-top:1px dashed var(--glass-border);">
 
-                <h4>أقسام الموقع (بالترتيب)</h4>
+                <h4>أقسام الموقع</h4>
                 <button onclick="verifyAdmin()" id="adminAuthBtn" style="background:#f6eedf; color:var(--primary); text-align:center;">🔒 الدخول للإدارة</button>
                 
                 <div id="adminButtonsWrapper" style="display:none; flex-direction: column; gap: 5px;">
@@ -270,8 +237,9 @@
                     <button onclick="openQuoteCMS()" style="background:#047857; color:white;">2. 💬 قسم الاقتباس</button>
                     <button onclick="openTickerCMS()" style="background:#059669; color:white;">3. ⚡ شريط التحديثات</button>
                     <button onclick="openAnnouncementsManager()" style="background:#10b981; color:white;">4. 📢 الإعلانات والمستجدات</button>
-                    <button onclick="openLinksCMS()" style="background:#0284c7; color:white;">5. ⚙️ الأقسام والروابط</button>
-                    <button onclick="openContactCMS()" style="background:#0369a1; color:white;">6. 📞 الاتصال والمساعد الذكي</button>
+                    <button onclick="openSchoolCalendarManager()" style="background:#1d4ed8; color:white;">5. 📅 إدارة التقويم الدراسي 1448</button>
+                    <button onclick="openLinksCMS()" style="background:#0284c7; color:white;">6. ⚙️ الأقسام والروابط</button>
+                    <button onclick="openContactCMS()" style="background:#0369a1; color:white;">7. 📞 الاتصال والمساعد الذكي</button>
                     <hr style="margin:6px 0; border:none; border-top:1px dashed var(--glass-border);">
                     <button onclick="openUrgentAdminCMS()" style="background:#ea580c; color:white;">🚨 التنبيه العاجل المنبثق</button>
                     <button onclick="logoutAdmin()" style="background:#ef4444; color:white; text-align:center; margin-top:8px;">تسجيل الخروج</button>
@@ -306,6 +274,11 @@
         </div>
 
         <div class="modern-grid">
+            <div class="action-card" id="calendarCardTrigger" onclick="openSchoolCalendarViewModal()" style="cursor: pointer;">
+                <div class="icon-wrapper"><svg viewBox="0 0 24 24"><path d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.9 20.1,3 19,3H18V1M17,12H12V17H17V12Z"/></svg></div>
+                <h3>التقويم الدراسي (1448 / 1449 هـ)</h3><p>جدول العودات والإجازات الرسمية المعتمدة لعام 1448 هـ.</p>
+                <div class="smart-link"><span>عرض التقويم</span><div class="arrow">←</div></div>
+            </div>
             <a href="https://nmoschool.github.io/Students/" id="gridLink1" class="action-card" target="_blank">
                 <div class="icon-wrapper"><svg viewBox="0 0 24 24"><path d="M13,9h5.5L13,3.5V9M6,2h8l6,6v12a2,2 0 0,1-2,2H6a2,2 0 0,1-2-2V4A2,2 0 0,1 6,2M7,20H17V18H7V20M7,16H17V14H7V16M7,12H12V10H7V12Z"/></svg></div>
                 <h3 id="gridTitle1">ملفات الطلاب</h3><p id="gridSub1">الوصول السريع لكافة ملفاتك الدراسية والمناهج المساعدة.</p>
@@ -352,7 +325,7 @@
 
     <div class="chatbot-wrapper">
         <div id="botWindow" class="chat-window" dir="rtl">
-            <div class="chat-hdr"><div><i class="fas fa-robot" style="color:var(--secondary); margin-left:5px;"></i><b id="botNameDisplay">مرشد المدرسة الذكي</b><span style="display:block; font-size:0.7rem; color:#8c7361;">متصل آلياً</span></div><button onclick="toggleBot()" style="background:none; border:none; cursor:pointer; font-size:1.1rem;">✕</button></div>
+            <div class="chat-hdr"><div><i class="fas fa-robot" style="color:var(--secondary); margin-left:5px;"></i><b id="botNameDisplay">مرشد المدرسة الذكي</b><span style="display:block; font-size:0.7rem; color:#8c7361;">متصل آلياً</span></div><button onclick="toggleBot()" style="background:none; border:none; cursor:pointer; font-size:1.1rem; color:var(--primary);">✕</button></div>
             <div id="botChatArea" class="chat-body"><div class="chat-msg msg-bot">أهلاً بك ولي الأمر الكريم! اختر أحد الاستفسارات التالية:</div></div>
             <div class="chat-options">
                 <span class="chat-chip" id="chipQ1" onclick="botAnswer(1)">⏰ أوقات الدوام؟</span>
@@ -369,9 +342,10 @@
         <div style="margin-top:20px; display:flex; justify-content:center; align-items:center; gap:10px;"><span class="dev-brand">NMO</span><span style="font-size:0.7rem; letter-spacing:2px; opacity:0.7;">DESIGNED BY</span></div>
     </footer>
 
+    <!-- النوافذ المنبثقة للإدارة -->
     <div id="loginModal" class="modal-overlay">
         <div class="cms-box" style="max-width: 380px;">
-            <div class="cms-hdr"><h3><i class="fas fa-lock"></i> تسجيل الدخول</h3><button onclick="closeAllModals()" style="background:none; border:none; font-size:1.3rem; cursor:pointer;">✕</button></div>
+            <div class="cms-hdr"><h3><i class="fas fa-lock"></i> تسجيل الدخول</h3><button onclick="closeAllModals()">✕</button></div>
             <div class="cms-body-content">
                 <label class="cms-lbl">البريد الإلكتروني المعتمد</label>
                 <input type="email" id="loginEmail" class="cms-inp" placeholder="أدخل البريد الإلكتروني..." dir="ltr" autocomplete="off">
@@ -383,12 +357,81 @@
         </div>
     </div>
 
+    <!-- نافذة تعديل إزاحة التقويم (الهجري والميلادي منفصلين) -->
+    <div id="calendarOffsetModal" class="modal-overlay">
+        <div class="cms-box" style="max-width: 420px;">
+            <div class="cms-hdr">
+                <h3><i class="fas fa-calendar-alt"></i> ضبط إزاحة التواريخ</h3>
+                <button onclick="closeAllModals()">✕</button>
+            </div>
+            <div class="cms-body-content">
+                <div class="config-section-card">
+                    <h4>التقويم الهجري</h4>
+                    <p style="font-size: 0.8rem; color: #8c7361; margin-top:0;">تقديم أو تأخير التاريخ الهجري المعروض باليوم.</p>
+                    <div style="display:flex; gap:8px; margin-bottom: 8px;">
+                        <button onclick="changeHijriOffset(1)" style="background:#f6eedf; flex:1;">يوم +1</button>
+                        <button onclick="changeHijriOffset(-1)" style="background:#f6eedf; flex:1;">يوم -1</button>
+                    </div>
+                    <button onclick="resetHijriOffset()" style="background:var(--secondary); color:white; text-align:center; width:100%; border:none; padding:8px; border-radius:6px; font-weight:bold; cursor:pointer;">إعادة ضبط الهجري للوضع الافتراضي</button>
+                    <div id="currentHijriOffsetText" style="font-size:0.8rem; margin-top:8px; text-align:center; font-weight:bold; color:var(--primary);"></div>
+                </div>
+
+                <div class="config-section-card" style="margin-top: 15px;">
+                    <h4>التقويم الميلادي</h4>
+                    <p style="font-size: 0.8rem; color: #8c7361; margin-top:0;">تقديم أو تأخير التاريخ الميلادي المعروض باليوم.</p>
+                    <div style="display:flex; gap:8px; margin-bottom: 8px;">
+                        <button onclick="changeGregorianOffset(1)" style="background:#f6eedf; flex:1;">يوم +1</button>
+                        <button onclick="changeGregorianOffset(-1)" style="background:#f6eedf; flex:1;">يوم -1</button>
+                    </div>
+                    <button onclick="resetGregorianOffset()" style="background:var(--secondary); color:white; text-align:center; width:100%; border:none; padding:8px; border-radius:6px; font-weight:bold; cursor:pointer;">إعادة ضبط الميلادي للوضع الافتراضي</button>
+                    <div id="currentGregorianOffsetText" style="font-size:0.8rem; margin-top:8px; text-align:center; font-weight:bold; color:var(--primary);"></div>
+                </div>
+                <button onclick="closeAllModals()" class="cms-btn" style="margin-top:10px;">إغلاق وحفظ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة إدارة التقويم الدراسي -->
+    <div id="schoolCalendarManagerModal" class="modal-overlay">
+        <div class="cms-box" style="max-width: 600px;">
+            <div class="cms-hdr">
+                <h3><i class="fas fa-calendar-check"></i> إدارة التقويم الدراسي 1448 هـ</h3>
+                <button onclick="closeAllModals()">✕</button>
+            </div>
+            <div class="cms-body-content">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <h4 style="margin: 0; color: var(--secondary);">قائمة الأحداث والفعاليات</h4>
+                    <button onclick="showAddSchoolCalForm()" class="cms-btn" style="margin-top: 0; width: auto; padding: 6px 14px; font-size: 0.85rem;"><i class="fas fa-plus"></i> إضافة بند جديد</button>
+                </div>
+                <div id="adminSchoolCalList" style="max-height: 220px; overflow-y: auto; margin-bottom: 15px; padding-left: 5px;"></div>
+
+                <div id="schoolCalFormContainer" style="display: none; background: #fffdfa; padding: 16px; border: 1px solid var(--glass-border); border-radius: 12px; margin-top: 10px;">
+                    <h4 id="schoolCalFormTitle" style="margin-top: 0; color: var(--secondary); border-bottom: 1px solid var(--glass-border); padding-bottom: 6px;">بند دراسي جديد</h4>
+                    <label class="cms-lbl">اسم البيان / الحدث *</label>
+                    <input type="text" id="scTitleInput" class="cms-inp" placeholder="مثال: عودة المعلمين الممارسين للتدريس">
+                    
+                    <div style="display:flex; gap:10px;">
+                        <div style="flex:1;"><label class="cms-lbl">التاريخ الهجري *</label><input type="text" id="scHijriInput" class="cms-inp" placeholder="1448 / 3 / 3"></div>
+                        <div style="flex:1;"><label class="cms-lbl">التاريخ الميلادي *</label><input type="text" id="scGregInput" class="cms-inp" placeholder="2026 / 8 / 16"></div>
+                    </div>
+
+                    <div style="display:flex; gap:10px;">
+                        <div style="flex:1;"><label class="cms-lbl">نوع البدء (اختياري)</label><select id="scTypeInput" class="cms-inp"><option value="">عادي (بدون فترة)</option><option value="from">بداية فترة (من)</option><option value="to">نهاية فترة (إلى)</option></select></div>
+                    </div>
+
+                    <div style="display:flex; gap:10px; margin-top: 15px;">
+                        <button onclick="saveSchoolCalendarItem()" id="scSubmitBtn" class="cms-btn" style="margin-top: 0; flex: 2;">حفظ وإضافة</button>
+                        <button onclick="hideSchoolCalendarForm()" class="cms-btn" style="margin-top: 0; flex: 1; background: #f6eedf; color: var(--primary); border:1px solid var(--glass-border);">إلغاء</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة الهيدر والفوتر -->
     <div id="headerModal" class="modal-overlay">
         <div class="cms-box" style="max-width: 550px;">
-            <div class="cms-hdr">
-                <h3><i class="fas fa-paint-brush"></i> الهيدر والفوتر والألوان</h3>
-                <button onclick="closeAllModals()" style="background:none; border:none; font-size:1.3rem; cursor:pointer;">✕</button>
-            </div>
+            <div class="cms-hdr"><h3><i class="fas fa-paint-brush"></i> الهيدر والفوتر والألوان</h3><button onclick="closeAllModals()">✕</button></div>
             <div class="cms-body-content">
                 <div class="config-section-card">
                     <h4>ألوان الموقع (الهيدر والفوتر)</h4>
@@ -408,6 +451,38 @@
                             </div>
                         </div>
                     </div>
+                    <div style="margin-top:10px;">
+                        <label class="cms-lbl">لون خلفية القالب (وسط الصفحة)</label>
+                        <div class="color-input-group">
+                            <input type="color" id="cfgBgColorPicker" oninput="document.getElementById('cfgBgColorHex').value = this.value">
+                            <input type="text" id="cfgBgColorHex" class="cms-inp" dir="ltr" placeholder="#fbf6ec" oninput="document.getElementById('cfgBgColorPicker').value = this.value">
+                        </div>
+                    </div>
+                </div>
+                <div class="config-section-card">
+                    <h4>خطوط القالب</h4>
+                    <label class="cms-lbl">خط القالب العام (يشمل كل النصوص عدا العنوان)</label>
+                    <select id="cfgSiteFont" class="cms-inp" style="font-size:1.05rem;">
+                        <option value="'Cairo', sans-serif" style="font-family:'Cairo';">Cairo (افتراضي)</option>
+                        <option value="'Tajawal', sans-serif" style="font-family:'Tajawal';">Tajawal</option>
+                        <option value="'Almarai', sans-serif" style="font-family:'Almarai';">Almarai</option>
+                        <option value="'Reem Kufi', sans-serif" style="font-family:'Reem Kufi';">Reem Kufi</option>
+                        <option value="'El Messiri', sans-serif" style="font-family:'El Messiri';">El Messiri</option>
+                        <option value="'Changa', sans-serif" style="font-family:'Changa';">Changa</option>
+                        <option value="'Amiri', serif" style="font-family:'Amiri';">Amiri</option>
+                    </select>
+                    <label class="cms-lbl">خط العنوان الرئيسي (مستقل عن خط القالب)</label>
+                    <select id="cfgHeaderFont" class="cms-inp" style="font-size:1.05rem;">
+                        <option value="'Cairo', sans-serif" style="font-family:'Cairo';">Cairo (افتراضي)</option>
+                        <option value="'Tajawal', sans-serif" style="font-family:'Tajawal';">Tajawal</option>
+                        <option value="'Almarai', sans-serif" style="font-family:'Almarai';">Almarai</option>
+                        <option value="'Lalezar', cursive" style="font-family:'Lalezar';">Lalezar</option>
+                        <option value="'Reem Kufi', sans-serif" style="font-family:'Reem Kufi';">Reem Kufi</option>
+                        <option value="'Aref Ruqaa', serif" style="font-family:'Aref Ruqaa';">Aref Ruqaa</option>
+                        <option value="'El Messiri', sans-serif" style="font-family:'El Messiri';">El Messiri</option>
+                        <option value="'Changa', sans-serif" style="font-family:'Changa';">Changa</option>
+                        <option value="'Amiri', serif" style="font-family:'Amiri';">Amiri</option>
+                    </select>
                 </div>
                 <div class="config-section-card">
                     <h4>النصوص الرئيسية</h4>
@@ -421,12 +496,10 @@
         </div>
     </div>
 
+    <!-- نافذة الاقتباس -->
     <div id="quoteModal" class="modal-overlay">
         <div class="cms-box" style="max-width: 500px;">
-            <div class="cms-hdr">
-                <h3><i class="fas fa-quote-right"></i> إدارة قسم الاقتباس</h3>
-                <button onclick="closeAllModals()" style="background:none; border:none; font-size:1.3rem; cursor:pointer;">✕</button>
-            </div>
+            <div class="cms-hdr"><h3><i class="fas fa-quote-right"></i> إدارة قسم الاقتباس</h3><button onclick="closeAllModals()">✕</button></div>
             <div class="cms-body-content">
                 <label class="cms-lbl">ظهور القسم للزوار</label>
                 <select id="cfgQuoteVisible" class="cms-inp">
@@ -442,31 +515,27 @@
         </div>
     </div>
 
+    <!-- نافذة شريط التحديثات -->
     <div id="tickerModal" class="modal-overlay">
         <div class="cms-box" style="max-width: 500px;">
-            <div class="cms-hdr">
-                <h3><i class="fas fa-bolt"></i> شريط التحديثات (الأخبار)</h3>
-                <button onclick="closeAllModals()" style="background:none; border:none; font-size:1.3rem; cursor:pointer;">✕</button>
-            </div>
+            <div class="cms-hdr"><h3><i class="fas fa-bolt"></i> شريط التحديثات (الأخبار)</h3><button onclick="closeAllModals()">✕</button></div>
             <div class="cms-body-content">
                 <label class="cms-lbl">ظهور الشريط للزوار</label>
                 <select id="cfgTickerVisible" class="cms-inp" style="margin-bottom: 15px;">
                     <option value="true">🟢 عرض شريط التحديثات</option>
                     <option value="false">🔴 إخفاء شريط التحديثات</option>
                 </select>
-                <label class="cms-lbl" style="color: #8c7361; margin-top:0; margin-bottom:5px; font-size:0.8rem;">* اكتب كل خبر في سطر مستقل ليفصل بينها النظام تلقائياً.</label>
+                <label class="cms-lbl" style="color: #8c7361; margin-top:0; margin-bottom:5px; font-size:0.8rem;">* اكتب كل خبر في سطر مستقل.</label>
                 <textarea id="tickerText" class="cms-txt" style="height: 120px; line-height: 1.8;" placeholder="الخبر الأول هنا...&#10;الخبر الثاني هنا..."></textarea>
                 <button onclick="saveTickerCMS()" id="tickerSubmitBtn" class="cms-btn">حفظ وتحديث الشريط</button>
             </div>
         </div>
     </div>
 
+    <!-- نافذة إدارة الإعلانات -->
     <div id="announcementsModal" class="modal-overlay">
         <div class="cms-box" style="max-width: 550px;">
-            <div class="cms-hdr">
-                <h3><i class="fas fa-bullhorn"></i> الإعلانات والمستجدات</h3>
-                <button onclick="closeAllModals()" style="background:none; border:none; font-size:1.3rem; cursor:pointer;">✕</button>
-            </div>
+            <div class="cms-hdr"><h3><i class="fas fa-bullhorn"></i> الإعلانات والمستجدات</h3><button onclick="closeAllModals()">✕</button></div>
             <div class="cms-body-content">
                 <div class="config-section-card" style="margin-bottom: 15px; padding: 12px;">
                     <h4 style="margin-bottom: 8px; font-size: 0.95rem;">إخفاء / إظهار قسم الإعلانات بالكامل</h4>
@@ -496,107 +565,130 @@
         </div>
     </div>
 
+    <!-- نافذة إدارة الأقسام والروابط -->
     <div id="linksModal" class="modal-overlay">
         <div class="cms-box" style="max-width: 600px;">
-            <div class="cms-hdr">
-                <h3><i class="fas fa-th-large"></i> الأقسام والروابط السريعة</h3>
-                <button onclick="closeAllModals()" style="background:none; border:none; font-size:1.3rem; cursor:pointer;">✕</button>
-            </div>
+            <div class="cms-hdr"><h3><i class="fas fa-th-large"></i> الأقسام والروابط السريعة</h3><button onclick="closeAllModals()">✕</button></div>
             <div class="cms-body-content">
                 <div class="config-section-card">
                     <h4>القسمين الرئيسيين (البطاقات الكبيرة)</h4>
                     <b>1. البطاقة الأولى (يمين):</b>
-                    <input type="text" id="cfgTitle1" class="cms-inp" placeholder="عنوان القسم (ملفات الطلاب)">
+                    <input type="text" id="cfgTitle1" class="cms-inp" placeholder="عنوان القسم">
                     <input type="text" id="cfgSub1" class="cms-inp" style="margin-top:6px;" placeholder="الوصف الصغير...">
-                    <input type="url" id="cfgUrl1" class="cms-inp" style="margin-top:6px;" placeholder="الرابط (https://...)" dir="ltr">
+                    <input type="url" id="cfgUrl1" class="cms-inp" style="margin-top:6px;" placeholder="الرابط" dir="ltr">
                     <hr style="margin:16px 0; border:none; border-top:1px dashed var(--glass-border);">
                     <b>2. البطاقة الثانية (يسار):</b>
-                    <input type="text" id="cfgTitle2" class="cms-inp" placeholder="عنوان القسم (نتائج الطلاب)">
+                    <input type="text" id="cfgTitle2" class="cms-inp" placeholder="عنوان القسم">
                     <input type="text" id="cfgSub2" class="cms-inp" style="margin-top:6px;" placeholder="الوصف الصغير...">
-                    <input type="url" id="cfgUrl2" class="cms-inp" style="margin-top:6px;" placeholder="الرابط (https://...)" dir="ltr">
+                    <input type="url" id="cfgUrl2" class="cms-inp" style="margin-top:6px;" placeholder="الرابط" dir="ltr">
                 </div>
                 <div class="config-section-card">
-                    <h4>الروابط السريعة الثلاثة (بالأسفل)</h4>
+                    <h4>الروابط السريعة الثلاثة</h4>
                     <b>3. الرابط الأول:</b>
                     <div style="display:flex; gap:10px; margin-top:6px;"><input type="text" id="cfgTitle3" class="cms-inp" placeholder="الاسم"><input type="text" id="cfgSub3" class="cms-inp" placeholder="الوصف"></div>
-                    <input type="url" id="cfgUrl3" class="cms-inp" style="margin-top:6px;" placeholder="الرابط..." dir="ltr">
+                    <input type="url" id="cfgUrl3" class="cms-inp" style="margin-top:6px;" placeholder="الرابط" dir="ltr">
                     <hr style="margin:16px 0; border:none; border-top:1px dashed var(--glass-border);">
                     <b>4. الرابط الثاني:</b>
                     <div style="display:flex; gap:10px; margin-top:6px;"><input type="text" id="cfgTitle4" class="cms-inp" placeholder="الاسم"><input type="text" id="cfgSub4" class="cms-inp" placeholder="الوصف"></div>
-                    <input type="url" id="cfgUrl4" class="cms-inp" style="margin-top:6px;" placeholder="الرابط..." dir="ltr">
+                    <input type="url" id="cfgUrl4" class="cms-inp" style="margin-top:6px;" placeholder="الرابط" dir="ltr">
                     <hr style="margin:16px 0; border:none; border-top:1px dashed var(--glass-border);">
                     <b>5. الرابط الثالث:</b>
                     <div style="display:flex; gap:10px; margin-top:6px;"><input type="text" id="cfgTitle5" class="cms-inp" placeholder="الاسم"><input type="text" id="cfgSub5" class="cms-inp" placeholder="الوصف"></div>
-                    <input type="url" id="cfgUrl5" class="cms-inp" style="margin-top:6px;" placeholder="الرابط..." dir="ltr">
+                    <input type="url" id="cfgUrl5" class="cms-inp" style="margin-top:6px;" placeholder="الرابط" dir="ltr">
                 </div>
                 <button onclick="saveLinksCMS()" id="linksSubmitBtn" class="cms-btn">💾 حفظ وتحديث الروابط</button>
             </div>
         </div>
     </div>
 
+    <!-- نافذة الاتصال والمساعد الذكي -->
     <div id="contactModal" class="modal-overlay">
         <div class="cms-box" style="max-width: 600px;">
-            <div class="cms-hdr">
-                <h3><i class="fas fa-headset"></i> بيانات الاتصال والمساعد الذكي</h3>
-                <button onclick="closeAllModals()" style="background:none; border:none; font-size:1.3rem; cursor:pointer;">✕</button>
-            </div>
+            <div class="cms-hdr"><h3><i class="fas fa-headset"></i> بيانات الاتصال والمساعد الذكي</h3><button onclick="closeAllModals()">✕</button></div>
             <div class="cms-body-content">
                 <div class="config-section-card">
                     <h4><i class="fas fa-user-tie"></i> قسم بيانات الاتصال</h4>
                     <label class="cms-lbl">عنوان التواصل أعلى الاسم</label>
-                    <input type="text" id="cfgContactTitle" class="cms-inp" placeholder="للإستفسار التواصل مع وكيل المدرسة">
-                    <label class="cms-lbl">الاسم (مثل الأستاذ/ ...)</label>
-                    <input type="text" id="cfgContactName" class="cms-inp" placeholder="الأستاذ/ نوار الذيابي">
+                    <input type="text" id="cfgContactTitle" class="cms-inp" placeholder="للإستفسار...">
+                    <label class="cms-lbl">الاسم</label>
+                    <input type="text" id="cfgContactName" class="cms-inp" placeholder="الأستاذ/ ...">
                     <div style="display:flex; gap:10px;">
-                        <div style="flex:1;"><label class="cms-lbl">رقم الواتساب (دولي)</label><input type="text" id="cfgContactWa" class="cms-inp" placeholder="966555578299" dir="ltr"></div>
-                        <div style="flex:1;"><label class="cms-lbl">رقم الاتصال</label><input type="text" id="cfgContactPhone" class="cms-inp" placeholder="0555578299" dir="ltr"></div>
+                        <div style="flex:1;"><label class="cms-lbl">رقم الواتساب (دولي)</label><input type="text" id="cfgContactWa" class="cms-inp" placeholder="966..." dir="ltr"></div>
+                        <div style="flex:1;"><label class="cms-lbl">رقم الاتصال</label><input type="text" id="cfgContactPhone" class="cms-inp" placeholder="05..." dir="ltr"></div>
                     </div>
                 </div>
-                
                 <div class="config-section-card">
                     <h4><i class="fas fa-robot"></i> إعدادات المساعد الذكي</h4>
                     <label class="cms-lbl" style="margin-top:0;">اسم المساعد الذكي</label>
-                    <input type="text" id="cfgBotName" class="cms-inp" placeholder="مرشد المدرسة الذكي">
+                    <input type="text" id="cfgBotName" class="cms-inp">
                     <hr style="margin:16px 0; border:none; border-top:1px dashed var(--glass-border);">
-
-                    <b>السؤال 1:</b><input type="text" id="cfgBotQ1" class="cms-inp" placeholder="نص السؤال"><textarea id="cfgBotA1" class="cms-txt" style="height:45px; margin-top:4px;" placeholder="الإجابة..."></textarea>
+                    <b>السؤال 1:</b><input type="text" id="cfgBotQ1" class="cms-inp"><textarea id="cfgBotA1" class="cms-txt" style="height:45px; margin-top:4px;"></textarea>
                     <hr style="margin:8px 0; border:none; border-top:1px dashed var(--glass-border);">
-                    <b>السؤال 2:</b><input type="text" id="cfgBotQ2" class="cms-inp" placeholder="نص السؤال"><textarea id="cfgBotA2" class="cms-txt" style="height:45px; margin-top:4px;" placeholder="الإجابة..."></textarea>
+                    <b>السؤال 2:</b><input type="text" id="cfgBotQ2" class="cms-inp"><textarea id="cfgBotA2" class="cms-txt" style="height:45px; margin-top:4px;"></textarea>
                     <hr style="margin:8px 0; border:none; border-top:1px dashed var(--glass-border);">
-                    <b>السؤال 3:</b><input type="text" id="cfgBotQ3" class="cms-inp" placeholder="نص السؤال"><textarea id="cfgBotA3" class="cms-txt" style="height:45px; margin-top:4px;" placeholder="الإجابة..."></textarea>
+                    <b>السؤال 3:</b><input type="text" id="cfgBotQ3" class="cms-inp"><textarea id="cfgBotA3" class="cms-txt" style="height:45px; margin-top:4px;"></textarea>
                     <hr style="margin:8px 0; border:none; border-top:1px dashed var(--glass-border);">
-                    <b>السؤال 4:</b><input type="text" id="cfgBotQ4" class="cms-inp" placeholder="نص السؤال"><textarea id="cfgBotA4" class="cms-txt" style="height:45px; margin-top:4px;" placeholder="الإجابة..."></textarea>
+                    <b>السؤال 4:</b><input type="text" id="cfgBotQ4" class="cms-inp"><textarea id="cfgBotA4" class="cms-txt" style="height:45px; margin-top:4px;"></textarea>
                 </div>
                 <button onclick="saveContactCMS()" id="contactSubmitBtn" class="cms-btn">💾 حفظ إعدادات الاتصال والمساعد</button>
             </div>
         </div>
     </div>
 
+    <!-- التنبيه العاجل للإدارة والزوار -->
     <div id="urgentAdminModal" class="modal-overlay">
         <div class="cms-box" style="max-width: 450px;">
             <div class="cms-hdr" style="background: #ea580c; color: white;">
                 <h3 style="color: white;"><i class="fas fa-bell"></i> التحكم بالتنبيه العاجل</h3>
-                <button onclick="closeAllModals()" style="background:none; border:none; color:white !important; font-size:1.3rem; cursor:pointer;">✕</button>
+                <button onclick="closeAllModals()" style="color:white !important;">✕</button>
             </div>
             <div class="cms-body-content">
                 <label class="cms-lbl">حالة الإشعار الآن</label>
                 <select id="urgAdminStatus" class="cms-inp" style="font-weight:bold;">
-                    <option value="false">🔴 معطل (لا يظهر للزوار)</option>
-                    <option value="true">🟢 مفعل (يظهر فور فتح الموقع)</option>
+                    <option value="false">🔴 معطل</option>
+                    <option value="true">🟢 مفعل</option>
                 </select>
-                <label class="cms-lbl">عنوان التنبيه</label><input type="text" id="urgAdminTitle" class="cms-inp" placeholder="مثال: تعليق الدراسة لهذا اليوم">
-                <label class="cms-lbl">نص التنبيه العاجل *</label><textarea id="urgAdminText" class="cms-txt" placeholder="اكتب تفاصيل الخبر العاجل..."></textarea>
-                <label class="cms-lbl">رابط إضافي (اختياري)</label><input type="url" id="urgAdminLink" class="cms-inp" placeholder="https://..." dir="ltr">
-                <button onclick="saveUrgentNoticeCMS()" id="urgSaveBtnExec" class="cms-btn" style="background:#ea580c; border-color:#ea580c;">🚀 حفظ ونشر التنبيه المباشر</button>
+                <label class="cms-lbl">عنوان التنبيه</label><input type="text" id="urgAdminTitle" class="cms-inp">
+                <label class="cms-lbl">نص التنبيه العاجل *</label><textarea id="urgAdminText" class="cms-txt"></textarea>
+                <label class="cms-lbl">رابط إضافي (اختياري)</label><input type="url" id="urgAdminLink" class="cms-inp" dir="ltr">
+                <button onclick="saveUrgentNoticeCMS()" id="urgSaveBtnExec" class="cms-btn" style="background:#ea580c; border-color:#ea580c;">🚀 حفظ ونشر</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة عرض التقويم الدراسي للزوار -->
+    <div id="viewCalendarModal" class="modal-overlay">
+        <div class="cms-box" style="max-width: 700px;">
+            <div class="cms-hdr">
+                <h3><i class="fas fa-calendar-alt"></i> التقويم الدراسي (1448 / 1449 هـ - 2026 / 2027 م)</h3>
+                <button onclick="closeAllModals()">✕</button>
+            </div>
+            <div class="cms-body-content">
+                <p style="text-align: center; color: #8c7361; font-size: 0.85rem; margin-top: 0; margin-bottom: 15px;">جدول العودات والإجازات الرسمية المعتمدة لعام 1448 هـ</p>
+                <div class="calendar-table-wrapper">
+                    <table class="school-cal-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 45%;">البيان</th>
+                                <th style="width: 28%;">الهجري</th>
+                                <th style="width: 27%;">الميلادي</th>
+                            </tr>
+                        </thead>
+                        <tbody id="schoolCalendarTableBody">
+                            <tr><td colspan="3" style="text-align:center; padding:20px;">جاري تحميل التقويم الدراسي...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="text-align: right; font-size: 0.75rem; color: #8c7361; margin-top: 10px;">* الإجازات الرسمية: يتم الإعلان عنها على مستوى المناطق.</div>
             </div>
         </div>
     </div>
 
     <div id="urgentVisitorModal" class="modal-overlay" style="z-index: 100000;">
-        <div class="cms-box" style="max-width: 420px; border: 1px solid rgba(239, 68, 68, 0.5); box-shadow: 0 25px 50px -12px rgba(239, 68, 68, 0.5);">
+        <div class="cms-box" style="max-width: 420px; border: 1px solid rgba(239, 68, 68, 0.5);">
             <div class="cms-hdr" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">
                 <h3 id="urgVisTitle"><i class="fas fa-exclamation-triangle"></i> تنبيه هام وعاجل</h3>
-                <button onclick="closeUrgentVisitor()" style="background:none; border:none; color:#ef4444 !important; font-size:1.3rem; cursor:pointer;">✕</button>
+                <button onclick="closeUrgentVisitor()" style="color:#ef4444 !important;">✕</button>
             </div>
             <div class="cms-body-content" style="text-align: center; padding: 30px 20px;">
                 <p id="urgVisText" style="font-size: 1.15rem; font-weight: 800; color: var(--primary); line-height: 1.7; margin: 0 0 20px 0;"></p>
@@ -620,10 +712,24 @@
         if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
         const db = firebase.database(); const auth = firebase.auth();
 
+        const defaultSchoolCalendar = [
+            { id: "sc1", title: "عودة الهيئة الإدارية والمشرفين التربويين بقية منسوبي مكتب التعليم", hijri: "1448 / 2 / 28", greg: "2026 / 8 / 11", type: "" },
+            { id: "sc2", title: "عودة المعلمين الممارسين للتدريس في جميع المراحل الدراسية", hijri: "1448 / 3 / 3", greg: "2026 / 8 / 16", type: "" },
+            { id: "sc3", title: "بداية العام الدراسي", hijri: "1448 / 3 / 10", greg: "2026 / 8 / 23", type: "" },
+            { id: "sc4", title: "إجازة اليوم الوطني", hijri: "من: 1448 / 4 / 12<br>إلى: 1448 / 4 / 15", greg: "من: 2026 / 9 / 23<br>إلى: 2026 / 9 / 26", type: "from" },
+            { id: "sc5", title: "إجازة الخريف", hijri: "من: 1448 / 6 / 10<br>إلى: 1448 / 6 / 18", greg: "من: 2026 / 11 / 20<br>إلى: 2026 / 11 / 28", type: "from" },
+            { id: "sc6", title: "إجازة منتصف العام الدراسي", hijri: "من: 1448 / 7 / 30<br>إلى: 1448 / 8 / 8", greg: "من: 2027 / 1 / 8<br>إلى: 2027 / 1 / 16", type: "from" },
+            { id: "sc7", title: "إجازة يوم التأسيس", hijri: "من: 1448 / 9 / 12<br>إلى: 1448 / 9 / 15", greg: "من: 2027 / 2 / 19<br>إلى: 2027 / 2 / 22", type: "from" },
+            { id: "sc8", title: "إجازة عيد الفطر", hijri: "من: 1448 / 9 / 19<br>إلى: 1448 / 10 / 5", greg: "من: 2027 / 2 / 26<br>إلى: 2027 / 3 / 13", type: "from" },
+            { id: "sc9", title: "إجازة عيد الأضحى", hijri: "من: 1448 / 12 / 1<br>إلى: 1448 / 12 / 16", greg: "من: 2027 / 5 / 7<br>إلى: 2027 / 5 / 22", type: "from" },
+            { id: "sc10", title: "بداية إجازة نهاية العام الدراسي", hijri: "1449 / 1 / 19", greg: "2027 / 6 / 24", type: "" },
+            { id: "sc11", title: "بداية العام الدراسي 1449 - 1450 هـ", hijri: "1449 / 3 / 20", greg: "2027 / 8 / 22", type: "" }
+        ];
+
         const defaultPageConfig = {
             appearance: {
-                colors: { color1: "#fbf6ec", color2: "#fffdfa" },
-                texts: { headerTitle: "مدرسة تحفيظ القرآن الابتدائية بالبجادية", footerText: "جميع الحقوق محفوظة لمدرسة تحفيظ القرآن بالبجادية &copy; 2026" },
+                colors: { color1: "#fbf6ec", color2: "#fffdfa", bgColor: "#fbf6ec" },
+                texts: { headerTitle: "مدرسة تحفيظ القرآن الابتدائية بالبجادية", footerText: "جميع الحقوق محفوظة لمدرسة تحفيظ القرآن بالبجادية &copy; 2026", headerFont: "'Cairo', sans-serif", siteFont: "'Cairo', sans-serif" },
                 quote: { visible: true, text: "« إنَّ عظمة طموحك هي التي تحدد حجم نجاحك؛ فاستثمر وقتك في طلب العلم بكل شغف، فالقمم لا تُنال إلا بصبر المجتهدين وعزيمة المبدعين »", author: "كُن أنت صانع مستقبلك المشرق" },
                 ticker: { visible: true },
                 alerts: { visible: true }
@@ -646,34 +752,42 @@
         };
 
         let currentPageConfig = null;
-        let loadedAnnouncements = []; 
+        let loadedAnnouncements = [];
+        let loadedSchoolCalendar = [];
         let currentEditingId = null;
+        let currentEditingSchoolCalId = null;
         let currentUser = null;
 
         function closeAllModals() { document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('show')); }
         function openModal(id) { closeAllModals(); document.getElementById(id).classList.add('show'); document.getElementById('panel-content').style.display = 'none'; }
         function togglePanel() { const c = document.getElementById('panel-content'); c.style.display = c.style.display === 'block' ? 'none' : 'block'; }
 
-        let portalTapCount = 0;
-        let portalTapTimer = null;
+        let portalTapCount = 0; let portalTapTimer = null;
         function handlePortalBadgeTap() {
             portalTapCount++;
             if (portalTapTimer) clearTimeout(portalTapTimer);
-            if (portalTapCount >= 3) {
-                portalTapCount = 0;
-                togglePanel();
-                return;
-            }
+            if (portalTapCount >= 3) { portalTapCount = 0; togglePanel(); return; }
             portalTapTimer = setTimeout(() => { portalTapCount = 0; }, 1200);
+        }
+
+        // فتح لوحة الإدارة بالضغط المطول (Long Press) على "بوابة الطالب الذكية"
+        let portalPressTimer = null; let portalPressTriggered = false;
+        function startPortalPress() {
+            portalPressTriggered = false;
+            portalPressTimer = setTimeout(() => { portalPressTriggered = true; togglePanel(); }, 600);
+        }
+        function cancelPortalPress() {
+            if (portalPressTimer) { clearTimeout(portalPressTimer); portalPressTimer = null; }
         }
 
         auth.onAuthStateChanged((user) => {
             currentUser = user;
-            const loginBtn = document.getElementById('adminAuthBtn'); 
-            const adminButtons = document.getElementById('adminButtonsWrapper');
+            const loginBtn = document.getElementById('adminAuthBtn'); const adminButtons = document.getElementById('adminButtonsWrapper');
             if (user) { document.body.classList.add('admin-mode'); loginBtn.style.display = 'none'; adminButtons.style.display = 'flex'; } 
             else { document.body.classList.remove('admin-mode'); loginBtn.style.display = 'block'; loginBtn.innerHTML = '🔒 الدخول للإدارة'; loginBtn.onclick = verifyAdmin; adminButtons.style.display = 'none'; closeAllModals(); }
         });
+
+        function openSchoolCalendarViewModal() { openModal('viewCalendarModal'); }
 
         function verifyAdmin() { if (!currentUser) { openModal('loginModal'); } }
         function executeLogin() {
@@ -697,7 +811,7 @@
             if(document.getElementById('gridTitle1')) document.getElementById('gridTitle1').innerText = cfg.links.card1.title; if(document.getElementById('gridSub1')) document.getElementById('gridSub1').innerText = cfg.links.card1.subtitle; if(document.getElementById('gridLink1')) document.getElementById('gridLink1').href = cfg.links.card1.url;
             if(document.getElementById('gridTitle2')) document.getElementById('gridTitle2').innerText = cfg.links.card2.title; if(document.getElementById('gridSub2')) document.getElementById('gridSub2').innerText = cfg.links.card2.subtitle; if(document.getElementById('gridLink2')) document.getElementById('gridLink2').href = cfg.links.card2.url;
             if(document.getElementById('miniTitle3')) document.getElementById('miniTitle3').innerText = cfg.links.card3.title; if(document.getElementById('miniSub3')) document.getElementById('miniSub3').innerText = cfg.links.card3.subtitle; if(document.getElementById('miniLink3')) document.getElementById('miniLink3').href = cfg.links.card3.url;
-            if(document.getElementById('miniTitle4')) document.getElementById('miniTitle4').innerText = cfg.links.card4.title; if(document.getElementById('miniSub4')) document.getElementById('miniSub4').innerText = cfg.links.card4.subtitle; if(document.getElementById('miniLink4')) document.getElementById('miniLink4').href = cfg.links.card4.url;
+            if(document.getElementById('miniTitle4')) document.getElementById('miniTitle4').innerText = cfg.links.card4.title; if(document.getElementById('miniSub4')) document.getElementById('miniSub4').subtitle; if(document.getElementById('miniLink4')) document.getElementById('miniLink4').href = cfg.links.card4.url;
             if(document.getElementById('miniTitle5')) document.getElementById('miniTitle5').innerText = cfg.links.card5.title; if(document.getElementById('miniSub5')) document.getElementById('miniSub5').innerText = cfg.links.card5.subtitle; if(document.getElementById('miniLink5')) document.getElementById('miniLink5').href = cfg.links.card5.url;
             
             if(document.getElementById('contactTitleTxt')) document.getElementById('contactTitleTxt').innerText = cfg.contact.title || defaultPageConfig.contact.title;
@@ -714,9 +828,12 @@
             }
 
             const app = cfg.appearance || defaultPageConfig.appearance;
-            document.documentElement.style.setProperty('--header-gradient', `linear-gradient(135deg, ${app.colors.color1}90 0%, ${app.colors.color2}90 100%)`);
+            document.documentElement.style.setProperty('--header-gradient', `linear-gradient(135deg, ${app.colors.color1} 0%, ${app.colors.color2} 100%)`);
+            document.documentElement.style.setProperty('--bg', app.colors.bgColor || defaultPageConfig.appearance.colors.bgColor);
             
             if(document.getElementById('main-header-title')) document.getElementById('main-header-title').innerText = app.texts.headerTitle;
+            if(document.getElementById('main-header-title')) document.getElementById('main-header-title').style.fontFamily = app.texts.headerFont || defaultPageConfig.appearance.texts.headerFont;
+            document.body.style.fontFamily = app.texts.siteFont || defaultPageConfig.appearance.texts.siteFont;
             if(document.getElementById('browser-title')) document.getElementById('browser-title').innerText = app.texts.headerTitle;
             if(document.getElementById('main-footer-text')) document.getElementById('main-footer-text').innerHTML = app.texts.footerText;
             
@@ -734,17 +851,206 @@
             if(alertsSection) { alertsSection.style.display = (app.alerts && (app.alerts.visible === false || app.alerts.visible === 'false')) ? 'none' : 'block'; }
         }
 
+        // تحميل وعرض التقويم الدراسي من Firebase
+        function loadSchoolCalendarData() {
+            const tableBody = document.getElementById('schoolCalendarTableBody'); if(!tableBody) return;
+            db.ref('school_calendar').on('value', (snap) => {
+                loadedSchoolCalendar = []; const data = snap.val();
+                if (data) {
+                    Object.keys(data).forEach(k => { loadedSchoolCalendar.push({ id: k, ...data[k] }); });
+                    renderSchoolCalendarTable();
+                    renderAdminSchoolCalendarList();
+                    updateCountdownWidget();
+                } else {
+                    db.ref('school_calendar').set(defaultSchoolCalendar);
+                }
+            });
+        }
+
+        // استخراج أول تاريخ ميلادي (YYYY / M / D) من نص الحقل الميلادي
+        function extractFirstGregDate(gregText) {
+            if (!gregText) return null;
+            const match = String(gregText).replace(/<br\s*\/?>/gi, ' ').match(/(\d{4})\s*\/\s*(\d{1,2})\s*\/\s*(\d{1,2})/);
+            if (!match) return null;
+            const year = parseInt(match[1], 10), month = parseInt(match[2], 10), day = parseInt(match[3], 10);
+            const d = new Date(year, month - 1, day);
+            return isNaN(d.getTime()) ? null : d;
+        }
+
+        // حساب وعرض العد التنازلي لأقرب حدث قادم (إجازة رسمية أو موعد مهم) من التقويم الدراسي
+        function updateCountdownWidget() {
+            const textEl = document.getElementById('countdownText'); if (!textEl) return;
+            if (!loadedSchoolCalendar || loadedSchoolCalendar.length === 0) { textEl.innerText = "لا تتوفر بيانات تقويم حالياً"; return; }
+
+            const today = new Date(); today.setHours(0, 0, 0, 0);
+            let closest = null; let closestDiff = Infinity;
+
+            loadedSchoolCalendar.forEach(item => {
+                const eventDate = extractFirstGregDate(item.greg);
+                if (!eventDate) return;
+                eventDate.setHours(0, 0, 0, 0);
+                const diffDays = Math.round((eventDate - today) / (1000 * 60 * 60 * 24));
+                if (diffDays >= 0 && diffDays < closestDiff) { closestDiff = diffDays; closest = item; }
+            });
+
+            if (!closest) { textEl.innerText = "لا توجد فعاليات قادمة في التقويم الحالي"; return; }
+
+            const cleanTitle = String(closest.title).replace(/<br\s*\/?>/gi, ' ');
+            if (closestDiff === 0) {
+                textEl.innerHTML = `اليوم: <b>${cleanTitle}</b>`;
+            } else {
+                textEl.innerHTML = `متبقي <span class="cd-days">${closestDiff}</span> يوم على: <b>${cleanTitle}</b>`;
+            }
+        }
+
+        function renderSchoolCalendarTable() {
+            const tableBody = document.getElementById('schoolCalendarTableBody'); if(!tableBody) return;
+            if (loadedSchoolCalendar.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="3" style="text-align:center; padding:20px;">لا توجد بيانات مضافة حالياً.</td></tr>`;
+                return;
+            }
+            tableBody.innerHTML = loadedSchoolCalendar.map(item => `
+                <tr>
+                    <td>${item.title}</td>
+                    <td style="text-align: center;">${item.hijri}</td>
+                    <td style="text-align: center;">${item.greg}</td>
+                </tr>
+            `).join('');
+        }
+
+        function openSchoolCalendarManager() {
+            if(!currentUser) return;
+            hideSchoolCalendarForm();
+            renderAdminSchoolCalendarList();
+            openModal('schoolCalendarManagerModal');
+        }
+
+        function renderAdminSchoolCalendarList() {
+            const listEl = document.getElementById('adminSchoolCalList'); if(!listEl) return;
+            if (loadedSchoolCalendar.length === 0) {
+                listEl.innerHTML = `<div style="text-align:center; padding:10px; color:#8c7361; font-size:0.9rem;">لا توجد بنود دراسية حالياً.</div>`;
+            } else {
+                listEl.innerHTML = loadedSchoolCalendar.map(item => `
+                    <div class="admin-list-item">
+                        <span>${item.title}</span>
+                        <div class="admin-list-btns">
+                            <button class="btn-edit" onclick="editSchoolCalItem('${item.id}')">تعديل</button>
+                            <button class="btn-del" onclick="delSchoolCalItem('${item.id}')">حذف</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function showAddSchoolCalForm() {
+            currentEditingSchoolCalId = null;
+            document.getElementById('scTitleInput').value = '';
+            document.getElementById('scHijriInput').value = '';
+            document.getElementById('scGregInput').value = '';
+            document.getElementById('scTypeInput').value = '';
+            document.getElementById('schoolCalFormTitle').innerText = 'إضافة بند دراسي جديد';
+            document.getElementById('schoolCalFormContainer').style.display = 'block';
+        }
+
+        function hideSchoolCalendarForm() {
+            document.getElementById('schoolCalFormContainer').style.display = 'none';
+        }
+
+        function editSchoolCalItem(id) {
+            const target = loadedSchoolCalendar.find(x => x.id === id); if(!target) return;
+            currentEditingSchoolCalId = id;
+            document.getElementById('scTitleInput').value = target.title;
+            document.getElementById('scHijriInput').value = target.hijri.replace(/<br>/g, ' ');
+            document.getElementById('scGregInput').value = target.greg.replace(/<br>/g, ' ');
+            document.getElementById('scTypeInput').value = target.type || '';
+            document.getElementById('schoolCalFormTitle').innerText = 'تعديل البند الدراسي';
+            document.getElementById('schoolCalFormContainer').style.display = 'block';
+        }
+
+        function saveSchoolCalendarItem() {
+            if(!currentUser) return;
+            const title = document.getElementById('scTitleInput').value.trim();
+            const hijri = document.getElementById('scHijriInput').value.trim();
+            const greg = document.getElementById('scGregInput').value.trim();
+            const type = document.getElementById('scTypeInput').value;
+
+            if(!title || !hijri || !greg) { alert("جميع الحقول الأساسية مطلوبة!"); return; }
+
+            const payload = { title, hijri, greg, type };
+            const btn = document.getElementById('scSubmitBtn'); btn.innerHTML = 'يُحفظ...'; btn.disabled = true;
+
+            const request = currentEditingSchoolCalId ? db.ref(`school_calendar/${currentEditingSchoolCalId}`).set(payload) : db.ref('school_calendar').push(payload);
+            request.then(() => {
+                hideSchoolCalendarForm();
+                renderAdminSchoolCalendarList();
+            }).finally(() => {
+                btn.innerText = 'حفظ وإضافة'; btn.disabled = false;
+            });
+        }
+
+        function delSchoolCalItem(id) {
+            if(!currentUser || !confirm("هل أنت متأكد من حذف هذا البند نهائياً؟")) return;
+            db.ref(`school_calendar/${id}`).remove();
+        }
+
+        // إدارة الإزاحات المنفصلة (هجري وميلادي)
+        let hijriOffset = parseInt(localStorage.getItem('school_hijri_offset')) || 0;
+        let gregOffset = parseInt(localStorage.getItem('school_greg_offset')) || 0;
+
+        function openCalendarOffsetCMS() {
+            if(!currentUser) return;
+            updateOffsetLabels();
+            openModal('calendarOffsetModal');
+        }
+
+        function updateOffsetLabels() {
+            document.getElementById('currentHijriOffsetText').textContent = "إزاحة الهجري الحالية: " + (hijriOffset > 0 ? "+" : "") + hijriOffset + " يوم";
+            document.getElementById('currentGregorianOffsetText').textContent = "إزاحة الميلادي الحالية: " + (gregOffset > 0 ? "+" : "") + gregOffset + " يوم";
+        }
+
+        function changeHijriOffset(v) { hijriOffset += v; localStorage.setItem('school_hijri_offset', hijriOffset); updateClock(); updateOffsetLabels(); }
+        function resetHijriOffset() { hijriOffset = 0; localStorage.setItem('school_hijri_offset', 0); updateClock(); updateOffsetLabels(); }
+
+        function changeGregorianOffset(v) { gregOffset += v; localStorage.setItem('school_greg_offset', gregOffset); updateClock(); updateOffsetLabels(); }
+        function resetGregorianOffset() { gregOffset = 0; localStorage.setItem('school_greg_offset', 0); updateClock(); updateOffsetLabels(); }
+
+        function updateClock() {
+            const now = new Date();
+            
+            // تاريخ هجري مع الإزاحة الخاصة به
+            const adjHijri = new Date(now);
+            adjHijri.setDate(now.getDate() + hijriOffset);
+            let hDate = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {day:'numeric',month:'long',year:'numeric'}).format(adjHijri);
+
+            // تاريخ ميلادي مع الإزاحة الخاصة به
+            const adjGreg = new Date(now);
+            adjGreg.setDate(now.getDate() + gregOffset);
+            let gDate = new Intl.DateTimeFormat('ar-EG', {day:'numeric',month:'numeric',year:'numeric'}).format(adjGreg) + " م";
+
+            let tStr = now.toLocaleTimeString('ar-EG', {hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true}).replace("صباحاً","ص").replace("مساءً","م");
+            
+            document.getElementById('hijri-clock').textContent = hDate;
+            document.getElementById('gregorian-clock').textContent = gDate;
+            document.getElementById('live-time-clock').textContent = tStr;
+        }
+        setInterval(updateClock, 1000); updateClock();
+
+        // دوال الإدارة الأخرى (الهيدر، الاقتباس، التحديثات، الإعلانات، الروابط، الاتصال)
         function openHeaderCMS() {
             if(!currentUser) return; const app = currentPageConfig.appearance;
             document.getElementById('cfgColor1Picker').value = app.colors.color1; document.getElementById('cfgColor1Hex').value = app.colors.color1;
             document.getElementById('cfgColor2Picker').value = app.colors.color2; document.getElementById('cfgColor2Hex').value = app.colors.color2;
+            const bg = app.colors.bgColor || defaultPageConfig.appearance.colors.bgColor;
+            document.getElementById('cfgBgColorPicker').value = bg; document.getElementById('cfgBgColorHex').value = bg;
             document.getElementById('cfgHeaderTitle').value = app.texts.headerTitle; document.getElementById('cfgFooterText').value = app.texts.footerText;
+            document.getElementById('cfgHeaderFont').value = app.texts.headerFont || defaultPageConfig.appearance.texts.headerFont;
+            document.getElementById('cfgSiteFont').value = app.texts.siteFont || defaultPageConfig.appearance.texts.siteFont;
             openModal('headerModal');
         }
         function saveHeaderCMS() {
             if(!currentUser) return; const btn = document.getElementById('headerSubmitBtn'); btn.innerHTML = "يُحفظ..."; btn.disabled = true;
-            db.ref('page_config/appearance/colors').set({ color1: document.getElementById('cfgColor1Hex').value.trim(), color2: document.getElementById('cfgColor2Hex').value.trim() });
-            db.ref('page_config/appearance/texts').set({ headerTitle: document.getElementById('cfgHeaderTitle').value.trim(), footerText: document.getElementById('cfgFooterText').value.trim() }).then(() => {
+            db.ref('page_config/appearance/colors').set({ color1: document.getElementById('cfgColor1Hex').value.trim(), color2: document.getElementById('cfgColor2Hex').value.trim(), bgColor: document.getElementById('cfgBgColorHex').value.trim() });
+            db.ref('page_config/appearance/texts').set({ headerTitle: document.getElementById('cfgHeaderTitle').value.trim(), footerText: document.getElementById('cfgFooterText').value.trim(), headerFont: document.getElementById('cfgHeaderFont').value, siteFont: document.getElementById('cfgSiteFont').value }).then(() => {
                 closeAllModals(); alert("تم الحفظ بنجاح!");
             }).finally(() => { btn.innerHTML = "💾 حفظ التغييرات"; btn.disabled = false; });
         }
@@ -910,23 +1216,16 @@
             const active = document.getElementById('urgAdminStatus').value === 'true'; const title = document.getElementById('urgAdminTitle').value.trim() || 'تنبيه هام وعاجل'; const text = document.getElementById('urgAdminText').value.trim(); const link = document.getElementById('urgAdminLink').value.trim();
             if(active && !text) { alert("يرجى كتابة نص التنبيه!"); return; }
             const btn = document.getElementById('urgSaveBtnExec'); btn.innerHTML = 'يُحفظ...'; btn.disabled = true;
-            db.ref('urgent_notice').set({ active, title, text, link, timestamp: Date.now() }).then(() => { closeAllModals(); alert(active ? "تم التفعيل!" : "تم الإيقاف."); }).finally(() => { btn.innerHTML = '🚀 حفظ ونشر التنبيه المباشر'; btn.disabled = false; });
+            db.ref('urgent_notice').set({ active, title, text, link, timestamp: Date.now() }).then(() => { closeAllModals(); alert(active ? "تم التفعيل!" : "تم الإيقاف."); }).finally(() => { btn.innerHTML = '🚀 حفظ ونشر'; btn.disabled = false; });
         }
 
-        let dateOffset = parseInt(localStorage.getItem('school_date_offset')) || 0;
-        function updateClock() {
-            const now = new Date(); const adj = new Date(now); adj.setDate(now.getDate() + dateOffset);
-            let hDate = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {day:'numeric',month:'long',year:'numeric'}).format(adj);
-            let gDate = new Intl.DateTimeFormat('ar-EG', {day:'numeric',month:'numeric',year:'numeric'}).format(adj) + " م";
-            let tStr = now.toLocaleTimeString('ar-EG', {hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true}).replace("صباحاً","ص").replace("مساءً","م");
-            document.getElementById('hijri-clock').textContent = hDate; document.getElementById('gregorian-clock').textContent = gDate; document.getElementById('live-time-clock').textContent = tStr;
-            const offEl = document.getElementById('current-offset-text'); if(offEl) offEl.textContent = "الإزاحة: " + (dateOffset>0?"+":"") + dateOffset;
-        }
-        function changeOffset(v) { dateOffset += v; localStorage.setItem('school_date_offset', dateOffset); updateClock(); }
-        function resetOffset() { dateOffset = 0; localStorage.setItem('school_date_offset', 0); updateClock(); }
-        setInterval(updateClock, 1000); updateClock();
-        
-        window.addEventListener('load', () => { loadAnnouncements(); loadTicker(); loadPageConfig(); loadUrgentNotice(); });
+        window.addEventListener('load', () => { 
+            loadAnnouncements(); 
+            loadTicker(); 
+            loadPageConfig(); 
+            loadUrgentNotice(); 
+            loadSchoolCalendarData(); 
+        });
 
         function toggleBot() { document.getElementById("botWindow").classList.toggle("open"); }
         function botAnswer(qId) {
