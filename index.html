@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="browser-title">مدرسة تحفيظ القرآن بالبجادية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Amiri:ital,wght@0,700;1,700&family=Marcellus&family=Tajawal:wght@400;700;900&family=Almarai:wght@400;700;800&family=Lalezar&family=Reem+Kufi:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=El+Messiri:wght@400;700&family=Changa:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Amiri:ital,wght@0,700;1,700&family=Marcellus&family=Tajawal:wght@400;700;900&family=Almarai:wght@400;700;800&family=Lalezar&family=Reem+Kufi:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=El+Messiri:wght@400;700&family=Changa:wght@400;700&family=Righteous&family=Bungee&family=Anton&family=Playfair+Display:wght@700;900&family=Abril+Fatface&family=Lobster&family=Pacifico&family=Great+Vibes&family=Dancing+Script:wght@700&family=Permanent+Marker&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -69,6 +69,29 @@
         .panel-body-padding h4 { margin: 0 0 10px; font-size: 0.9rem; color: var(--secondary); font-weight: 900; }
         .panel-body-padding button { border: 1px solid var(--glass-border); padding: 9px 12px; border-radius: 8px; cursor: pointer; font-family: 'Cairo'; font-weight: 800; margin: 4px 0; width: 100%; transition:0.2s; font-size: 0.85rem; text-align: right; color: var(--primary); }
         .panel-body-padding button:hover { transform: translateY(-2px); box-shadow: var(--shadow-xs); }
+        .admin-menu-btn { background: var(--card-bg) !important; color: var(--primary) !important; border: 1px solid var(--glass-border) !important; border-right: 4px solid var(--secondary) !important; }
+        .admin-menu-btn:hover { background: #f6eedf !important; }
+        .admin-menu-btn-danger { border-right-color: #ef4444 !important; color: #ef4444 !important; }
+
+        /* شاشة التحميل الافتتاحية (Splash Screen) */
+        #site-preloader {
+            position: fixed; inset: 0; z-index: 999999;
+            background: var(--bg);
+            display: flex; align-items: center; justify-content: center; flex-direction: column;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        #site-preloader::before { content: ''; position: absolute; inset: 0; background-image: url('https://www.transparenttextures.com/patterns/islamic-art.png'); opacity: 0.04; pointer-events: none; }
+        #site-preloader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+        .preloader-inner { text-align: center; padding: 20px; position: relative; z-index: 2; }
+        .preloader-badge { width: 112px; height: 112px; border-radius: 50%; background: var(--card-bg); border: 2px solid var(--glass-border); box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: center; margin: 0 auto 30px; position: relative; animation: preloaderPulse 2.2s ease-in-out infinite; overflow: hidden; }
+        .preloader-image { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+        .preloader-mark { font-size: 1.9rem; font-weight: 900; color: var(--primary); letter-spacing: 1px; }
+        @keyframes preloaderPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(199,164,100,0.4); } 50% { box-shadow: 0 0 0 18px rgba(199,164,100,0); } }
+        .preloader-progress { width: 190px; height: 4px; background: var(--glass-border); border-radius: 10px; overflow: hidden; margin: 0 auto 16px; }
+        .preloader-progress-bar { width: 0%; height: 100%; background: var(--secondary); border-radius: 10px; transition: width 0.4s ease; }
+        .preloader-caption { color: var(--primary); font-size: 0.85rem; font-weight: 700; opacity: 0.8; font-family: 'Cairo', sans-serif; }
+        .preloader-credit { margin-top: 32px; color: var(--primary); opacity: 0.55; font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; font-family: 'Cairo', sans-serif; }
+        .preloader-credit span { color: var(--secondary); font-weight: 900; opacity: 1; }
 
         /* وضع لوحة الإدارة كصفحة كاملة مستقلة (تبويب منفصل) */
         body.admin-fullpage-mode header,
@@ -84,7 +107,7 @@
         }
         body.admin-fullpage-mode .panel-header-sticky { padding: 16px 20px; }
         body.admin-fullpage-mode .panel-header-sticky span { font-size: 1.1rem; }
-        body.admin-fullpage-mode .btn-close-panel { width: auto; padding: 6px 14px; border-radius: 50px; background: #f6eedf; font-size: 0.8rem; font-weight: 800; }
+        body.admin-fullpage-mode .btn-close-panel { width: auto; padding: 6px 14px; border-radius: 50px; background: #f6eedf; border: 1px solid var(--glass-border); color: var(--primary); font-size: 0.8rem; font-weight: 800; }
         body.admin-fullpage-mode .panel-body-padding { max-width: 480px; margin: 0 auto; padding: 25px 20px 60px; }
         
         .btn-close-panel { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 50%; color: #ef4444; font-size: 1rem; cursor: pointer; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-weight: bold; transition: 0.2s; }
@@ -244,6 +267,18 @@
 </head>
 <body>
 
+    <div id="site-preloader">
+        <div class="preloader-inner">
+            <div class="preloader-badge">
+                <img id="preloaderImage" class="preloader-image" src="" alt="" style="display:none;">
+                <div id="preloaderMark" class="preloader-mark">NMO</div>
+            </div>
+            <div class="preloader-progress"><div class="preloader-progress-bar" id="preloaderProgressBar"></div></div>
+            <div class="preloader-caption">جاري تحميل الموقع...</div>
+            <div class="preloader-credit">تصميم وتطوير <span>NMO</span></div>
+        </div>
+    </div>
+
     <div class="admin-corner-trigger" id="adminCornerTrigger" onclick="openAdminFullPage()">
         <i class="fas fa-user-shield"></i><span>لوحة الإدارة</span>
     </div>
@@ -290,18 +325,18 @@
                 <button onclick="verifyAdmin()" id="adminAuthBtn" style="background:#f6eedf; color:var(--primary); text-align:center;">🔒 الدخول للإدارة</button>
                 
                 <div id="adminButtonsWrapper" style="display:none; flex-direction: column; gap: 5px;">
-                    <button onclick="openHeaderCMS()" style="background:#0f2c4c; color:white;">1. 🎨 الهيدر والفوتر والألوان</button>
-                    <button onclick="openQuoteCMS()" style="background:#047857; color:white;">2. 💬 قسم الاقتباس</button>
-                    <button onclick="openTickerCMS()" style="background:#059669; color:white;">3. ⚡ شريط التحديثات</button>
-                    <button onclick="openAnnouncementsManager()" style="background:#10b981; color:white;">4. 📢 الإعلانات والمستجدات</button>
-                    <button onclick="openSchoolCalendarManager()" style="background:#1d4ed8; color:white;">5. 📅 إدارة التقويم الدراسي 1448</button>
-                    <button onclick="openCalendarOffsetCMS()" style="background:#1e40af; color:white;">6. ⚙️ ضبط إزاحة التقويم (هجري/ميلادي)</button>
-                    <button onclick="openLinksCMS()" style="background:#0284c7; color:white;">7. ⚙️ الأقسام والروابط</button>
-                    <button onclick="openContactCMS()" style="background:#0369a1; color:white;">8. 📞 الاتصال والمساعد الذكي</button>
+                    <button onclick="openHeaderCMS()" class="admin-menu-btn">1. 🎨 الهيدر والفوتر والألوان</button>
+                    <button onclick="openQuoteCMS()" class="admin-menu-btn">2. 💬 قسم الاقتباس</button>
+                    <button onclick="openTickerCMS()" class="admin-menu-btn">3. ⚡ شريط التحديثات</button>
+                    <button onclick="openAnnouncementsManager()" class="admin-menu-btn">4. 📢 الإعلانات والمستجدات</button>
+                    <button onclick="openSchoolCalendarManager()" class="admin-menu-btn">5. 📅 إدارة التقويم الدراسي 1448</button>
+                    <button onclick="openCalendarOffsetCMS()" class="admin-menu-btn">6. ⚙️ ضبط إزاحة التقويم (هجري/ميلادي)</button>
+                    <button onclick="openLinksCMS()" class="admin-menu-btn">7. ⚙️ الأقسام والروابط</button>
+                    <button onclick="openContactCMS()" class="admin-menu-btn">8. 📞 الاتصال والمساعد الذكي</button>
                     <hr style="margin:6px 0; border:none; border-top:1px dashed var(--glass-border);">
-                    <button onclick="openUrgentAdminCMS()" style="background:#ea580c; color:white;">🚨 التنبيه العاجل المنبثق</button>
-                    <button onclick="openChangePasswordModal()" style="background:#6d28d9; color:white;">🔑 تغيير كلمة المرور</button>
-                    <button onclick="logoutAdmin()" style="background:#ef4444; color:white; text-align:center; margin-top:8px;">تسجيل الخروج</button>
+                    <button onclick="openUrgentAdminCMS()" class="admin-menu-btn">🚨 التنبيه العاجل المنبثق</button>
+                    <button onclick="openChangePasswordModal()" class="admin-menu-btn">🔑 تغيير كلمة المرور</button>
+                    <button onclick="logoutAdmin()" class="admin-menu-btn admin-menu-btn-danger" style="text-align:center; margin-top:8px;">تسجيل الخروج</button>
                 </div>
             </div>
         </div>
@@ -587,6 +622,28 @@
                     </select>
                 </div>
                 <div class="config-section-card">
+                    <h4><i class="fas fa-spinner"></i> شاشة التحميل الافتتاحية</h4>
+                    <label class="cms-lbl">خط اسم "NMO" في شاشة التحميل (غيّرها من وقت لآخر)</label>
+                    <select id="cfgPreloaderFont" class="cms-inp" style="font-size:1.15rem;">
+                        <option value="'Righteous', cursive" style="font-family:'Righteous';">Righteous</option>
+                        <option value="'Bungee', cursive" style="font-family:'Bungee';">Bungee</option>
+                        <option value="'Anton', sans-serif" style="font-family:'Anton';">Anton</option>
+                        <option value="'Playfair Display', serif" style="font-family:'Playfair Display';">Playfair Display</option>
+                        <option value="'Abril Fatface', cursive" style="font-family:'Abril Fatface';">Abril Fatface</option>
+                        <option value="'Lobster', cursive" style="font-family:'Lobster';">Lobster</option>
+                        <option value="'Pacifico', cursive" style="font-family:'Pacifico';">Pacifico</option>
+                        <option value="'Great Vibes', cursive" style="font-family:'Great Vibes';">Great Vibes</option>
+                        <option value="'Dancing Script', cursive" style="font-family:'Dancing Script';">Dancing Script</option>
+                        <option value="'Permanent Marker', cursive" style="font-family:'Permanent Marker';">Permanent Marker</option>
+                    </select>
+                    <label class="cms-lbl">صورة شاشة التحميل (اختياري، بدلاً من حرف NMO)</label>
+                    <select id="cfgPreloaderImgEnabled" class="cms-inp">
+                        <option value="false">🔴 بدون صورة (استخدام NMO فقط)</option>
+                        <option value="true">🟢 إظهار صورة مخصصة</option>
+                    </select>
+                    <input type="text" id="cfgPreloaderImgUrl" class="cms-inp" dir="ltr" placeholder="https://example.com/logo.png">
+                </div>
+                <div class="config-section-card">
                     <h4>النصوص الرئيسية</h4>
                     <label class="cms-lbl">اسم المدرسة (يغير الهيدر وعنوان التبويب)</label>
                     <input type="text" id="cfgHeaderTitle" class="cms-inp" placeholder="مدرسة تحفيظ القرآن...">
@@ -824,17 +881,17 @@
         const db = firebase.database(); const auth = firebase.auth();
 
         const defaultSchoolCalendar = [
-            { id: "sc1", title: "عودة الهيئة الإدارية والمشرفين التربويين بقية منسوبي مكتب التعليم", hijri: "1448 / 2 / 28", greg: "2026 / 8 / 11", type: "" },
-            { id: "sc2", title: "عودة المعلمين الممارسين للتدريس في جميع المراحل الدراسية", hijri: "1448 / 3 / 3", greg: "2026 / 8 / 16", type: "" },
-            { id: "sc3", title: "بداية العام الدراسي", hijri: "1448 / 3 / 10", greg: "2026 / 8 / 23", type: "" },
-            { id: "sc4", title: "إجازة اليوم الوطني", hijri: "من: 1448 / 4 / 12<br>إلى: 1448 / 4 / 15", greg: "من: 2026 / 9 / 23<br>إلى: 2026 / 9 / 26", type: "from" },
-            { id: "sc5", title: "إجازة الخريف", hijri: "من: 1448 / 6 / 10<br>إلى: 1448 / 6 / 18", greg: "من: 2026 / 11 / 20<br>إلى: 2026 / 11 / 28", type: "from" },
-            { id: "sc6", title: "إجازة منتصف العام الدراسي", hijri: "من: 1448 / 7 / 30<br>إلى: 1448 / 8 / 8", greg: "من: 2027 / 1 / 8<br>إلى: 2027 / 1 / 16", type: "from" },
-            { id: "sc7", title: "إجازة يوم التأسيس", hijri: "من: 1448 / 9 / 12<br>إلى: 1448 / 9 / 15", greg: "من: 2027 / 2 / 19<br>إلى: 2027 / 2 / 22", type: "from" },
-            { id: "sc8", title: "إجازة عيد الفطر", hijri: "من: 1448 / 9 / 19<br>إلى: 1448 / 10 / 5", greg: "من: 2027 / 2 / 26<br>إلى: 2027 / 3 / 13", type: "from" },
-            { id: "sc9", title: "إجازة عيد الأضحى", hijri: "من: 1448 / 12 / 1<br>إلى: 1448 / 12 / 16", greg: "من: 2027 / 5 / 7<br>إلى: 2027 / 5 / 22", type: "from" },
-            { id: "sc10", title: "بداية إجازة نهاية العام الدراسي", hijri: "1449 / 1 / 19", greg: "2027 / 6 / 24", type: "" },
-            { id: "sc11", title: "بداية العام الدراسي 1449 - 1450 هـ", hijri: "1449 / 3 / 20", greg: "2027 / 8 / 22", type: "" }
+            { title: "عودة الهيئة الإدارية والمشرفين التربويين بقية منسوبي مكتب التعليم", hijri: "1448 / 2 / 28", greg: "2026 / 8 / 11", type: "" },
+            { title: "عودة المعلمين الممارسين للتدريس في جميع المراحل الدراسية", hijri: "1448 / 3 / 3", greg: "2026 / 8 / 16", type: "" },
+            { title: "بداية العام الدراسي", hijri: "1448 / 3 / 10", greg: "2026 / 8 / 23", type: "" },
+            { title: "إجازة اليوم الوطني", hijri: "من: 1448 / 4 / 12<br>إلى: 1448 / 4 / 15", greg: "من: 2026 / 9 / 23<br>إلى: 2026 / 9 / 26", type: "from" },
+            { title: "إجازة الخريف", hijri: "من: 1448 / 6 / 10<br>إلى: 1448 / 6 / 18", greg: "من: 2026 / 11 / 20<br>إلى: 2026 / 11 / 28", type: "from" },
+            { title: "إجازة منتصف العام الدراسي", hijri: "من: 1448 / 7 / 30<br>إلى: 1448 / 8 / 8", greg: "من: 2027 / 1 / 8<br>إلى: 2027 / 1 / 16", type: "from" },
+            { title: "إجازة يوم التأسيس", hijri: "من: 1448 / 9 / 12<br>إلى: 1448 / 9 / 15", greg: "من: 2027 / 2 / 19<br>إلى: 2027 / 2 / 22", type: "from" },
+            { title: "إجازة عيد الفطر", hijri: "من: 1448 / 9 / 19<br>إلى: 1448 / 10 / 5", greg: "من: 2027 / 2 / 26<br>إلى: 2027 / 3 / 13", type: "from" },
+            { title: "إجازة عيد الأضحى", hijri: "من: 1448 / 12 / 1<br>إلى: 1448 / 12 / 16", greg: "من: 2027 / 5 / 7<br>إلى: 2027 / 5 / 22", type: "from" },
+            { title: "بداية إجازة نهاية العام الدراسي", hijri: "1449 / 1 / 19", greg: "2027 / 6 / 24", type: "" },
+            { title: "بداية العام الدراسي 1449 - 1450 هـ", hijri: "1449 / 3 / 20", greg: "2027 / 8 / 22", type: "" }
         ];
 
         const defaultPageConfig = {
@@ -842,6 +899,7 @@
                 colors: { color1: "#fbf6ec", color2: "#fffdfa", bgColor: "#fbf6ec" },
                 texts: { headerTitle: "مدرسة تحفيظ القرآن الابتدائية بالبجادية", footerText: "جميع الحقوق محفوظة لمدرسة تحفيظ القرآن بالبجادية &copy; 2026", headerFont: "'Cairo', sans-serif", siteFont: "'Cairo', sans-serif" },
                 logo: { enabled: false, url: "", position: "right" },
+                preloader: { fontFamily: "'Righteous', cursive", imageEnabled: false, imageUrl: "" },
                 quote: { visible: true, text: "« إنَّ عظمة طموحك هي التي تحدد حجم نجاحك؛ فاستثمر وقتك في طلب العلم بكل شغف، فالقمم لا تُنال إلا بصبر المجتهدين وعزيمة المبدعين »", author: "كُن أنت صانع مستقبلك المشرق" },
                 ticker: { visible: true },
                 alerts: { visible: true }
@@ -942,6 +1000,37 @@
 
         function openSchoolCalendarViewModal() { openModal('viewCalendarModal'); }
 
+        // تطبيق إعدادات شاشة التحميل الافتتاحية (الخط والصورة)
+        function applyPreloaderConfig(cfg) {
+            const mark = document.getElementById('preloaderMark');
+            const img = document.getElementById('preloaderImage');
+            if (!mark || !img) return;
+            mark.style.fontFamily = cfg.fontFamily || defaultPageConfig.appearance.preloader.fontFamily;
+            const enabled = (cfg.imageEnabled === true || cfg.imageEnabled === 'true') && cfg.imageUrl && cfg.imageUrl.trim() !== '';
+            if (enabled) { img.src = cfg.imageUrl.trim(); img.style.display = 'block'; mark.style.display = 'none'; }
+            else { img.style.display = 'none'; img.src = ''; mark.style.display = 'flex'; }
+        }
+
+        // إدارة شاشة التحميل: تبقى ظاهرة مدة كافية ولا تختفي بسرعة، وتُغلق فقط بعد اكتمال التحميل الفعلي والمدة الدنيا
+        let preloaderMinTimeElapsed = false; let preloaderPageLoaded = false;
+        const PRELOADER_MIN_MS = 2200;
+        function tryHidePreloader() {
+            if (preloaderMinTimeElapsed && preloaderPageLoaded) {
+                const el = document.getElementById('site-preloader');
+                if (el) el.classList.add('hide');
+            }
+        }
+        setTimeout(() => { preloaderMinTimeElapsed = true; tryHidePreloader(); }, PRELOADER_MIN_MS);
+        (function animatePreloaderProgress() {
+            const bar = document.getElementById('preloaderProgressBar'); if (!bar) return;
+            let pct = 0;
+            const iv = setInterval(() => {
+                if (preloaderPageLoaded) { bar.style.width = '100%'; clearInterval(iv); return; }
+                pct = Math.min(pct + Math.random() * 12, 88);
+                bar.style.width = pct + '%';
+            }, 320);
+        })();
+
         function verifyAdmin() { if (!currentUser) { openModal('loginModal'); } }
         function executeLogin() {
             const email = document.getElementById('loginEmail').value.trim(); const pass = document.getElementById('loginPass').value;
@@ -1010,7 +1099,7 @@
             if(document.getElementById('gridTitle1')) document.getElementById('gridTitle1').innerText = cfg.links.card1.title; if(document.getElementById('gridSub1')) document.getElementById('gridSub1').innerText = cfg.links.card1.subtitle; if(document.getElementById('gridLink1')) document.getElementById('gridLink1').href = cfg.links.card1.url;
             if(document.getElementById('gridTitle2')) document.getElementById('gridTitle2').innerText = cfg.links.card2.title; if(document.getElementById('gridSub2')) document.getElementById('gridSub2').innerText = cfg.links.card2.subtitle; if(document.getElementById('gridLink2')) document.getElementById('gridLink2').href = cfg.links.card2.url;
             if(document.getElementById('miniTitle3')) document.getElementById('miniTitle3').innerText = cfg.links.card3.title; if(document.getElementById('miniSub3')) document.getElementById('miniSub3').innerText = cfg.links.card3.subtitle; if(document.getElementById('miniLink3')) document.getElementById('miniLink3').href = cfg.links.card3.url;
-            if(document.getElementById('miniTitle4')) document.getElementById('miniTitle4').innerText = cfg.links.card4.title; if(document.getElementById('miniSub4')) document.getElementById('miniSub4').subtitle; if(document.getElementById('miniLink4')) document.getElementById('miniLink4').href = cfg.links.card4.url;
+            if(document.getElementById('miniTitle4')) document.getElementById('miniTitle4').innerText = cfg.links.card4.title; if(document.getElementById('miniSub4')) document.getElementById('miniSub4').innerText = cfg.links.card4.subtitle; if(document.getElementById('miniLink4')) document.getElementById('miniLink4').href = cfg.links.card4.url;
             if(document.getElementById('miniTitle5')) document.getElementById('miniTitle5').innerText = cfg.links.card5.title; if(document.getElementById('miniSub5')) document.getElementById('miniSub5').innerText = cfg.links.card5.subtitle; if(document.getElementById('miniLink5')) document.getElementById('miniLink5').href = cfg.links.card5.url;
             
             if(document.getElementById('contactTitleTxt')) document.getElementById('contactTitleTxt').innerText = cfg.contact.title || defaultPageConfig.contact.title;
@@ -1040,6 +1129,9 @@
             const logoCfg = app.logo || defaultPageConfig.appearance.logo;
             applySchoolLogo(logoCfg);
             
+            const preloaderCfg = app.preloader || defaultPageConfig.appearance.preloader;
+            applyPreloaderConfig(preloaderCfg);
+            
             const quoteCard = document.getElementById('main-quote-card');
             if(quoteCard) {
                 quoteCard.style.display = (app.quote.visible === true || app.quote.visible === 'true') ? 'block' : 'none';
@@ -1052,6 +1144,8 @@
 
             const alertsSection = document.getElementById('alerts-section-wrapper');
             if(alertsSection) { alertsSection.style.display = (app.alerts && (app.alerts.visible === false || app.alerts.visible === 'false')) ? 'none' : 'block'; }
+
+            preloaderPageLoaded = true; tryHidePreloader();
         }
 
         // تحميل وعرض التقويم الدراسي من Firebase
@@ -1060,14 +1154,35 @@
             db.ref('school_calendar').on('value', (snap) => {
                 loadedSchoolCalendar = []; const data = snap.val();
                 if (data) {
-                    Object.keys(data).forEach(k => { loadedSchoolCalendar.push({ id: k, ...data[k] }); });
+                    Object.keys(data).forEach(k => { if (data[k]) loadedSchoolCalendar.push({ ...data[k], id: k }); });
                     renderSchoolCalendarTable();
                     renderAdminSchoolCalendarList();
                     updateCountdownWidget();
                 } else {
-                    db.ref('school_calendar').set(defaultSchoolCalendar);
+                    // نتحقق أولاً هل سبق تعبئة التقويم من قبل، لمنع إعادة تعبئته تلقائياً بكل بياناته الافتراضية
+                    // في كل مرة يصبح فيها فارغاً (مثلاً بعد حذف آخر بند متبقٍ بقصد من الإدارة)
+                    db.ref('school_calendar_seeded').once('value').then(seededSnap => {
+                        if (!seededSnap.exists()) {
+                            seedDefaultSchoolCalendar();
+                        } else {
+                            renderSchoolCalendarTable();
+                            renderAdminSchoolCalendarList();
+                            updateCountdownWidget();
+                        }
+                    });
                 }
             });
+        }
+
+        // تعبئة التقويم الدراسي الافتراضي لأول مرة فقط - كل بند يحصل على مفتاح فريد حقيقي من Firebase
+        function seedDefaultSchoolCalendar() {
+            const updates = {};
+            defaultSchoolCalendar.forEach(item => {
+                const newRef = db.ref('school_calendar').push();
+                updates[newRef.key] = item;
+            });
+            db.ref('school_calendar').update(updates);
+            db.ref('school_calendar_seeded').set(true);
         }
 
         // استخراج أول تاريخ ميلادي (YYYY / M / D) من نص الحقل الميلادي
@@ -1252,16 +1367,22 @@
             document.getElementById('cfgLogoEnabled').value = (logoCfg.enabled === true || logoCfg.enabled === 'true') ? 'true' : 'false';
             document.getElementById('cfgLogoUrl').value = logoCfg.url || '';
             document.getElementById('cfgLogoPosition').value = logoCfg.position || 'right';
+            const preloaderCfg = app.preloader || defaultPageConfig.appearance.preloader;
+            document.getElementById('cfgPreloaderFont').value = preloaderCfg.fontFamily || defaultPageConfig.appearance.preloader.fontFamily;
+            document.getElementById('cfgPreloaderImgEnabled').value = (preloaderCfg.imageEnabled === true || preloaderCfg.imageEnabled === 'true') ? 'true' : 'false';
+            document.getElementById('cfgPreloaderImgUrl').value = preloaderCfg.imageUrl || '';
             openModal('headerModal');
         }
         function saveHeaderCMS() {
             if(!currentUser) return; const btn = document.getElementById('headerSubmitBtn'); btn.innerHTML = "يُحفظ..."; btn.disabled = true;
             db.ref('page_config/appearance/colors').set({ color1: document.getElementById('cfgColor1Hex').value.trim(), color2: document.getElementById('cfgColor2Hex').value.trim(), bgColor: document.getElementById('cfgBgColorHex').value.trim() });
             db.ref('page_config/appearance/logo').set({ enabled: document.getElementById('cfgLogoEnabled').value === 'true', url: document.getElementById('cfgLogoUrl').value.trim(), position: document.getElementById('cfgLogoPosition').value });
+            db.ref('page_config/appearance/preloader').set({ fontFamily: document.getElementById('cfgPreloaderFont').value, imageEnabled: document.getElementById('cfgPreloaderImgEnabled').value === 'true', imageUrl: document.getElementById('cfgPreloaderImgUrl').value.trim() });
             db.ref('page_config/appearance/texts').set({ headerTitle: document.getElementById('cfgHeaderTitle').value.trim(), footerText: document.getElementById('cfgFooterText').value.trim(), headerFont: document.getElementById('cfgHeaderFont').value, siteFont: document.getElementById('cfgSiteFont').value }).then(() => {
                 closeAllModals(); alert("تم الحفظ بنجاح!");
             }).finally(() => { btn.innerHTML = "💾 حفظ التغييرات"; btn.disabled = false; });
         }
+
 
         function openQuoteCMS() {
             if(!currentUser) return; const q = currentPageConfig.appearance.quote;
@@ -1446,6 +1567,7 @@
             });
         }
         function saveUrgentNoticeCMS() {
+            if(!currentUser) return;
             const active = document.getElementById('urgAdminStatus').value === 'true'; const title = document.getElementById('urgAdminTitle').value.trim() || 'تنبيه هام وعاجل'; const text = document.getElementById('urgAdminText').value.trim(); const link = document.getElementById('urgAdminLink').value.trim(); const color = document.getElementById('urgAdminColor').value;
             if(active && !text) { alert("يرجى كتابة نص التنبيه!"); return; }
             const btn = document.getElementById('urgSaveBtnExec'); btn.innerHTML = 'يُحفظ...'; btn.disabled = true;
@@ -1458,6 +1580,8 @@
             loadPageConfig(); 
             loadUrgentNotice(); 
             loadSchoolCalendarData(); 
+            // خط أمان: لو تعذر الاتصال بقاعدة البيانات لأي سبب، لا تبقى شاشة التحميل عالقة للأبد
+            setTimeout(() => { preloaderPageLoaded = true; tryHidePreloader(); }, 6000);
         });
 
         function toggleBot() { document.getElementById("botWindow").classList.toggle("open"); }
