@@ -15,7 +15,7 @@
     <title id="browser-title">مدرسة تحفيظ القرآن بالبجادية</title>
     
     <!-- الخطوط والأيقونات -->
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@500;600;700&family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- مكتبات Firebase -->
@@ -26,27 +26,29 @@
     <style>
         /* المتغيرات والألوان الأساسية */
         :root {
-            --primary: #453a6a; 
-            --primary-light: #7b729e; 
-            --secondary: #00a79d; 
-            --secondary-dark: #00877f;
-            --text-main: #333333; 
-            --text-muted: #666666;
-            --bg: #f4f5f7; 
+            --primary: #141414; 
+            --primary-light: #2a2a2a; 
+            --secondary: #d9782f; 
+            --secondary-dark: #b6631f;
+            --text-main: #262626; 
+            --text-muted: #6e6e6e;
+            --bg: #f7f6f3; 
             --card-bg: #ffffff;
             --glass-border: #eaecf0;
-            --r-lg: 12px; 
-            --r-xl: 18px;
-            --shadow-sm: 0 4px 12px rgba(0,0,0,0.05);
-            --shadow-lg: 0 10px 30px rgba(69, 58, 106, 0.1);
+            --r-lg: 16px; 
+            --r-xl: 26px;
+            --shadow-sm: 0 4px 12px rgba(0,0,0,0.06);
+            --shadow-lg: 0 14px 34px rgba(0,0,0,0.16);
+            --font-heading: 'El Messiri', serif;
+            --font-body: 'Cairo', sans-serif;
         }
 
         html { scroll-behavior: smooth; background-color: var(--bg); font-size: 16px; }
-        body { font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; color: var(--text-main); overflow-x: hidden; background: var(--bg); min-height: 100vh; position: relative; }
+        body { font-family: var(--font-body); margin: 0; padding: 0; color: var(--text-main); overflow-x: hidden; background: var(--bg); min-height: 100vh; position: relative; }
 
         /* شريط التنقل العلوي للزوار (الهيدر العائم الزجاجي) */
         .top-navbar {
-            background: rgba(69, 58, 106, 0.85); /* لون أساسي شفاف لضمان التوافق */
+            background: rgba(15, 15, 15, 0.8); /* لون أساسي شفاف لضمان التوافق */
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             padding: 15px 30px;
@@ -75,8 +77,8 @@
         .school-logo { width: 45px; height: 45px; object-fit: contain; display: none; }
         
         .nav-title { 
-            font-size: 1.5rem; font-weight: 800; color: white; margin: 0; 
-            font-family: 'Tajawal', sans-serif; letter-spacing: 0.5px; 
+            font-size: 1.6rem; font-weight: 700; color: white; margin: 0; 
+            font-family: var(--font-heading); letter-spacing: 0.5px; 
             text-shadow: 0 2px 4px rgba(0,0,0,0.15); 
         }
 
@@ -116,12 +118,12 @@
         .sidebar-menu a .arrow-dash { font-family: Arial, sans-serif; font-size: 1.1rem; letter-spacing: 2px; font-weight: 300; opacity: 0.9; }
         
         .sidebar-buttons { padding: 0 30px 40px; display: flex; flex-direction: column; gap: 15px; }
-        .sidebar-btn-solid { background: var(--secondary); color: white; border: none; border-radius: 50px; padding: 14px; font-size: 1.1rem; font-weight: 800; font-family: 'Tajawal'; cursor: pointer; transition: 0.3s; width: 100%; text-align: center; }
+        .sidebar-btn-solid { background: var(--secondary); color: white; border: none; border-radius: 50px; padding: 14px; font-size: 1.1rem; font-weight: 800; font-family: var(--font-body); cursor: pointer; transition: 0.3s; width: 100%; text-align: center; }
         .sidebar-btn-solid:hover { background: var(--secondary-dark); }
 
         /* قسم النبذة */
         .school-intro-section { text-align: center; padding: 40px 20px 40px; max-width: 900px; margin: 0 auto; }
-        .school-intro-section p { font-family: 'Tajawal', sans-serif; font-size: 1.15rem; color: var(--text-muted); line-height: 1.8; margin: 0 auto; font-weight: 500; max-width: 800px;}
+        .school-intro-section p { font-family: var(--font-body); font-size: 1.15rem; color: var(--text-muted); line-height: 1.8; margin: 0 auto; font-weight: 500; max-width: 800px;}
 
         /* شريط الوقت والتاريخ */
         .vertical-time-widget { display: flex; flex-direction: column; gap: 12px; max-width: 400px; margin: 20px auto 50px; padding: 0 20px; }
@@ -129,14 +131,14 @@
         .time-row i { color: var(--secondary); font-size: 1.4rem; width: 30px; text-align: center; }
         .time-row.highlight { background: var(--secondary); color: white; cursor: pointer; border-color: var(--secondary-dark); }
         .time-row.highlight i { color: white; }
-        .time-row.highlight:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,167,157,0.3); }
+        .time-row.highlight:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(217,120,47,0.35); }
 
         .container { max-width: 1150px; margin: 0 auto 60px; padding: 0 20px; }
 
         /* الاقتباس */
         .corporate-quote { background: var(--card-bg); padding: 40px; border-right: 5px solid var(--secondary); border-radius: var(--r-lg); box-shadow: var(--shadow-sm); margin-bottom: 60px; border: 1px solid var(--glass-border); text-align: right; }
-        .corporate-quote p { font-family: 'Tajawal', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--primary); line-height: 1.8; margin: 0 0 15px; }
-        .corporate-quote i { font-family: 'Tajawal', sans-serif; font-size: 1.1rem; color: var(--secondary); font-weight: 800; font-style: normal; }
+        .corporate-quote p { font-family: var(--font-heading); font-size: 1.7rem; font-weight: 700; color: var(--primary); line-height: 1.8; margin: 0 0 15px; }
+        .corporate-quote i { font-family: var(--font-body); font-size: 1.1rem; color: var(--secondary); font-weight: 800; font-style: normal; }
 
         /* شريط الأخبار */
         .news-ticker-corp { display: flex; background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: var(--r-lg); overflow: hidden; margin-bottom: 30px; box-shadow: var(--shadow-sm); }
@@ -149,7 +151,7 @@
         @keyframes ticker-pro { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
 
         /* الأكورديون (لوحة الإعلانات) */
-        .alerts-section-header { text-align: right; margin-bottom: 15px; color: var(--primary); font-weight: 900; font-size: 1.6rem; font-family: 'Tajawal', sans-serif;}
+        .alerts-section-header { text-align: right; margin-bottom: 15px; color: var(--primary); font-weight: 700; font-size: 2rem; font-family: var(--font-heading);}
         .accordion-box { background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: var(--r-lg); margin-bottom: 15px; overflow: hidden; transition: 0.3s; }
         .accordion-box:hover { border-color: var(--primary); }
         .acc-header { padding: 20px 25px; display: flex; align-items: center; gap: 15px; cursor: pointer; user-select: none; }
@@ -164,12 +166,12 @@
 
         /* قسم جديد المدرسة */
         .section-header-ataa { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; margin-top: 60px;}
-        .section-header-ataa h2 { font-size: 2.2rem; font-weight: 900; color: var(--primary); margin: 0; font-family: 'Tajawal', sans-serif; }
+        .section-header-ataa h2 { font-size: 2.4rem; font-weight: 700; color: var(--primary); margin: 0; font-family: var(--font-heading); }
         .ataa-controls { display: flex; align-items: center; justify-content: center; width: 45px; height: 45px; }
 
         .ataa-cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 60px; }
         .ataa-news-card {
-            position: relative; border-radius: 15px; overflow: hidden; min-height: 420px;
+            position: relative; border-radius: 22px; overflow: hidden; min-height: 420px;
             background-color: var(--primary-light); background-size: cover; background-position: center;
             box-shadow: var(--shadow-lg); cursor: pointer; transition: transform 0.3s ease;
             text-decoration: none; display: block; border: 1px solid rgba(0,0,0,0.05);
@@ -177,17 +179,17 @@
         .ataa-news-card:hover { transform: translateY(-8px); }
         .ataa-card-overlay {
             position: absolute; inset: 0;
-            background: linear-gradient(to top, rgba(69, 58, 106, 0.98) 0%, rgba(69, 58, 106, 0.5) 45%, rgba(0,0,0,0) 100%);
+            background: linear-gradient(to top, rgba(10, 10, 10, 0.95) 0%, rgba(10, 10, 10, 0.45) 45%, rgba(0,0,0,0) 100%);
             display: flex; flex-direction: column; justify-content: flex-end; padding: 35px 25px 25px;
         }
-        .ataa-card-title { font-family: 'Tajawal', sans-serif; color: white; font-size: 1.4rem; font-weight: 800; margin: 0 0 20px 0; line-height: 1.6; }
+        .ataa-card-title { font-family: var(--font-heading); color: white; font-size: 1.6rem; font-weight: 700; margin: 0 0 20px 0; line-height: 1.6; }
         .ataa-card-footer { display: flex; justify-content: space-between; align-items: center; color: white; padding-top: 5px; }
         .ataa-card-arrow { font-family: Arial, sans-serif; font-size: 1.4rem; letter-spacing: 2px; font-weight: 300; }
-        .ataa-card-date { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 1rem; font-family: 'Tajawal', sans-serif; }
+        .ataa-card-date { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 1rem; font-family: var(--font-body); }
         .ataa-card-date i { font-size: 1.2rem; }
 
         /* الفوتر المؤسسي */
-        footer { background: var(--primary-light); color: white; padding-top: 60px; font-family: 'Tajawal', sans-serif; }
+        footer { background: var(--primary-light); color: white; padding-top: 60px; font-family: var(--font-body); }
         .footer-grid { max-width: 1100px; margin: 0 auto; padding: 0 20px 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: right; }
         .footer-col h3 { font-size: 1.5rem; font-weight: 900; margin-bottom: 20px; color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
         .footer-col p { font-size: 1.1rem; line-height: 1.8; color: rgba(255,255,255,0.9); margin-bottom: 10px; font-weight: 500; }
@@ -200,7 +202,7 @@
         .footer-contact-item i { color: rgba(255,255,255,0.5); font-size: 1.5rem; transition: 0.3s;}
         .footer-contact-item:hover i { color: var(--secondary); }
         .footer-bottom { background: var(--primary); padding: 25px 20px; text-align: center; color: rgba(255,255,255,0.8); font-size: 1.05rem; font-weight: 500; display: flex; flex-direction: column; gap: 10px; }
-        .dev-brand { font-family: 'Tajawal', sans-serif; font-size: 1.1rem; font-weight: 900; letter-spacing: 2px; }
+        .dev-brand { font-family: var(--font-body); font-size: 1.1rem; font-weight: 900; letter-spacing: 2px; }
 
         /* جداول النوافذ للزوار */
         .school-cal-table { width: 100%; border-collapse: collapse; text-align: right; font-size: 1.05rem; background: #fff; }
@@ -211,7 +213,7 @@
         .duty-card-header { font-weight: 900; font-size: 1.2rem; color: var(--primary); text-align: center; margin-bottom: 15px; }
 
         /* النوافذ المنبثقة (Modals) */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(69, 58, 106, 0.85); backdrop-filter: blur(5px); z-index: 100000; display: none; align-items: center; justify-content: center; padding: 15px; overflow-y:auto;}
+        .modal-overlay { position: fixed; inset: 0; background: rgba(10, 10, 10, 0.82); backdrop-filter: blur(5px); z-index: 100000; display: none; align-items: center; justify-content: center; padding: 15px; overflow-y:auto;}
         .modal-overlay.show { display: flex; animation: cdFadeIn 0.25s ease; }
         @keyframes cdFadeIn { from { opacity:0; transform:scale(0.96); } to { opacity:1; transform:scale(1); } }
         
@@ -222,10 +224,15 @@
         .cms-hdr button:hover { color: #e11d48; }
         .cms-body-content { padding: 25px; overflow-y: auto; text-align: right; }
         .cms-lbl { display: block; font-weight: 800; font-size: 1rem; color: var(--primary); margin: 15px 0 8px; }
-        .cms-inp, .cms-txt, select.cms-inp { width: 100%; padding: 14px; border: 1px solid var(--glass-border); border-radius: var(--r-lg); font-family: 'Tajawal', sans-serif; font-size: 1rem; color: var(--text-main); font-weight: 600; background: #fafafa; box-sizing:border-box;}
+        .pass-field-wrap { position: relative; }
+        .pass-field-wrap .cms-inp { padding-left: 45px; }
+        .pass-toggle-eye { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 1.15rem; padding: 4px; display: flex; align-items: center; }
+        .pass-toggle-eye:hover { color: var(--secondary); }
+        .cms-inp, .cms-txt, select.cms-inp { width: 100%; padding: 14px; border: 1px solid var(--glass-border); border-radius: var(--r-lg); font-family: var(--font-body); font-size: 1rem; color: var(--text-main); font-weight: 600; background: #fafafa; box-sizing:border-box;}
         .cms-inp:focus, .cms-txt:focus { border-color: var(--secondary); outline: none; background: white; }
         .cms-txt { height: 85px; resize: none; }
-        .cms-btn { width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: var(--r-lg); font-weight: 800; font-size: 1.15rem; margin-top: 25px; cursor: pointer; font-family: 'Tajawal'; transition: 0.3s; box-shadow: var(--shadow-sm); }
+        .cms-btn { width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: 50px; font-weight: 800; font-size: 1.15rem; margin-top: 25px; cursor: pointer; font-family: var(--font-body); transition: 0.3s; box-shadow: var(--shadow-sm); }
+        .cms-btn:hover { background: var(--secondary); }
         .cms-btn:hover { background: var(--primary-dark); transform: translateY(-2px); }
 
         .config-section-card { background: #ffffff; border: 1px solid var(--glass-border); border-radius: var(--r-lg); padding: 20px; margin-bottom: 20px; box-shadow: var(--shadow-xs); }
@@ -255,8 +262,8 @@
         .admin-hamburger span:nth-child(2) { width: 20px; background-color: var(--secondary); }
         .admin-hamburger span:nth-child(3) { width: 28px; background-color: white; }
         
-        .admin-top-title { font-size: 1.3rem; font-weight: 900; font-family: 'Tajawal'; }
-        .admin-back-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 8px 15px; border-radius: 6px; font-family: 'Tajawal'; font-weight: 700; cursor: pointer; transition: 0.3s;}
+        .admin-top-title { font-size: 1.3rem; font-weight: 900; font-family: var(--font-body); }
+        .admin-back-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 8px 15px; border-radius: 6px; font-family: var(--font-body); font-weight: 700; cursor: pointer; transition: 0.3s;}
         .admin-back-btn:hover { background: var(--secondary); border-color: var(--secondary); }
 
         body.admin-fullpage-mode > header.top-navbar,
@@ -277,11 +284,11 @@
         body.admin-fullpage-mode .panel-content { display: flex !important; flex-direction: column; width: 100%; height: 100%; background: transparent; box-shadow: none; border: none; max-height: none; padding: 0; overflow-y:auto; }
         body.admin-fullpage-mode .panel-header-sticky { background: transparent; padding: 25px 30px 10px; display: flex; justify-content: flex-start; align-items: center; border: none; }
         body.admin-fullpage-mode .panel-header-sticky span { display: none; } 
-        body.admin-fullpage-mode .btn-close-panel { background: none; border: none; padding: 0; color: var(--secondary); font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 700; font-family: 'Tajawal', sans-serif; transition: 0.3s; border-radius: 0; width: auto; }
+        body.admin-fullpage-mode .btn-close-panel { background: none; border: none; padding: 0; color: var(--secondary); font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 700; font-family: var(--font-body); transition: 0.3s; border-radius: 0; width: auto; }
         body.admin-fullpage-mode .btn-close-panel:hover { color: white; background: transparent; border: none; }
         
         body.admin-fullpage-mode .panel-body-padding { padding: 10px 30px 40px; display: flex; flex-direction: column; flex: 1; }
-        body.admin-fullpage-mode .admin-menu-btn { background: transparent; color: white; border: none; border-bottom: 1px solid rgba(255,255,255,0.1); border-radius: 0; text-align: right; padding: 18px 0; font-family: 'Tajawal'; font-weight: 500; font-size: 1.15rem; transition: 0.3s; width: 100%; display: flex; justify-content: space-between; align-items: center; flex-direction: row-reverse; }
+        body.admin-fullpage-mode .admin-menu-btn { background: transparent; color: white; border: none; border-bottom: 1px solid rgba(255,255,255,0.1); border-radius: 0; text-align: right; padding: 18px 0; font-family: var(--font-body); font-weight: 500; font-size: 1.15rem; transition: 0.3s; width: 100%; display: flex; justify-content: space-between; align-items: center; flex-direction: row-reverse; }
         body.admin-fullpage-mode .admin-menu-btn:hover { background: transparent; color: var(--secondary); padding-right: 8px; transform: none; box-shadow: none; }
         body.admin-fullpage-mode .admin-menu-btn .arrow-dash { font-family: Arial, sans-serif; font-size: 1.1rem; letter-spacing: 2px; font-weight: 300; opacity: 0.9; }
         body.admin-fullpage-mode .admin-menu-btn-danger { color: #e11d48 !important; border-bottom: none !important; margin-top: auto !important; }
@@ -322,7 +329,7 @@
         /* رفع الصور */
         .img-upload-wrap { display: flex; gap: 10px; align-items: center; margin-top: 10px; }
         .img-upload-wrap input[type="text"] { flex: 1; margin: 0 !important; }
-        .img-upload-btn { background: #eef2f6; border: 1px solid var(--glass-border); padding: 12px; border-radius: var(--r-lg); cursor: pointer; font-weight: bold; font-family: 'Tajawal'; color: var(--primary); display: flex; align-items: center; gap: 5px; white-space: nowrap; position: relative; overflow: hidden; }
+        .img-upload-btn { background: #eef2f6; border: 1px solid var(--glass-border); padding: 12px; border-radius: var(--r-lg); cursor: pointer; font-weight: bold; font-family: var(--font-body); color: var(--primary); display: flex; align-items: center; gap: 5px; white-space: nowrap; position: relative; overflow: hidden; }
         .img-upload-btn:hover { background: var(--glass-border); }
         .img-upload-btn input[type="file"] { position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
 
@@ -575,7 +582,10 @@
                 <label class="cms-lbl">البريد الإلكتروني</label>
                 <input type="email" id="loginEmail" class="cms-inp" dir="ltr" style="margin-bottom:15px;">
                 <label class="cms-lbl">كلمة المرور</label>
-                <input type="password" id="loginPass" class="cms-inp" dir="ltr">
+                <div class="pass-field-wrap">
+                    <input type="password" id="loginPass" class="cms-inp" dir="ltr">
+                    <button type="button" class="pass-toggle-eye" onclick="togglePassView('loginPass', this)" tabindex="-1" aria-label="إظهار كلمة المرور"><i class="fas fa-eye"></i></button>
+                </div>
                 <div id="loginErrMsg" style="color:#e11d48; margin-top:15px; font-weight:bold; display:none; font-size:1.05rem;"></div>
                 <button class="cms-btn" onclick="executeLogin()" id="loginBtnExec" style="margin-top:25px;">دخول <i class="fas fa-sign-in-alt"></i></button>
             </div>
@@ -589,9 +599,15 @@
             <div class="cms-body-content">
                 <p style="font-size:0.95rem; color:var(--text-muted); margin-top:0; margin-bottom:20px; font-weight:700; line-height:1.6;">لأسباب أمنية، قد يطلب منك النظام تسجيل الخروج ثم الدخول من جديد قبل تغيير كلمة المرور.</p>
                 <label class="cms-lbl">كلمة المرور الجديدة (6 أحرف على الأقل)</label>
-                <input type="password" id="newPassInput" class="cms-inp" dir="ltr" autocomplete="new-password">
+                <div class="pass-field-wrap">
+                    <input type="password" id="newPassInput" class="cms-inp" dir="ltr" autocomplete="new-password">
+                    <button type="button" class="pass-toggle-eye" onclick="togglePassView('newPassInput', this)" tabindex="-1" aria-label="إظهار كلمة المرور"><i class="fas fa-eye"></i></button>
+                </div>
                 <label class="cms-lbl" style="margin-top:15px;">تأكيد كلمة المرور الجديدة</label>
-                <input type="password" id="newPassConfirmInput" class="cms-inp" dir="ltr" autocomplete="new-password">
+                <div class="pass-field-wrap">
+                    <input type="password" id="newPassConfirmInput" class="cms-inp" dir="ltr" autocomplete="new-password">
+                    <button type="button" class="pass-toggle-eye" onclick="togglePassView('newPassConfirmInput', this)" tabindex="-1" aria-label="إظهار كلمة المرور"><i class="fas fa-eye"></i></button>
+                </div>
                 <button onclick="executeChangePassword()" id="changePassBtnExec" class="cms-btn" style="background:#6d28d9; margin-top:25px;">💾 حفظ كلمة المرور</button>
                 <div id="changePassErrMsg" style="color:#e11d48; font-size:0.95rem; margin-top:15px; text-align:center; display:none; font-weight:bold;"></div>
             </div>
@@ -609,7 +625,7 @@
                         <button onclick="changeHijriOffset(1)" class="cms-inp" style="background:var(--bg); flex:1; cursor:pointer; font-weight:900; font-size:1.1rem;">يوم +1</button>
                         <button onclick="changeHijriOffset(-1)" class="cms-inp" style="background:var(--bg); flex:1; cursor:pointer; font-weight:900; font-size:1.1rem;">يوم -1</button>
                     </div>
-                    <button onclick="resetHijriOffset()" style="background:var(--secondary); color:white; text-align:center; width:100%; border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer; font-family:'Tajawal'; font-size:1.05rem;">إعادة ضبط الهجري للافتراضي</button>
+                    <button onclick="resetHijriOffset()" style="background:var(--secondary); color:white; text-align:center; width:100%; border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer; font-family:var(--font-body); font-size:1.05rem;">إعادة ضبط الهجري للافتراضي</button>
                     <div id="currentHijriOffsetText" style="font-size:1.05rem; margin-top:15px; text-align:center; font-weight:900; color:var(--primary);"></div>
                 </div>
 
@@ -619,7 +635,7 @@
                         <button onclick="changeGregorianOffset(1)" class="cms-inp" style="background:var(--bg); flex:1; cursor:pointer; font-weight:900; font-size:1.1rem;">يوم +1</button>
                         <button onclick="changeGregorianOffset(-1)" class="cms-inp" style="background:var(--bg); flex:1; cursor:pointer; font-weight:900; font-size:1.1rem;">يوم -1</button>
                     </div>
-                    <button onclick="resetGregorianOffset()" style="background:var(--secondary); color:white; text-align:center; width:100%; border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer; font-family:'Tajawal'; font-size:1.05rem;">إعادة ضبط الميلادي للافتراضي</button>
+                    <button onclick="resetGregorianOffset()" style="background:var(--secondary); color:white; text-align:center; width:100%; border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer; font-family:var(--font-body); font-size:1.05rem;">إعادة ضبط الميلادي للافتراضي</button>
                     <div id="currentGregorianOffsetText" style="font-size:1.05rem; margin-top:15px; text-align:center; font-weight:900; color:var(--primary);"></div>
                 </div>
             </div>
@@ -682,14 +698,14 @@
                             <label class="cms-lbl">اللون الأساسي</label>
                             <div class="color-input-group" style="display:flex; gap:5px;">
                                 <input type="color" id="cfgColor1Picker" oninput="document.getElementById('cfgColor1Hex').value = this.value" style="width:50px; height:46px; padding:2px;">
-                                <input type="text" id="cfgColor1Hex" class="cms-inp" dir="ltr" placeholder="#453a6a" oninput="document.getElementById('cfgColor1Picker').value = this.value">
+                                <input type="text" id="cfgColor1Hex" class="cms-inp" dir="ltr" placeholder="#141414" oninput="document.getElementById('cfgColor1Picker').value = this.value">
                             </div>
                         </div>
                         <div style="flex:1; min-width: 200px;">
                             <label class="cms-lbl">اللون الثانوي</label>
                             <div class="color-input-group" style="display:flex; gap:5px;">
                                 <input type="color" id="cfgColor2Picker" oninput="document.getElementById('cfgColor2Hex').value = this.value" style="width:50px; height:46px; padding:2px;">
-                                <input type="text" id="cfgColor2Hex" class="cms-inp" dir="ltr" placeholder="#00a79d" oninput="document.getElementById('cfgColor2Picker').value = this.value">
+                                <input type="text" id="cfgColor2Hex" class="cms-inp" dir="ltr" placeholder="#d9782f" oninput="document.getElementById('cfgColor2Picker').value = this.value">
                             </div>
                         </div>
                     </div>
@@ -697,7 +713,7 @@
                         <label class="cms-lbl">لون خلفية القالب</label>
                         <div class="color-input-group" style="display:flex; gap:5px;">
                             <input type="color" id="cfgBgColorPicker" oninput="document.getElementById('cfgBgColorHex').value = this.value" style="width:50px; height:46px; padding:2px;">
-                            <input type="text" id="cfgBgColorHex" class="cms-inp" dir="ltr" placeholder="#f4f5f7" oninput="document.getElementById('cfgBgColorPicker').value = this.value">
+                            <input type="text" id="cfgBgColorHex" class="cms-inp" dir="ltr" placeholder="#f7f6f3" oninput="document.getElementById('cfgBgColorPicker').value = this.value">
                         </div>
                     </div>
                 </div>
@@ -716,7 +732,7 @@
                             <label class="cms-lbl" style="margin-top:0;">لون الاسم الثاني</label>
                             <div class="color-input-group" style="display:flex; gap:5px;">
                                 <input type="color" id="cfgDesignedByColorPicker" oninput="document.getElementById('cfgDesignedByColor').value = this.value" style="width:40px; height:46px; padding:2px;">
-                                <input type="text" id="cfgDesignedByColor" class="cms-inp" dir="ltr" placeholder="#00a79d" oninput="document.getElementById('cfgDesignedByColorPicker').value = this.value">
+                                <input type="text" id="cfgDesignedByColor" class="cms-inp" dir="ltr" placeholder="#d9782f" oninput="document.getElementById('cfgDesignedByColorPicker').value = this.value">
                             </div>
                         </div>
                     </div>
@@ -1024,7 +1040,7 @@
                             <div><span style="font-size:1rem; color:var(--text-muted); font-weight:800;">الحصة الأولى</span><br><b style="font-size:1.8rem; color:var(--primary);">6:30</b></div>
                         </div>
                     </div>
-                    <div class="duty-card" style="--duty-accent:#7b729e;">
+                    <div class="duty-card" style="--duty-accent:#2a2a2a;">
                         <div class="duty-card-header">الدوام الشتوي</div>
                         <div style="display:flex; justify-content:space-around; margin-bottom:15px; text-align:center;">
                             <div><span style="font-size:1rem; color:var(--text-muted); font-weight:800;">الاصطفاف</span><br><b style="font-size:1.8rem; color:var(--primary);">6:45</b></div>
@@ -1094,15 +1110,15 @@
 
         const defaultPageConfig = {
             appearance: {
-                colors: { enabled: false, color1: "#453a6a", color2: "#00a79d", bgColor: "#f4f5f7" },
+                colors: { enabled: false, color1: "#141414", color2: "#d9782f", bgColor: "#f7f6f3" },
                 texts: { 
                     headerTitle: "مدرسة تحفيظ القرآن الابتدائية", 
                     footerText: "جميع الحقوق محفوظة لمدرسة تحفيظ القرآن بالبجادية © 2026", 
-                    headerFont: "'Tajawal', sans-serif", 
-                    siteFont: "'Tajawal', sans-serif",
+                    headerFont: "var(--font-heading)", 
+                    siteFont: "var(--font-body)",
                     designedByPrefix: "DESIGNED BY",
                     designedByName: "NMO",
-                    designedByColor: "#00a79d"
+                    designedByColor: "#d9782f"
                 },
                 logo: { enabled: false, url: "", position: "right" },
                 quote: { visible: true, text: "« إنَّ عظمة طموحك هي التي تحدد حجم نجاحك؛ فاستثمر وقتك في طلب العلم بكل شغف »", author: "كُن أنت صانع مستقبلك المشرق" },
@@ -1194,6 +1210,20 @@
                 closeAllModals(); if (isAdminFullPageMode) openModal('loginModal'); 
             }
         });
+
+        function togglePassView(inputId, btn) {
+            const input = document.getElementById(inputId);
+            const icon = btn.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye'); icon.classList.add('fa-eye-slash');
+                btn.setAttribute('aria-label', 'إخفاء كلمة المرور');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash'); icon.classList.add('fa-eye');
+                btn.setAttribute('aria-label', 'إظهار كلمة المرور');
+            }
+        }
 
         function executeLogin() {
             const email = document.getElementById('loginEmail').value.trim(); const pass = document.getElementById('loginPass').value;
@@ -1318,9 +1348,9 @@
             const app = cfg.appearance || defaultPageConfig.appearance;
             
             const colorsEnabled = app.colors.enabled !== false && app.colors.enabled !== 'false';
-            const applyPrimary = colorsEnabled ? app.colors.color1 : "#453a6a";
-            const applySecondary = colorsEnabled ? app.colors.color2 : "#00a79d";
-            const applyBg = colorsEnabled ? app.colors.bgColor : "#f4f5f7";
+            const applyPrimary = colorsEnabled ? app.colors.color1 : "#141414";
+            const applySecondary = colorsEnabled ? app.colors.color2 : "#d9782f";
+            const applyBg = colorsEnabled ? app.colors.bgColor : "#f7f6f3";
 
             document.documentElement.style.setProperty('--primary', applyPrimary);
             document.documentElement.style.setProperty('--secondary', applySecondary);
@@ -1483,7 +1513,7 @@
             
             document.getElementById('cfgDesignedByPrefix').value = app.texts.designedByPrefix !== undefined ? app.texts.designedByPrefix : "DESIGNED BY";
             document.getElementById('cfgDesignedByName').value = app.texts.designedByName !== undefined ? app.texts.designedByName : "NMO";
-            const defColor = app.texts.designedByColor || app.colors.color2 || "#00a79d";
+            const defColor = app.texts.designedByColor || app.colors.color2 || "#d9782f";
             document.getElementById('cfgDesignedByColorPicker').value = defColor; document.getElementById('cfgDesignedByColor').value = defColor;
 
             const logoCfg = app.logo || defaultPageConfig.appearance.logo;
@@ -1499,7 +1529,7 @@
             db.ref('page_config/appearance/texts').set({ 
                 headerTitle: document.getElementById('cfgHeaderTitle').value.trim(), 
                 footerText: document.getElementById('cfgFooterText').value.trim(), 
-                headerFont: "'Tajawal', sans-serif", siteFont: "'Tajawal', sans-serif",
+                headerFont: "var(--font-heading)", siteFont: "var(--font-body)",
                 designedByPrefix: document.getElementById('cfgDesignedByPrefix').value.trim(),
                 designedByName: document.getElementById('cfgDesignedByName').value.trim(),
                 designedByColor: document.getElementById('cfgDesignedByColor').value.trim()
@@ -1547,7 +1577,7 @@
                     container.innerHTML = loadedAnnouncements.map(a => `
                         <div class="accordion-box" id="acc-${a.id}">
                             <div class="acc-header" onclick="toggleAcc('${a.id}')"><span class="acc-badge ${a.badge}">${getBadgeName(a.badge)}</span><span class="acc-title">${a.title}</span><span class="acc-date" dir="rtl">${a.date || ''}</span><i class="fas fa-chevron-down acc-arrow" style="margin-right:auto; margin-left:5px;"></i></div>
-                            <div class="acc-body"><p style="margin-top:0;">${a.body}</p>${a.link ? `<a href="${a.link}" target="_blank" class="acc-link" style="color:var(--secondary); border-color:var(--secondary); background:rgba(0,167,157,0.1);">فتح الرابط</a>` : ''}</div>
+                            <div class="acc-body"><p style="margin-top:0;">${a.body}</p>${a.link ? `<a href="${a.link}" target="_blank" class="acc-link" style="color:var(--secondary); border-color:var(--secondary); background:rgba(217,120,47,0.12);">فتح الرابط</a>` : ''}</div>
                         </div>
                     `).join('');
                 } else { container.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-muted); font-size:1.2rem; font-weight:800;">لا توجد إعلانات منشورة حالياً.</div>'; }
